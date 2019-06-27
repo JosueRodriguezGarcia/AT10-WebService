@@ -8,7 +8,6 @@
  * with Jalasoft.
  */
 package com.fundation.webservice.model;
-
 /**
  * Implements the model class File and the getter and setter´s methods
  *
