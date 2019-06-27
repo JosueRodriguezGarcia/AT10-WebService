@@ -10,6 +10,8 @@
 package com.fundation.webservice.model;
 import org.im4java.core.ConvertCmd;
 import org.im4java.core.IMOperation;
+import org.im4java.process.ProcessStarter;
+import java.io.File;
 /**
   * Implements the model class File and the getter and setter´s methods
   *
@@ -17,19 +19,20 @@ import org.im4java.core.IMOperation;
   * @version 1.0
  */
 public class ConvertPptToImage {
-    String input = "C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.pptx";
-    String output = "C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.jpg";
-    public ConvertPptToImage (String input, String output) {
+    File input;
+    File output;
+    public ConvertPptToImage (File input, File output) {
         this.input = input;
         this.output = output;
     }
-    public static void convertemf2png(String input,String output) {
+    public void converterformat() {
+        String myPath = "PATH\\TO\\ImageMagick";
+        ProcessStarter.setGlobalSearchPath(myPath);
         try {
-            IMOperation img = new IMOperation();
-            img.addImage();
-            img.addImage();
+            IMOperation image = new IMOperation();
+            image.addImage();
             ConvertCmd convert = new ConvertCmd();
-            convert.run(img,input,output);
+            convert.run(image,input,output);
         }
         catch(Exception e) {
             e.printStackTrace();
