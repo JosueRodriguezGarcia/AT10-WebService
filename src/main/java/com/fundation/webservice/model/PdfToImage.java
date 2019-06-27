@@ -24,7 +24,7 @@ import java.io.IOException;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class PdfToImage {
+public class PdfToImage implements IConvert {
     private String pathOrigin;
     private String pathDestiny;
     private String nameOut;
