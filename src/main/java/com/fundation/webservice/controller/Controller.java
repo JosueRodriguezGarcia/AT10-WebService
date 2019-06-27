@@ -32,7 +32,7 @@ public class Controller {
     }
     
     @RequestMapping("/convert")
-    public Greeting conversion(@RequestParam(value="content", defaultValue="") String content, @RequestParam(value="name", defaultValue="") String name) {
+    public Greeting conversion(@RequestParam(value = "content", defaultValue = "") String content, @RequestParam(value = "name", defaultValue = "") String name) {
         return new Greeting(1, content, name);
     }
 
