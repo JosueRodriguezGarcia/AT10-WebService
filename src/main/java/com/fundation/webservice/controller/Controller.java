@@ -10,7 +10,9 @@
 package com.fundation.webservice.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -32,5 +34,10 @@ public class Controller {
     @RequestMapping("/convert")
     public Greeting conversion(@RequestParam(value="content", defaultValue="") String content, @RequestParam(value="name", defaultValue="") String name) {
         return new Greeting(1, content, name);
+    }
+
+    @PostMapping("/body")
+    Greeting newGreeting(@RequestBody Greeting greeting) {
+        return new Greeting(3*greeting.getId(),greeting.getContent() + "RES", greeting.getName() + "RES");
     }
 }
