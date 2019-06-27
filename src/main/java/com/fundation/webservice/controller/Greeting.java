@@ -13,7 +13,7 @@
  * Implements the class to be created from a JSON data received by the webservice
  *
  * @author Alejandro Sánchez Luizaga
- * @version 0.1.0
+ * @version 1.0
  */
  public class Greeting {
 

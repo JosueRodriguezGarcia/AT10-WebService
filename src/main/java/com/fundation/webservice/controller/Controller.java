@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Implements the REST controller. All HTTP requests will be handled by this controller.
  *
  * @author Alejandro Sánchez Luizaga
- * @version 0.1.0
+ * @version 1.0
  */
 @RestController
 public class Controller {
