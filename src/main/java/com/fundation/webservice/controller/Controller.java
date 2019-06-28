@@ -15,6 +15,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
  *
@@ -25,6 +39,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
     private final String HELLO = "Hello";
 
+    @Autowired
+    private FileStorageService fileStorageService;
+    
     @RequestMapping("/greet")
     public String greeting() {
         Greeting greeting = new Greeting(1, HELLO, "Chango");
@@ -39,5 +56,18 @@ public class Controller {
     @PostMapping("/body")
     Greeting newGreeting(@RequestBody Greeting greeting) {
         return new Greeting(3*greeting.getId(),greeting.getContent() + "RES", greeting.getName() + "RES");
+    }
+
+    @PostMapping("/upload")
+    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile file) {
+        String fileName = fileStorageService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
     }
 }
