@@ -71,21 +71,31 @@ public class Controller {
                 file.getContentType(), file.getSize());
     }
 
+    @PostMapping("/uploadMore")
+    public UploadFileResponse uploadMore(@RequestParam("file") MultipartFile file, value = "vcodec", defaultValue = "") String vcodec, @RequestParam(value = "codec", defaultValue = "") String acodec) {
+        String fileName = fileStorageService.storeFile(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(fileName)
+                .toUriString();
+
+        return new UploadMoreResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize(), vcodec, acodec);
+    }
+
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request) {
-        // Load file as Resource
         Resource resource = fileStorageService.loadFileAsResource(fileName);
 
-        // Try to determine file's content type
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
         } catch (IOException ex) {
-            //logger.info("Could not determine file type.");
             
         }
 
-        // Fallback to the default content type if type could not be determined
+        // Default content type if type could not be determined
         if(contentType == null) {
             contentType = "application/octet-stream";
         }
