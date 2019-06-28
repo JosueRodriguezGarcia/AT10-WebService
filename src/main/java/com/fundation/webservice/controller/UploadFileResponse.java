@@ -14,7 +14,7 @@ public class UploadFileResponse {
     }
 
 	// Getters and Setters 
-    public String fileName() {
+    public String getfileName() {
         return this.fileName;
     }
 
