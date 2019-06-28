@@ -7,6 +7,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
+
 package com.fundation.webservice.model;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -24,35 +25,15 @@ import java.io.IOException;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class PdfToImage implements IConvert {
-    private String pathOrigin;
-    private String pathDestiny;
-    private String nameOut;
-    private int dpi;
-    private String imageFormat;
-    private String formatColor;
-
-    public PdfToImage(String pathOrigin,
-                      String pathDestiny,
-                      String nameOut,
-                      int dpi,
-                      String imageFormat,
-                      String formatColor) {
-        this.pathOrigin = pathOrigin;
-        this.pathDestiny = pathDestiny;
-        this.nameOut = nameOut + "-";
-        this.dpi = dpi;
-        this.imageFormat = imageFormat;
-        this.formatColor = formatColor;
-    }
+public class PdfToImage extends CriteriaPdf {
 
     public void convert() {
-        try (final PDDocument document = PDDocument.load(new File(pathOrigin))) {
+        try (final PDDocument document = PDDocument.load(new File(getSrcPath()))) {
             PDFRenderer pdfRenderer = new PDFRenderer(document);
             for (int page = 0; page < document.getNumberOfPages(); ++page) {
-                BufferedImage bim = pdfRenderer.renderImageWithDPI(page, dpi, ImageType.valueOf(formatColor));
-                String fileName = pathDestiny + nameOut + page + imageFormat;
-                ImageIOUtil.writeImage(bim, fileName, dpi);
+                BufferedImage bim = pdfRenderer.renderImageWithDPI(page, getDpi(), ImageType.valueOf(getFormatColor()));
+                String fileName = getDestPath() + getName() + page + getExt();
+                ImageIOUtil.writeImage(bim, fileName, getDpi());
             }
         } catch (IOException e) {
             System.err.println("Exception while trying to create pdf document - " + e);

@@ -16,8 +16,8 @@ package com.fundation.webservice.model;
  * @version 1.0
  */
 public class CriteriaConvert {
-    String srcPath;
-    String destPath;
+    private String srcPath;
+    private String destPath;
 
     public String getSrcPath() {
         return srcPath;
