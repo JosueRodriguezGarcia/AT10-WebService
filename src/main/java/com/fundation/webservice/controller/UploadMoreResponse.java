@@ -1,6 +1,6 @@
 package com.fundation.webservice.controller;
 
-public class UploadFileResponse {
+public class UploadMoreResponse {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
@@ -8,7 +8,7 @@ public class UploadFileResponse {
     private String vcodec;
     private String acodec;
 
-    public UploadFileResponse(String fileName, String fileDownloadUri, String fileType, long size, String vcoded, String acodec) {
+    public UploadMoreResponse(String fileName, String fileDownloadUri, String fileType, long size, String vcodec, String acodec) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -32,5 +32,13 @@ public class UploadFileResponse {
 
     public long getSize() {
         return this.size;
+    }
+
+    public String getVcodec() {
+        return this.vcodec;
+    }
+
+    public String getAcodec() {
+        return this.acodec;
     }
 }

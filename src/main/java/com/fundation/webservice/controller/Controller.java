@@ -72,7 +72,7 @@ public class Controller {
     }
 
     @PostMapping("/uploadMore")
-    public UploadFileResponse uploadMore(@RequestParam("file") MultipartFile file, value = "vcodec", defaultValue = "") String vcodec, @RequestParam(value = "codec", defaultValue = "") String acodec) {
+    public UploadMoreResponse uploadMore(@RequestParam("file") MultipartFile file, @RequestParam(value = "vcodec", defaultValue = "") String vcodec, @RequestParam(value = "acodec", defaultValue = "") String acodec) {
         String fileName = fileStorageService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
