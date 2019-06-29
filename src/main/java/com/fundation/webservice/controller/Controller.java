@@ -84,9 +84,44 @@ public class Controller {
                 file.getContentType(), file.getSize(), vcodec, acodec);
     }
 
+    @PostMapping("/convertMore")
+    public UploadMoreResponse convertMore(@RequestParam("file") MultipartFile file, @RequestParam(value = "vcodec", defaultValue = "") String vcodec, @RequestParam(value = "acodec", defaultValue = "") String acodec) {
+        String fileName = fileStorageService.storeConversion(file);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadConverted/")
+                .path(fileName)
+                .toUriString();
+
+        return new UploadMoreResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize(), vcodec, acodec);
+    }
+
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = fileStorageService.loadFileAsResource(fileName);
+
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            
+        }
+
+        // Default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
+    }
+
+    @GetMapping("/downloadConverted/{fileName:.+}")
+    public ResponseEntity<Resource> downloadConversion(@PathVariable String fileName, HttpServletRequest request) {
+        Resource resource = fileStorageService.loadConversionAsResource(fileName);
 
         String contentType = null;
         try {
