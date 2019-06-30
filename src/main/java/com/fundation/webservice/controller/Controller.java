@@ -72,7 +72,7 @@ public class Controller {
     }
 
     @PostMapping("/uploadMore")
-    public UploadMoreResponse uploadMore(@RequestParam("file") MultipartFile file, @RequestParam(value = "vcodec", defaultValue = "") String vcodec, @RequestParam(value = "acodec", defaultValue = "") String acodec) {
+    public UploadMoreResponse uploadMore(@RequestParam("file") MultipartFile file, @RequestParam(value = "vcodec", defaultValue = "") String vcodec, @RequestParam(value = "acodec", defaultValue = "") String acodec, @RequestParam(value = "container", defaultValue = "") String container, @RequestParam(value = "frameRate", defaultValue = "") String frameRate, @RequestParam(value = "width", defaultValue = "") String width, @RequestParam(value = "height", defaultValue = "") String height) {
         String fileName = fileStorageService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -81,11 +81,11 @@ public class Controller {
                 .toUriString();
 
         return new UploadMoreResponse(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize(), vcodec, acodec);
+                file.getContentType(), file.getSize(), vcodec, acodec, container, frameRate, width, height);
     }
 
     @PostMapping("/convertMore")
-    public UploadMoreResponse convertMore(@RequestParam("file") MultipartFile file, @RequestParam(value = "vcodec", defaultValue = "") String vcodec, @RequestParam(value = "acodec", defaultValue = "") String acodec) {
+    public UploadMoreResponse convertMore(@RequestParam("file") MultipartFile file, @RequestParam(value = "vcodec", defaultValue = "") String vcodec, @RequestParam(value = "acodec", defaultValue = "") String acodec, @RequestParam(value = "container", defaultValue = "") String container, @RequestParam(value = "frameRate", defaultValue = "") String frameRate, @RequestParam(value = "width", defaultValue = "") String width, @RequestParam(value = "height", defaultValue = "") String height) {
         String fileName = fileStorageService.storeConversion(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
@@ -94,7 +94,7 @@ public class Controller {
                 .toUriString();
 
         return new UploadMoreResponse(fileName, fileDownloadUri,
-                file.getContentType(), file.getSize(), vcodec, acodec);
+                file.getContentType(), file.getSize(), vcodec, acodec, container, frameRate, width, height);
     }
 
     @GetMapping("/download/{fileName:.+}")
