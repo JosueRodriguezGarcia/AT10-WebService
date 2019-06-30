@@ -10,25 +10,18 @@
  package com.fundation.webservice.controller;
 
 /**
- * Implements the class to be created from a JSON data received by the webservice
+ * Implements a greeting type of response to a given request made to the webservice
  *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
  public class Greeting {
-
-    private int id;
     private String content;
     private String name;
 
-    public Greeting(int id, String content, String name) {
-        this.id = id;
+    public Greeting(String content, String name) {
         this.content = content;
         this.name = name;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getContent() {
