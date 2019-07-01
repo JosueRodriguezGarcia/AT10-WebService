@@ -9,7 +9,7 @@
  */
 package com.fundation.webservice.model;
 
-public abstract class CriteriaPdf extends CriteriaConvert implements IConvert{
+public abstract class CriteriaPdfToImage extends CriteriaConvert implements IConvert{
     private String name;
     private int dpi;
     private String ext;
