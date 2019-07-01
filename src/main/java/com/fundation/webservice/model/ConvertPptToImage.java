@@ -8,35 +8,29 @@
  * with Jalasoft.
  */
 package com.fundation.webservice.model;
-import org.im4java.core.ConvertCmd;
-import org.im4java.core.IMOperation;
-import org.im4java.process.ProcessStarter;
+
+import com.spire.presentation.Presentation;
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+
 /**
-  * Implements the model class File and the getter and setter´s methods
-  *
-  * @author Limbert Alvaro Vargas Laura
-  * @version 1.0
+ * Implements the model class File and the getter and setter´s methods
+ *
+ * @author Limbert Alvaro Vargas Laura
+ * @version 1.0
  */
 public class ConvertPptToImage {
-    File input;
-    File output;
-    public ConvertPptToImage (File input, File output) {
-        this.input = input;
-        this.output = output;
-    }
-    public void converterformat() {
-        String myPath = "PATH\\TO\\ImageMagick";
-        ProcessStarter.setGlobalSearchPath(myPath);
-        try {
-            IMOperation image = new IMOperation();
-            image.addImage();
-            ConvertCmd convert = new ConvertCmd();
-            convert.run(image,input,output);
+    public static void main(String[] args) throws Exception {
+        Presentation ppt = new Presentation();
+        ppt.loadFromFile("C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.ppt");
+        for (int slides = 0; slides < ppt.getSlides().getCount(); slides++) {
+            BufferedImage image = ppt.getSlides().get(slides).saveAsImage();
+            String fileName = String.format("C:\\Users\\LimbertVargas\\Desktop\\OBSERVER_IMG.png", slides);
+            ImageIO.write(image, "PNG", new File(fileName));
         }
-        catch(Exception e) {
-            e.printStackTrace();
-        }
+        ppt.dispose();
     }
 }
 
