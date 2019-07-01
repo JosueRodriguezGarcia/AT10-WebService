@@ -30,14 +30,12 @@ import java.nio.file.StandardCopyOption;
  */
 @Service
 public class StorageService {
-
     private final Path uploadLocation;
 
     @Autowired
     public StorageService(StorageProperties storageProperties) {
         this.uploadLocation = Paths.get(storageProperties.getUploadDir()).toAbsolutePath()
                               .normalize();
-
         try {
             Files.createDirectories(this.uploadLocation);
         } 
@@ -49,7 +47,6 @@ public class StorageService {
     public String storeFile(MultipartFile file) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-
         try {
             // Check if the file's name contains invalid characters
             if(fileName.contains("..")) {
