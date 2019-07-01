@@ -9,11 +9,15 @@
  */
 package com.fundation.webservice.model;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.logging.Level;
+import ws.schild.jave.AudioAttributes;
+import ws.schild.jave.Encoder;
+import ws.schild.jave.EncodingAttributes;
+import ws.schild.jave.MultimediaObject;
+import ws.schild.jave.VideoAttributes;
+
 import java.util.logging.Logger;
+import java.io.File;
+
 /**
  * Implements the model class File and the getter and setter´s methods
  *
@@ -21,30 +25,74 @@ import java.util.logging.Logger;
  * @version 1.0
  */
 public class VideoConvert implements IConvert {
-    private final Logger LOG = Logger.getLogger(VideoConvert.class.getName());
-    String inputFile;
-    String outputFile;
+    private String inputFile;
+    private String outputFile;
+    private String newFormat;
 
-    public VideoConvert(String inputFile, String outputFile) {
+    //audio
+    private String aCodec;
+    private int aBit;
+    private int aChannel;
+    private int aRate;
+
+    //video
+    private String vCodec;
+    private String vTag;
+    private int vBit;
+    private int vRate;
+
+    public VideoConvert(String inputFile, String outputFile, String newFormat,
+                        String aCodec, int aBit, int aChannel, int aRate,
+                        String vCodec, String vTag, int vBit, int vRate) {
         this.inputFile = inputFile;
         this.outputFile = outputFile;
+        this.newFormat = newFormat;
+
+        //audio
+        this.aCodec = aCodec;
+        this.aBit = aBit;
+        this.aChannel = aChannel;
+        this.aRate = aRate;
+
+        //video
+        this.vCodec = vCodec;
+        this.vBit = vBit;
+        this.vTag = vTag;
+        this.vRate = vRate;
+
     }
 
     public void convert() {
         try {
-            String line;
-            String cmd = "ffmpeg -i " + inputFile + " " + outputFile;
-            Process p = Runtime.getRuntime().exec(cmd);
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(p.getErrorStream()));
-            while ((line = in.readLine()) != null) {
-                System.out.println(line);
-            }
-            p.waitFor();
-            System.out.println("Video converted successfully!");
-            in.close();
-        } catch (IOException | InterruptedException e) {
-            LOG.log(Level.SEVERE, null, e);
+            File source = new File(inputFile);
+            File target = new File(outputFile);
+
+            //Audio Attributes
+            AudioAttributes audio = new AudioAttributes();
+            audio.setCodec(aCodec);
+            audio.setBitRate(aBit);
+            audio.setChannels(aChannel);
+            audio.setSamplingRate(aRate);
+
+            //Video Attributes
+            VideoAttributes video = new VideoAttributes();
+            video.setCodec(vCodec);
+            video.setTag(vTag);
+            video.setBitRate(new Integer(vBit));
+            video.setFrameRate(new Integer(vRate));
+
+            //Encoding attributes
+            EncodingAttributes attrs = new EncodingAttributes();
+            attrs.setFormat(newFormat);
+            attrs.setAudioAttributes(audio);
+            attrs.setVideoAttributes(video);
+
+            //Encode
+            Encoder encoder = new Encoder();
+            encoder.encode(new MultimediaObject(source), target, attrs);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }
