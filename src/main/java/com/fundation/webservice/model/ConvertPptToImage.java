@@ -16,7 +16,8 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 /**
- * Implements the model class File and the getter and setter´s methods
+ * Implement the model class File when hardcode method for convert Power Point
+ * file to another Image format (jpg, png, bmp).
  *
  * @author Limbert Alvaro Vargas Laura
  * @version 1.0
@@ -25,10 +26,16 @@ public class ConvertPptToImage {
     public static void main(String[] args) throws Exception {
         Presentation ppt = new Presentation();
         ppt.loadFromFile("C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.ppt");
-        for (int slides = 0; slides < ppt.getSlides().getCount(); slides++) {
+        int proveSlides = ppt.getSlides().getCount();
+        System.out.println(proveSlides);
+        for (int slides = 0; slides < proveSlides; slides++) {
             BufferedImage image = ppt.getSlides().get(slides).saveAsImage();
-            String fileName = String.format("C:\\Users\\LimbertVargas\\Desktop\\OBSERVER_IMG.png", slides);
-            ImageIO.write(image, "PNG", new File(fileName));
+            String pngFileName = String.format("C:\\Users\\LimbertVargas\\Desktop\\PruebaPptToImage\\PptToImagePNG\\OBSERVER_IMG"+slides+".png");
+            ImageIO.write(image, "PNG", new File(pngFileName));
+            String jpgFileName = String.format("C:\\Users\\LimbertVargas\\Desktop\\PruebaPptToImage\\PptToImageJPG\\OBSERVER_IMG"+slides+".jpg");
+            ImageIO.write(image, "PNG", new File(jpgFileName));
+            String bmpFileName = String.format("C:\\Users\\LimbertVargas\\Desktop\\PruebaPptToImage\\PptToImageBMP\\OBSERVER_IMG"+slides+".bmp");
+            ImageIO.write(image, "PNG", new File(bmpFileName));
         }
         ppt.dispose();
     }
