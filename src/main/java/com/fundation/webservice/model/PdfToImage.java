@@ -25,7 +25,7 @@ import java.io.IOException;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class PdfToImage extends CriteriaPdf {
+public class PdfToImage extends CriteriaPdfToImage {
 
     public void convert() {
         try (final PDDocument document = PDDocument.load(new File(getSrcPath()))) {
@@ -40,4 +40,3 @@ public class PdfToImage extends CriteriaPdf {
         }
     }
 }
-
