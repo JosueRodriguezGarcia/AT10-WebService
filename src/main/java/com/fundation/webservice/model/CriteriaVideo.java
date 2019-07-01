@@ -1,15 +1,27 @@
+/*
+ * Copyright (c) 2019 Jalasoft.
+ *
+ * This software is the confidential and proprietary information of Jalasoft.
+ * ("Confidential Information"). You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jalasoft.
+ */
 package com.fundation.webservice.model;
 
+/**
+ * Implements the model class File and the getter and setter´s methods
+ *
+ * @author Maday Alcala
+ * @version 1.0
+ */
 public class CriteriaVideo extends CriteriaConvert {
-
     private String newFormat;
-
     //audio
     private String aCodec;
     private int aBit;
     private int aChannel;
     private int aRate;
-
     //video
     private String vCodec;
     private String vTag;
