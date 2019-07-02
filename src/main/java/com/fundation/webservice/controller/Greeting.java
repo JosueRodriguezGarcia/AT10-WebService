@@ -24,6 +24,7 @@
         this.name = name;
     }
 
+    // Getters needed so Spring Boot Framework can return object as JSON
     public String getContent() {
         return content;
     }

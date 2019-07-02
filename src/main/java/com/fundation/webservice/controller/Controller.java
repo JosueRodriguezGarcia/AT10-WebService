@@ -23,6 +23,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -33,11 +34,13 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestController
 public class Controller {
+    // @Services injection through Spring @Autowired
     @Autowired
     private UploadService uploadService;
     @Autowired
     private DownloadService downloadService;
 
+    // Default Request is a GET method
     @RequestMapping("/")
     public String home() {
         return "AT-10 File Conversion Service";
@@ -50,31 +53,33 @@ public class Controller {
     
     @RequestMapping("/hi")
     public String hi(@RequestParam(value = "content", defaultValue = "Greetings") String content, 
-                     @RequestParam(value = "name", defaultValue = "earthling") String name) {
+            @RequestParam(value = "name", defaultValue = "earthling") String name) {
         Greeting greeting = new Greeting(content, name);
         return greeting.getContent() + " " + greeting.getName() + "!";
     }
 
+    // POST asset to be converted along with the required conversion criteria.
     @PostMapping("/upload")
     public VideoResponse upload(@RequestParam("file") MultipartFile file, 
-                                         @RequestParam(value = "vcodec", defaultValue = "") String vcodec, 
-                                         @RequestParam(value = "acodec", defaultValue = "") String acodec, 
-                                         @RequestParam(value = "container", defaultValue = "") String container, 
-                                         @RequestParam(value = "frameRate", defaultValue = "") String frameRate, 
-                                         @RequestParam(value = "width", defaultValue = "") String width, 
-                                         @RequestParam(value = "height", defaultValue = "") String height) {
+            @RequestParam(value = "vcodec", defaultValue = "") String vcodec, 
+            @RequestParam(value = "acodec", defaultValue = "") String acodec, 
+            @RequestParam(value = "container", defaultValue = "") String container, 
+            @RequestParam(value = "frameRate", defaultValue = "") String frameRate, 
+            @RequestParam(value = "width", defaultValue = "") String width, 
+            @RequestParam(value = "height", defaultValue = "") String height) {
         String fileName = uploadService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                                 .path("/download/")
-                                 .path(fileName)
-                                 .toUriString();
+            .path("/download/")
+            .path(fileName)
+            .toUriString();
 
         return new VideoResponse(fileName, fileDownloadUri, file.getContentType(), 
-                                      file.getSize(), vcodec, acodec, container, frameRate, width, 
-                                      height);
+            file.getSize(), vcodec, acodec, container, frameRate, width, 
+            height);
     }
 
+    // Endpoint for downloading converted assets
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = downloadService.loadFileAsResource(fileName);
@@ -93,7 +98,7 @@ public class Controller {
         }
 
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + 
-                resource.getFilename() + "\"").body(resource);
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + 
+            resource.getFilename() + "\"").body(resource);
     }
 }

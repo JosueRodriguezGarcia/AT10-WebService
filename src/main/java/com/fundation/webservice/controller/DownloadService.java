@@ -14,6 +14,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -30,6 +31,8 @@ import java.nio.file.Paths;
 public class DownloadService {
     private final Path downloadLocation;
 
+    // @Autowired needed in order to properly inject the @Service class
+    // Constructor will create (if not present) a directory where the converted files are to be retrieved from.
     @Autowired
     public DownloadService(StorageProperties storageProperties) {
         this.downloadLocation = Paths.get(storageProperties.getDownloadDir()).toAbsolutePath().normalize();
@@ -41,6 +44,7 @@ public class DownloadService {
         }
     }
 
+    // Returns the actual converted asset at user request, i.e. through the /download endpoint.
     public Resource loadFileAsResource(String fileName) {
         try {
             Path filePath = this.downloadLocation.resolve(fileName).normalize();

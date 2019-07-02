@@ -13,6 +13,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Implements a POJO class to be binded to a specific prefix in application.properties.
+ * In this case prefix=file, this is to be used for storing both uploaded and converted assets.
  *
  * @author Alejandro Sanchez Luizaga
  * @version 1.0
@@ -22,6 +23,7 @@ public class StorageProperties {
     private String uploadDir;
     private String downloadDir;
 
+    // Getters AND setters are required by the @ConfigurationProperties annotation.
     public String getUploadDir() {
         return uploadDir;
     }

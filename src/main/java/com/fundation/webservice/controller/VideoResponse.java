@@ -28,8 +28,8 @@ public class VideoResponse {
     private String height;
 
     public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size, 
-                         String vcodec, String acodec, String container, String frameRate, 
-                         String width, String height) {
+            String vcodec, String acodec, String container, String frameRate, 
+            String width, String height) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -42,6 +42,7 @@ public class VideoResponse {
         this.height = height;
     }
 
+    // Getters needed so Spring Boot Framework can return object as JSON
     public String getfileName() {
         return this.fileName;
     }
