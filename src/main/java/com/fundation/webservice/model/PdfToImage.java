@@ -25,18 +25,21 @@ import java.io.IOException;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class PdfToImage extends CriteriaPdfToImage {
-
+public class PdfToImage implements IConvert{
+    CriteriaPdfToImage criterion;
+    PdfToImage(CriteriaPdfToImage criterio){
+            this.criterion = criterio;
+    }
     public void convert() {
-        try (final PDDocument document = PDDocument.load(new File(getSrcPath()))) {
+        try (final PDDocument document = PDDocument.load(new File(criterion.getSrcPath()))) {
             PDFRenderer pdfRenderer = new PDFRenderer(document);
             for (int page = 0; page < document.getNumberOfPages(); ++page) {
-                BufferedImage bim = pdfRenderer.renderImageWithDPI(page, getDpi(), ImageType.valueOf(getFormatColor()));
-                String fileName = getDestPath() + getName() + page + getExt();
-                ImageIOUtil.writeImage(bim, fileName, getDpi());
+                BufferedImage bim = pdfRenderer.renderImageWithDPI(page, criterion.getDpi(), ImageType.valueOf(criterion.getFormatColor()));
+                String fileName = criterion.getDestPath() + criterion.getName() + page + criterion.getExt();
+                ImageIOUtil.writeImage(bim, fileName, criterion.getDpi());
             }
         } catch (IOException e) {
-            System.err.println("Exception while trying to create pdf document - " + e);
+
         }
     }
 }
