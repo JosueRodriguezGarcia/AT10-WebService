@@ -26,17 +26,17 @@ import java.io.IOException;
  * @version 1.0
  */
 public class PdfToImage implements IConvert{
-    CriteriaPdfToImage criterio;
+    CriteriaPdfToImage criterion;
     PdfToImage(CriteriaPdfToImage criterio){
-            this.criterio = criterio;
+            this.criterion = criterio;
     }
     public void convert() {
-        try (final PDDocument document = PDDocument.load(new File(criterio.getSrcPath()))) {
+        try (final PDDocument document = PDDocument.load(new File(criterion.getSrcPath()))) {
             PDFRenderer pdfRenderer = new PDFRenderer(document);
             for (int page = 0; page < document.getNumberOfPages(); ++page) {
-                BufferedImage bim = pdfRenderer.renderImageWithDPI(page, criterio.getDpi(), ImageType.valueOf(criterio.getFormatColor()));
-                String fileName = criterio.getDestPath() + criterio.getName() + page + criterio.getExt();
-                ImageIOUtil.writeImage(bim, fileName, criterio.getDpi());
+                BufferedImage bim = pdfRenderer.renderImageWithDPI(page, criterion.getDpi(), ImageType.valueOf(criterion.getFormatColor()));
+                String fileName = criterion.getDestPath() + criterion.getName() + page + criterion.getExt();
+                ImageIOUtil.writeImage(bim, fileName, criterion.getDpi());
             }
         } catch (IOException e) {
 
