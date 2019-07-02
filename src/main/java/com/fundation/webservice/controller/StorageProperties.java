@@ -14,12 +14,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * Implements a POJO class to be binded to a specific prefix in application.properties.
  *
- * @author Alejandro Sánchez Luizaga
+ * @author Alejandro Sanchez Luizaga
  * @version 1.0
  */
 @ConfigurationProperties(prefix = "file")
 public class StorageProperties {
     private String uploadDir;
+    private String downloadDir;
 
     public String getUploadDir() {
         return uploadDir;
@@ -27,5 +28,13 @@ public class StorageProperties {
 
     public void setUploadDir(String uploadDir) {
         this.uploadDir = uploadDir;
+    }
+
+    public String getDownloadDir() {
+        return downloadDir;
+    }
+
+    public void setDownloadDir(String downloadDir) {
+        this.downloadDir = downloadDir;
     }
 }

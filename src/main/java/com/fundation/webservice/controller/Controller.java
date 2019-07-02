@@ -28,13 +28,15 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
  *
- * @author Alejandro Sánchez Luizaga
+ * @author Alejandro Sanchez Luizaga
  * @version 1.0
  */
 @RestController
 public class Controller {
     @Autowired
-    private StorageService storageService;
+    private UploadService uploadService;
+    @Autowired
+    private DownloadService downloadService;
 
     @RequestMapping("/")
     public String home() {
@@ -61,7 +63,7 @@ public class Controller {
                                          @RequestParam(value = "frameRate", defaultValue = "") String frameRate, 
                                          @RequestParam(value = "width", defaultValue = "") String width, 
                                          @RequestParam(value = "height", defaultValue = "") String height) {
-        String fileName = storageService.storeFile(file);
+        String fileName = uploadService.storeFile(file);
 
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                                  .path("/download/")
@@ -75,7 +77,7 @@ public class Controller {
 
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request) {
-        Resource resource = storageService.loadFileAsResource(fileName);
+        Resource resource = downloadService.loadFileAsResource(fileName);
 
         String contentType = null;
         try {

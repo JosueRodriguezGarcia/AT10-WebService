@@ -12,7 +12,7 @@ package com.fundation.webservice.controller;
 /**
  * Implements a type of response to an /upload request.
  *
- * @author Alejandro Sánchez Luizaga
+ * @author Alejandro Sanchez Luizaga
  * @version 1.0
  */
 public class VideoResponse {

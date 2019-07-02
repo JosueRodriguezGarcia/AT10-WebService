@@ -12,7 +12,7 @@
 /**
  * Implements a greeting type of response to a given request made to the webservice
  *
- * @author Alejandro Sánchez Luizaga
+ * @author Alejandro Sanchez Luizaga
  * @version 1.0
  */
  public class Greeting {
