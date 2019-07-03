@@ -14,7 +14,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     // https://mvnrepository.com/artifact/org.im4java/im4java
     compile group: 'org.im4java', name: 'im4java', version: '1.4.0'
-<<<<<<< refs/remotes/origin/Model/implementation.PptToImage
+    // refs/remotes/origin/Model/implementation.PptToImage
     compile group: 'org.apache.pdfbox', name: 'pdfbox-tools', version: '2.0.1'
     // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
     compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.1'
@@ -23,7 +23,4 @@ dependencies {
     // https://mvnrepository.com/artifact/ws.schild/jave-all-deps
     compile group: 'ws.schild', name: 'jave-all-deps', version: '2.5.0'
 }
-=======
-
-}
->>>>>>> local
+local
