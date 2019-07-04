@@ -25,10 +25,10 @@ import java.io.IOException;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class PdfToImage implements IConvert{
+public class ConvertPdfToImage implements IConvert{
     CriteriaPdfToImage criterion;
-    PdfToImage(CriteriaPdfToImage criterio){
-            this.criterion = criterio;
+    ConvertPdfToImage(CriteriaPdfToImage criterion){
+            this.criterion = criterion;
     }
     public void convert() {
         try (final PDDocument document = PDDocument.load(new File(criterion.getSrcPath()))) {

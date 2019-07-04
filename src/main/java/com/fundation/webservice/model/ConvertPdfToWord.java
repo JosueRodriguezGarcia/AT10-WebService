@@ -22,11 +22,15 @@ import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 
-public class PdfToWord extends CriteriaPdfToWord {
+public class ConvertPdfToWord implements IConvert {
+    CriteriaPdfToWord criterion;
+    public ConvertPdfToWord(CriteriaPdfToWord criterion){
+        this.criterion = criterion;
+    }
     public void convert() {
         XWPFDocument doc = new XWPFDocument();
 
-        String pdf = getSrcPath();
+        String pdf = criterion.getSrcPath();
         try {
             PdfReader reader = new PdfReader(pdf);
             PdfReaderContentParser parser = new PdfReaderContentParser(reader);
@@ -38,7 +42,7 @@ public class PdfToWord extends CriteriaPdfToWord {
                 run.setText(text);
                 run.addBreak(BreakType.PAGE);
             }
-            FileOutputStream out = new FileOutputStream(getDestPath());
+            FileOutputStream out = new FileOutputStream(criterion.getDestPath());
             doc.write(out);
             out.close();
             reader.close();
