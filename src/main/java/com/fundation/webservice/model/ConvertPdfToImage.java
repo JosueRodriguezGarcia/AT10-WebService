@@ -7,7 +7,6 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.fundation.webservice.model;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -20,15 +19,13 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Implements the model class File and the getter and setter´s methods
- *
  * @author Josue Rodriguez
  * @version 1.0
  */
 public class ConvertPdfToImage implements IConvert{
     CriteriaPdfToImage criterion;
-    ConvertPdfToImage(CriteriaPdfToImage criterion){
-            this.criterion = criterion;
+    ConvertPdfToImage(CriteriaPdfToImage criterio){
+            this.criterion = criterio;
     }
     public void convert() {
         try (final PDDocument document = PDDocument.load(new File(criterion.getSrcPath()))) {
@@ -39,7 +36,7 @@ public class ConvertPdfToImage implements IConvert{
                 ImageIOUtil.writeImage(bim, fileName, criterion.getDpi());
             }
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
     }
 }
