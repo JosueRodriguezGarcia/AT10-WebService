@@ -10,11 +10,9 @@
 package com.fundation.webservice.model;
 
 /**
- * Implements the model class File and the getter and setter´s methods
- *
  * @author Josue Rodriguez
  * @version 1.0
  */
 public interface IConvert {
-    public void convert();
+    void convert();
 }
