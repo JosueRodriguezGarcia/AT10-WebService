@@ -13,10 +13,19 @@ public class Main {
         PdfToImage hola = new PdfToWord(prueba);
         hola.convert();
         */
+        
+        /*
         CriteriaPdfToHtml prueba = new CriteriaPdfToHtml();
         prueba.setSrcPath("C:\\_pg\\tuli.pdf");
         prueba.setDestPath("C:\\_pg\\tuli.html");
         PdfToHtml hola = new PdfToHtml(prueba);
+        hola.convert();
+        */
+        
+        CriteriaHtmlToDoc prueba = new CriteriaHtmlToDoc();
+        prueba.setSrcPath("C:\\_pg\\tuli.html");
+        prueba.setDestPath("C:\\_pg\\tuli.docx");
+        HtmlToDoc hola = new HtmlToDoc(prueba);
         hola.convert();
     }
 }
