@@ -1,3 +1,5 @@
+package com.fundation.webservice.model;
+
 /*
  * Copyright (c) 2019 Jalasoft.
  *
@@ -7,7 +9,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-package com.fundation.webservice.model;
+/*package com.fundation.webservice.model;
 
 import com.spire.presentation.Presentation;
 
