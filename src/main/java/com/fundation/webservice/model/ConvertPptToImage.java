@@ -1,6 +1,4 @@
-package com.fundation.webservice.model;
-
-/*
+package com.fundation.webservice.model;/*
  * Copyright (c) 2019 Jalasoft.
  *
  * This software is the confidential and proprietary information of Jalasoft.
@@ -24,7 +22,7 @@ import java.io.File;
  * @author Limbert Alvaro Vargas Laura
  * @version 1.0
  */
-public class ConvertPptToImage {
+/*public class ConvertPptToImage {
     public static void main(String[] args) throws Exception {
         Presentation ppt = new Presentation();
         ppt.loadFromFile("C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.ppt");
@@ -41,5 +39,5 @@ public class ConvertPptToImage {
         }
         ppt.dispose();
     }
-}
+}*/
 
