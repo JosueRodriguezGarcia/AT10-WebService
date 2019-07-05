@@ -10,7 +10,7 @@
 package com.fundation.webservice.model;
 
 /**
- * Implements the CriteriaAudio class File and the getter and setter´s methods.
+ * Implements the CriteriaAudio class File with getter and setter´s methods.
  *
  * @author Limbert Alvaro Vargas Laura
  * @version 1.0
