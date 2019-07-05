@@ -10,8 +10,6 @@
 package com.fundation.webservice.model;
 
 /**
- * Implements the CriteriaConvert class and its getter and setter´s methods.
- *
  * @author Josue Rodriguez
  * @version 1.0
  */
