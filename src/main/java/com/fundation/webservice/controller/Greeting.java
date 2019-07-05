@@ -12,7 +12,7 @@
 /**
  * Implements a greeting type of response to a given request made to the webservice
  *
- * @author Alejandro Sánchez Luizaga
+ * @author Alejandro Sanchez Luizaga
  * @version 1.0
  */
  public class Greeting {
@@ -24,6 +24,7 @@
         this.name = name;
     }
 
+    // Getters needed so Spring Boot Framework can return object as JSON
     public String getContent() {
         return content;
     }

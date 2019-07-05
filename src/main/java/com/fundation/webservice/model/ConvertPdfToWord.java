@@ -22,14 +22,17 @@ import com.itextpdf.text.pdf.parser.PdfReaderContentParser;
 import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 
+/**
+ * @author Josue Rodriguez
+ * @version 1.0
+ */
 public class ConvertPdfToWord implements IConvert {
     CriteriaPdfToWord criterion;
-    public ConvertPdfToWord(CriteriaPdfToWord criterion){
+    ConvertPdfToWord(CriteriaPdfToWord criterion){
         this.criterion = criterion;
     }
     public void convert() {
         XWPFDocument doc = new XWPFDocument();
-
         String pdf = criterion.getSrcPath();
         try {
             PdfReader reader = new PdfReader(pdf);
