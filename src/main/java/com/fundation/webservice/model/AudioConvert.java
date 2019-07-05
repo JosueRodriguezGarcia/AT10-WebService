@@ -13,20 +13,19 @@ import ws.schild.jave.AudioAttributes;
 import ws.schild.jave.Encoder;
 import ws.schild.jave.EncodingAttributes;
 import ws.schild.jave.MultimediaObject;
-import ws.schild.jave.VideoAttributes;
 
 import java.io.File;
 
 /**
- * Implements the model class File and the Criterion constructor.
+ * Implements the criterion and AudioConvert class.
  *
- * @author Maday Alcala Cuba, Limbert Alvaro Vargas Laura
- * @version 1.1
+ * @author Limbert Alvaro Vargas Laura
+ * @version 1.0
  */
-public class VideoConvert implements IConvert {
-    private CriteriaVideo criterion;
+public class AudioConvert {
+    private CriteriaAudio criterion;
 
-    public VideoConvert(CriteriaVideo criterion) {
+    public AudioConvert(CriteriaAudio criterion) {
         this.criterion = criterion;
     }
 
@@ -40,17 +39,10 @@ public class VideoConvert implements IConvert {
             audio.setBitRate(criterion.getaBit());
             audio.setChannels(criterion.getaChannel());
             audio.setSamplingRate(criterion.getaRate());
-            //Video Attributes
-            VideoAttributes video = new VideoAttributes();
-            video.setCodec(criterion.getvCodec());
-            video.setTag(criterion.getvTag());
-            video.setBitRate(new Integer(criterion.getvBit()));
-            video.setFrameRate(new Integer(criterion.getvRate()));
             //Encoding attributes
             EncodingAttributes attrs = new EncodingAttributes();
             attrs.setFormat(criterion.getNewFormat());
             attrs.setAudioAttributes(audio);
-            attrs.setVideoAttributes(video);
             //Encode
             Encoder encoder = new Encoder();
             encoder.encode(new MultimediaObject(source), target, attrs);
