@@ -26,7 +26,7 @@ import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class ConvertPdfToWord implements IConvert {
+public class ConvertPdfToWord implements IConvert{
     CriteriaPdfToWord criterion;
     ConvertPdfToWord(CriteriaPdfToWord criterion){
         this.criterion = criterion;

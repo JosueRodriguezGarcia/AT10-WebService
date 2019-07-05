@@ -13,7 +13,7 @@ package com.fundation.webservice.model;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public abstract class CriteriaPdfToImage extends CriteriaConvert implements IConvert {
+public class CriteriaPdfToImage extends CriteriaConvert{
     private String name;
     private int dpi;
     private String ext;
@@ -50,6 +50,4 @@ public abstract class CriteriaPdfToImage extends CriteriaConvert implements ICon
     public void setFormatColor(String formatColor) {
         this.formatColor = formatColor;
     }
-
-    public abstract void convert();
 }

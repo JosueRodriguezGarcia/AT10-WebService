@@ -13,6 +13,6 @@ package com.fundation.webservice.model;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public abstract class CriteriaPdfToWord extends CriteriaConvert {
-    public abstract void convert();
+public class CriteriaPdfToWord extends CriteriaConvert {
+
 }

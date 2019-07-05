@@ -15,7 +15,7 @@ package com.fundation.webservice.model;
  * @author Maday Alcala
  * @version 1.0
  */
-public class CriteriaVideo extends CriteriaConvert {
+public class CriteriaVideo extends CriteriaConvert{
     private String newFormat;
     //audio
     private String aCodec;

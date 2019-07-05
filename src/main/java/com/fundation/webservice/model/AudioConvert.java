@@ -22,7 +22,7 @@ import java.io.File;
  * @author Limbert Alvaro Vargas Laura
  * @version 1.0
  */
-public class AudioConvert {
+public class AudioConvert implements IConvert{
     private CriteriaAudio criterion;
 
     public AudioConvert(CriteriaAudio criterion) {

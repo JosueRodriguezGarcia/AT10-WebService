@@ -28,8 +28,8 @@ import java.util.List;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class ConvertPPTtoImage implements IConvert {
-    CriteriaPPTtoImage criterion;
+public class ConvertPPTtoImage implements IConvert{
+    private CriteriaPPTtoImage criterion;
 
     public ConvertPPTtoImage(CriteriaPPTtoImage criterion) {
         this.criterion = criterion;

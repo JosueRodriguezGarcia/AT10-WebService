@@ -22,14 +22,11 @@ import java.io.IOException;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class ConvertPdfToImage implements IConvert {
+public class ConvertPdfToImage implements IConvert{
     CriteriaPdfToImage criterion;
+
     ConvertPdfToImage(CriteriaPdfToImage criterion) {
         this.criterion = criterion;
-
-    ConvertPdfToImage(CriteriaPdfToImage criterio){
-            this.criterion = criterio;
-
     }
 
     public void convert() {
