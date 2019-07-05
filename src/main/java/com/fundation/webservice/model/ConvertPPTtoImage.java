@@ -56,7 +56,6 @@ public class ConvertPPTtoImage implements IConvert {
                 ppt.write(out);
                 out.close();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
