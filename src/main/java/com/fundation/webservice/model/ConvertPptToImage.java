@@ -1,4 +1,4 @@
-package com.fundation.webservice.model;/*
+/*
  * Copyright (c) 2019 Jalasoft.
  *
  * This software is the confidential and proprietary information of Jalasoft.
@@ -7,7 +7,7 @@ package com.fundation.webservice.model;/*
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-/*package com.fundation.webservice.model;
+package com.fundation.webservice.model;
 
 import com.spire.presentation.Presentation;
 
@@ -15,14 +15,14 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-/**
+/*
  * Implement the model class File when hardcode method for convert Power Point
  * file to another Image format (jpg, png, bmp).
  *
  * @author Limbert Alvaro Vargas Laura
  * @version 1.0
  */
-/*public class ConvertPptToImage {
+public class ConvertPptToImage {
     public static void main(String[] args) throws Exception {
         Presentation ppt = new Presentation();
         ppt.loadFromFile("C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.ppt");
@@ -39,5 +39,4 @@ import java.io.File;
         }
         ppt.dispose();
     }
-}*/
-
+}
