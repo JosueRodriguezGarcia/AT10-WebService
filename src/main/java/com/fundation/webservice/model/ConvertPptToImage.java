@@ -7,7 +7,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-package com.fundation.webservice.model;
+/*package com.fundation.webservice.model;
 
 import com.spire.presentation.Presentation;
 
@@ -22,7 +22,7 @@ import java.io.File;
  * @author Limbert Alvaro Vargas Laura
  * @version 1.0
  */
-public class ConvertPptToImage {
+/*public class ConvertPptToImage {
     public static void main(String[] args) throws Exception {
         Presentation ppt = new Presentation();
         ppt.loadFromFile("C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.ppt");
@@ -39,5 +39,5 @@ public class ConvertPptToImage {
         }
         ppt.dispose();
     }
-}
+}*/
 
