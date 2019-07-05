@@ -10,13 +10,11 @@
 package com.fundation.webservice.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -25,17 +23,18 @@ import java.nio.file.StandardCopyOption;
 /**
  * Implements a Spring service that handles copying to the upload directory.
  *
- * @author Alejandro Sánchez Luizaga
+ * @author Alejandro Sanchez Luizaga
  * @version 1.0
  */
 @Service
-public class StorageService {
+public class UploadService {
     private final Path uploadLocation;
 
+    // @Autowired needed in order to properly inject the @Service class
+    // Constructor will create (if not present) a directory where the uploaded assets are to be uploaded to.
     @Autowired
-    public StorageService(StorageProperties storageProperties) {
-        this.uploadLocation = Paths.get(storageProperties.getUploadDir()).toAbsolutePath()
-                              .normalize();
+    public UploadService(StorageProperties storageProperties) {
+        this.uploadLocation = Paths.get(storageProperties.getUploadDir()).toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.uploadLocation);
         } 
@@ -44,14 +43,14 @@ public class StorageService {
         }
     }
 
+    // Stores assets that are uploaded through /upload endpoint.
     public String storeFile(MultipartFile file) {
         // Normalize file name
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             // Check if the file's name contains invalid characters
             if(fileName.contains("..")) {
-                throw new IllegalStateException("Filename contains invalid path sequence " + 
-                                                 fileName);
+                throw new IllegalStateException("Filename contains invalid path sequence " + fileName);
             }
 
             // Copy file to the target location (Replacing existing file with the same name)
@@ -61,24 +60,7 @@ public class StorageService {
             return fileName;
         } 
         catch (IOException ex) {
-            throw new IllegalStateException("Could not store file " + fileName + 
-                                            ". Please try again!", ex);
-        }
-    }
-
-    public Resource loadFileAsResource(String fileName) {
-        try {
-            Path filePath = this.uploadLocation.resolve(fileName).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
-            if(resource.exists()) {
-                return resource;
-            } 
-            else {
-                throw new IllegalStateException("File not found " + fileName);
-            }
-        } 
-        catch (MalformedURLException ex) {
-            throw new IllegalStateException("File not found " + fileName, ex);
+            throw new IllegalStateException("Could not store file " + fileName + ". Please try again!", ex);
         }
     }
 }
