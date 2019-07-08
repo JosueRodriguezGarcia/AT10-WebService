@@ -19,10 +19,10 @@ import java.io.InputStreamReader;
  * @author Alejandro Sanchez
  * @version 1.0
  */
-public class HtmlToDoc implements IConvert {
+public class ConvertHtmlToDoc implements IConvert {
     CriteriaHtmlToDoc criteriaHtmlToDoc;
 
-    public HtmlToDoc (CriteriaHtmlToDoc criteriaHtmlToDoc) {
+    public ConvertHtmlToDoc(CriteriaHtmlToDoc criteriaHtmlToDoc) {
         this.criteriaHtmlToDoc = criteriaHtmlToDoc;
     }
 
@@ -32,9 +32,7 @@ public class HtmlToDoc implements IConvert {
         try {
             Process p = Runtime.getRuntime().exec("\\Users\\AlejandroSanchez\\Desktop\\alszla\\_i\\pandoc\\pandoc.exe -o " + criteriaHtmlToDoc.getDestPath() + " " + criteriaHtmlToDoc.getSrcPath());
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
-            }
+            while ((s = stdInput.readLine()) != null) { }
             System.exit(0);
         }
         catch (IOException e) {
