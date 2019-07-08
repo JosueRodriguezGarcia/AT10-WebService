@@ -12,74 +12,93 @@ package com.fundation.webservice.controller;
 /**
  * Implements a type of response to an /upload request.
  *
- * @author Alejandro Sanchez Luizaga
- * @version 1.0
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba
+ * @version 1.1
  */
 public class VideoResponse {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
     private long size;
-    private String vcodec;
-    private String acodec;
-    private String container;
-    private String frameRate;
-    private String width;
-    private String height;
+    private String newFormat;
+    //audio
+    private String aCodec;
+    private String aBit;
+    private String aChannel;
+    private String aRate;
+    //video
+    private String vCodec;
+    private String vTag;
+    private String vBit;
+    private String vRate;
 
-    public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size, 
-            String vcodec, String acodec, String container, String frameRate, 
-            String width, String height) {
+    public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size,
+            String newFormat, String aCodec, String aBit, String aChannel, String aRate,
+            String vCodec, String vTag, String vBit, String vRate) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
-        this.vcodec = vcodec;
-        this.acodec = acodec;
-        this.container = container;
-        this.frameRate = frameRate;
-        this.width = width;
-        this.height = height;
+        this.newFormat = newFormat;
+        this.aCodec = aCodec;
+        this.aBit = aBit;
+        this.aChannel = aChannel;
+        this.aRate = aRate;
+        this.vCodec = vCodec;
+        this.vTag = vTag;
+        this.vBit = vBit;
+        this.vRate = vRate;
     }
 
-    // Getters needed so Spring Boot Framework can return object as JSON
-    public String getfileName() {
-        return this.fileName;
+    public String getFileName() {
+        return fileName;
     }
 
     public String getFileDownloadUri() {
-        return this.fileDownloadUri;
+        return fileDownloadUri;
     }
 
     public String getFileType() {
-        return this.fileType;
+        return fileType;
     }
 
     public long getSize() {
-        return this.size;
+        return size;
     }
 
-    public String getVcodec() {
-        return this.vcodec;
+    public String getNewFormat() {
+        return newFormat;
     }
 
-    public String getAcodec() {
-        return this.acodec;
+    public String getaCodec() {
+        return aCodec;
     }
 
-    public String getContainer() {
-        return this.container;
+    public String getaBit() {
+        return aBit;
     }
 
-    public String getFrameRate() {
-        return this.frameRate;
+    public String getaChannel() {
+        return aChannel;
     }
 
-    public String getWidth() {
-        return this.width;
+    public String getaRate() {
+        return aRate;
     }
 
-    public String getHeight() {
-        return this.height;
+    public String getvCodec() {
+        return vCodec;
+    }
+
+    public String getvTag() {
+        return vTag;
+    }
+
+    public String getvBit() {
+        return vBit;
+    }
+
+    public String getvRate() {
+        return vRate;
     }
 }
