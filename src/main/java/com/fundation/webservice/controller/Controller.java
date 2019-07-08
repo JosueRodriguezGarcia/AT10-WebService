@@ -9,6 +9,8 @@
  */
 package com.fundation.webservice.controller;
 
+import com.fundation.webservice.model.ConvertPdfToImage;
+import com.fundation.webservice.model.CriteriaPdfToImage;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,14 +24,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
  *
- * @author Alejandro Sanchez Luizaga
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba
  * @version 1.0
  */
 @RestController
@@ -45,60 +47,53 @@ public class Controller {
     public String home() {
         return "AT-10 File Conversion Service";
     }
-    
-    @RequestMapping("/hello")
-    public Greeting hello() {
-        return new Greeting("Welcome", "visitor");
-    }
-    
-    @RequestMapping("/hi")
-    public String hi(@RequestParam(value = "content", defaultValue = "Greetings") String content, 
-            @RequestParam(value = "name", defaultValue = "earthling") String name) {
-        Greeting greeting = new Greeting(content, name);
-        return greeting.getContent() + " " + greeting.getName() + "!";
-    }
 
     // POST asset to be converted along with the required conversion criteria.
-    @PostMapping("/upload")
-    public VideoResponse upload(@RequestParam("file") MultipartFile file, 
-            @RequestParam(value = "vcodec", defaultValue = "") String vcodec, 
-            @RequestParam(value = "acodec", defaultValue = "") String acodec, 
-            @RequestParam(value = "container", defaultValue = "") String container, 
-            @RequestParam(value = "frameRate", defaultValue = "") String frameRate, 
-            @RequestParam(value = "width", defaultValue = "") String width, 
-            @RequestParam(value = "height", defaultValue = "") String height) {
-        String fileName = uploadService.storeFile(file);
-
+    @PostMapping("/uploadPdf")
+    public PdfResponse upload(@RequestParam("pdf") MultipartFile pdf,
+                              @RequestParam(value = "name", defaultValue = "") String name,
+                              @RequestParam(value = "dpi", defaultValue = "") String dpi,
+                              @RequestParam(value = "extension", defaultValue = "") String ext,
+                              @RequestParam(value = "formatColor", defaultValue = "") String formatColor) {
+        String pdfName = uploadService.storeFile(pdf);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-            .path("/download/")
-            .path(fileName)
-            .toUriString();
-
-        return new VideoResponse(fileName, fileDownloadUri, file.getContentType(), 
-            file.getSize(), vcodec, acodec, container, frameRate, width, 
-            height);
+                .path("/download/")
+                .path(name + ".zip")
+                .toUriString();
+        //creating a new folder for the converted images
+        new File("C:/_pg/tmp/conversions/" + name + "/").mkdirs();
+        //Converting pdf into images
+        CriteriaPdfToImage criterion = new CriteriaPdfToImage();
+        criterion.setSrcPath("C:\\_pg\\tmp\\uploads\\" + pdfName);
+        criterion.setDestPath("C:\\_pg\\tmp\\conversions\\" + name + "\\");
+        criterion.setName(name);
+        criterion.setDpi(new Integer(dpi));
+        criterion.setExt(ext);
+        criterion.setFormatColor(formatColor);
+        ConvertPdfToImage pdfDocument = new ConvertPdfToImage(criterion);
+        pdfDocument.convert();
+        //This line compresses the folder with images in a zip file
+        FolderZipped.zipFolder(name);
+        return new PdfResponse(pdfName, fileDownloadUri, pdf.getContentType(),
+                pdf.getSize(), name, dpi, ext, formatColor);
     }
 
     // Endpoint for downloading converted assets
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = downloadService.loadFileAsResource(fileName);
-
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } 
-        catch (Exception ex) {
-            
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
         // Default content type if type could not be determined
-        if(contentType == null) {
+        if (contentType == null) {
             contentType = "application/octet-stream";
         }
-
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + 
-            resource.getFilename() + "\"").body(resource);
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
+                        resource.getFilename() + "\"").body(resource);
     }
 }

@@ -25,7 +25,7 @@ import java.io.IOException;
 public class ConvertPdfToImage implements IConvert{
     CriteriaPdfToImage criterion;
 
-    ConvertPdfToImage(CriteriaPdfToImage criterion) {
+    public ConvertPdfToImage(CriteriaPdfToImage criterion) {
         this.criterion = criterion;
     }
 
