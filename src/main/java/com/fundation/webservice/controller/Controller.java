@@ -24,7 +24,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -51,60 +50,50 @@ public class Controller {
 
     // POST asset to be converted along with the required conversion criteria.
     @PostMapping("/uploadPdf")
-    public pdfResponse upload(@RequestParam("pdf") MultipartFile pdf,
+    public PdfResponse upload(@RequestParam("pdf") MultipartFile pdf,
                               @RequestParam(value = "name", defaultValue = "") String name,
                               @RequestParam(value = "dpi", defaultValue = "") String dpi,
                               @RequestParam(value = "extension", defaultValue = "") String ext,
-                              @RequestParam(value = "formatColor", defaultValue = "") String formatColor){
+                              @RequestParam(value = "formatColor", defaultValue = "") String formatColor) {
         String pdfName = uploadService.storeFile(pdf);
-
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
                 .path(name + ".zip")
                 .toUriString();
-
         //creating a new folder for the converted images
         new File("C:/_pg/tmp/conversions/" + name + "/").mkdirs();
-
         //Converting pdf into images
         CriteriaPdfToImage criterion = new CriteriaPdfToImage();
         criterion.setSrcPath("C:\\_pg\\tmp\\uploads\\" + pdfName);
-        criterion.setDestPath("C:\\_pg\\tmp\\conversions\\"+name + "\\");
+        criterion.setDestPath("C:\\_pg\\tmp\\conversions\\" + name + "\\");
         criterion.setName(name);
         criterion.setDpi(new Integer(dpi));
         criterion.setExt(ext);
         criterion.setFormatColor(formatColor);
-        ConvertPdfToImage cuento = new ConvertPdfToImage(criterion);
-        cuento.convert();
-
+        ConvertPdfToImage pdfDocument = new ConvertPdfToImage(criterion);
+        pdfDocument.convert();
         //This line compresses the folder with images in a zip file
         FolderZipped.zipFolder(name);
-
-        return new pdfResponse(pdfName, fileDownloadUri, pdf.getContentType(),
+        return new PdfResponse(pdfName, fileDownloadUri, pdf.getContentType(),
                 pdf.getSize(), name, dpi, ext, formatColor);
     }
-
 
     // Endpoint for downloading converted assets
     @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = downloadService.loadFileAsResource(fileName);
-
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } 
-        catch (Exception ex) {
-            
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
-
         // Default content type if type could not be determined
-        if(contentType == null) {
+        if (contentType == null) {
             contentType = "application/octet-stream";
         }
-
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + 
-            resource.getFilename() + "\"").body(resource);
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
+                        resource.getFilename() + "\"").body(resource);
     }
 }

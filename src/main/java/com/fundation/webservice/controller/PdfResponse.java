@@ -15,7 +15,7 @@ package com.fundation.webservice.controller;
  * @author Maday Alcala Cuba
  * @version 1.0
  */
-public class pdfResponse {
+public class PdfResponse {
     private String fileName;
     private String pdfDownloadUri;
     private String refactorType;
@@ -25,7 +25,7 @@ public class pdfResponse {
     private String ext;
     private String formatColor;
 
-    public pdfResponse(String fileName, String pdfDownloadUri, String pdfType, long size,
+    public PdfResponse(String fileName, String pdfDownloadUri, String pdfType, long size,
                        String name, String dpi, String ext, String formatColor) {
         this.fileName = fileName;
         this.pdfDownloadUri = pdfDownloadUri;
