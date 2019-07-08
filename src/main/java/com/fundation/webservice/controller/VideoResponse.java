@@ -23,18 +23,18 @@ public class VideoResponse {
     private String newFormat;
     //audio
     private String aCodec;
-    private int aBit;
-    private int aChannel;
-    private int aRate;
+    private String aBit;
+    private String aChannel;
+    private String aRate;
     //video
     private String vCodec;
     private String vTag;
-    private int vBit;
-    private int vRate;
+    private String vBit;
+    private String vRate;
 
     public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                         String newFormat, String aCodec, int aBit, int aChannel, int aRate,
-                         String vCodec, String vTag, int vBit, int vRate) {
+            String newFormat, String aCodec, String aBit, String aChannel, String aRate,
+            String vCodec, String vTag, String vBit, String vRate) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -50,7 +50,6 @@ public class VideoResponse {
         this.vRate = vRate;
     }
 
-    // Getters needed so Spring Boot Framework can return object as JSON
     public String getFileName() {
         return fileName;
     }
@@ -75,15 +74,15 @@ public class VideoResponse {
         return aCodec;
     }
 
-    public int getaBit() {
+    public String getaBit() {
         return aBit;
     }
 
-    public int getaChannel() {
+    public String getaChannel() {
         return aChannel;
     }
 
-    public int getaRate() {
+    public String getaRate() {
         return aRate;
     }
 
@@ -95,11 +94,11 @@ public class VideoResponse {
         return vTag;
     }
 
-    public int getvBit() {
+    public String getvBit() {
         return vBit;
     }
 
-    public int getvRate() {
+    public String getvRate() {
         return vRate;
     }
 }

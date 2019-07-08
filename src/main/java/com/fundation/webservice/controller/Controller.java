@@ -11,6 +11,8 @@ package com.fundation.webservice.controller;
 
 import com.fundation.webservice.model.ConvertPdfToImage;
 import com.fundation.webservice.model.CriteriaPdfToImage;
+import com.fundation.webservice.model.CriteriaVideo;
+import com.fundation.webservice.model.VideoConvert;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,6 +78,44 @@ public class Controller {
         FolderZipped.zipFolder(name);
         return new PdfResponse(pdfName, fileDownloadUri, pdf.getContentType(),
                 pdf.getSize(), name, dpi, ext, formatColor);
+    }
+
+    // POST asset to be converted along with the required conversion criteria.
+    @PostMapping("/uploadVideo")
+    public VideoResponse upload(@RequestParam("video") MultipartFile file,
+            @RequestParam(value = "newFormat", defaultValue = "") String newFormat,
+            @RequestParam(value = "acodec", defaultValue = "") String acodec,
+            @RequestParam(value = "aBit", defaultValue = "") String aBit,
+            @RequestParam(value = "aChannel", defaultValue = "") String aChannel,
+            @RequestParam(value = "aRate", defaultValue = "") String aRate,
+            @RequestParam(value = "vcodec", defaultValue = "") String vcodec,
+            @RequestParam(value = "vTag", defaultValue = "") String vTag,
+            @RequestParam(value = "vBit", defaultValue = "") String vBit,
+            @RequestParam(value = "vRate", defaultValue = "") String vRate,
+            @RequestParam(value = "newName", defaultValue = "") String newName,
+            @RequestParam(value = "ext", defaultValue = "") String extension) {
+        String fileName = uploadService.storeFile(file);
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+            .path("/download/")
+            .path(newName + extension)
+            .toUriString();
+        //Converting Video
+        CriteriaVideo criterion = new CriteriaVideo();
+        criterion.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
+        criterion.setDestPath("C:\\_pg\\tmp\\conversions\\" + newName + extension);
+        criterion.setNewFormat(newFormat);
+        criterion.setaCodec(acodec);
+        criterion.setaBit(new Integer(aBit));
+        criterion.setaChannel(new Integer(aChannel));
+        criterion.setaRate(new Integer(aRate));
+        criterion.setvCodec(vcodec);
+        criterion.setvTag(vTag);
+        criterion.setvBit(new Integer(vBit));
+        criterion.setvRate(new Integer(vRate));
+        VideoConvert video = new VideoConvert(criterion);
+        video.convert();
+        return new VideoResponse(fileName, fileDownloadUri, file.getContentType(),
+            file.getSize(), newFormat, acodec, aBit,aChannel, aRate, vcodec, vTag, vBit, vRate);
     }
 
     // Endpoint for downloading converted assets
