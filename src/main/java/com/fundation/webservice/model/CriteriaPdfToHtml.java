@@ -12,7 +12,7 @@ package com.fundation.webservice.model;
 /**
  * Implements a Criteria class (specific to PDF -> HTML conversion) that extends a CriteriaConvert superclass.
  *
- * @author Alejandro Sancez
+ * @author Alejandro Sanchez
  * @version 1.0
  */
 public class CriteriaPdfToHtml extends CriteriaConvert {
