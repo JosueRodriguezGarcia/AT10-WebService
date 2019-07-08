@@ -19,10 +19,10 @@ import java.io.InputStreamReader;
  * @author Alejandro Sanchez
  * @version 1.0
  */
-public class PdfToHtml implements IConvert{
+public class ConvertPdfToHtml implements IConvert{
     CriteriaPdfToHtml criteriaPdfToHtml;
 
-    public PdfToHtml (CriteriaPdfToHtml criteriaConvert) {
+    public ConvertPdfToHtml(CriteriaPdfToHtml criteriaConvert) {
         this.criteriaPdfToHtml = criteriaConvert;
     }
 
@@ -32,9 +32,7 @@ public class PdfToHtml implements IConvert{
         try {
             Process p = Runtime.getRuntime().exec("\\Users\\AlejandroSanchez\\Desktop\\alszla\\_i\\poppler\\bin\\pdftohtml.exe -c -noframes " + criteriaPdfToHtml.getSrcPath() + " " + criteriaPdfToHtml.getDestPath());
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while ((s = stdInput.readLine()) != null) {
-                System.out.println(s);
-            }
+            while ((s = stdInput.readLine()) != null) { }
             System.exit(0);
         }
        catch (IOException e) {
