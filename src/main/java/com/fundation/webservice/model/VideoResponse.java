@@ -7,15 +7,15 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-package com.fundation.webservice.controller;
+package com.fundation.webservice.model;
 
 /**
  * Implements a type of response to an /upload request.
  *
- * @author Maday Alcala Cuba
- * @version 1.0
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba
+ * @version 1.1
  */
-public class AudioResponse {
+public class VideoResponse {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
@@ -26,9 +26,15 @@ public class AudioResponse {
     private String aBit;
     private String aChannel;
     private String aRate;
+    //video
+    private String vCodec;
+    private String vTag;
+    private String vBit;
+    private String vRate;
 
-    public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-            String newFormat, String aCodec, String aBit, String aChannel, String aRate) {
+    public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size,
+            String newFormat, String aCodec, String aBit, String aChannel, String aRate,
+            String vCodec, String vTag, String vBit, String vRate) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -38,6 +44,10 @@ public class AudioResponse {
         this.aBit = aBit;
         this.aChannel = aChannel;
         this.aRate = aRate;
+        this.vCodec = vCodec;
+        this.vTag = vTag;
+        this.vBit = vBit;
+        this.vRate = vRate;
     }
 
     public String getFileName() {
@@ -74,5 +84,21 @@ public class AudioResponse {
 
     public String getaRate() {
         return aRate;
+    }
+
+    public String getvCodec() {
+        return vCodec;
+    }
+
+    public String getvTag() {
+        return vTag;
+    }
+
+    public String getvBit() {
+        return vBit;
+    }
+
+    public String getvRate() {
+        return vRate;
     }
 }

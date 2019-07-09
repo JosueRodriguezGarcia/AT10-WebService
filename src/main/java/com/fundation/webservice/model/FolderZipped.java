@@ -7,7 +7,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-package com.fundation.webservice.controller;
+package com.fundation.webservice.model;
 
 import java.io.File;
 import java.io.FileInputStream;
