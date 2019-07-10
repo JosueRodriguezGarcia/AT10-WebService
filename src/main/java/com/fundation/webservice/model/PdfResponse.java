@@ -7,7 +7,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-package com.fundation.webservice.controller;
+package com.fundation.webservice.model;
 
 /**
  * Implements a type of response to an /uploadPdf request.
