@@ -25,6 +25,7 @@ public class ThumbnailVideo {
         this.criteria = criteria;
     }
 
+    //The convert method capture a thumbnail of a frame specific
     public void convert() {
         try {
             String cmd = "ffmpeg -i "
