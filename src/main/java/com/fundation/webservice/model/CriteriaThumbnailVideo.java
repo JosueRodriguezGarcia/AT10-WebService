@@ -10,7 +10,7 @@
 package com.fundation.webservice.model;
 
 /**
- * Implements the criteria for create a Thumbnail
+ * Implements the criteria for create a Thumbnail.
  *
  * @author Josue Rodriguez
  * @version 1.0
@@ -20,12 +20,12 @@ public class CriteriaThumbnailVideo extends CriteriaConvert {
     private String time;
     private String ext;
 
-    //The getName method return the name of the output file
+    //The getName method return the name of the output file.
     public String getName() {
         return name;
     }
 
-    //The setName method modify the name of the output file
+    //The setName method modify the name of the output file.
     public void setName(String name) {
         this.name = name;
     }
@@ -35,17 +35,17 @@ public class CriteriaThumbnailVideo extends CriteriaConvert {
         return time;
     }
 
-    //The setTime Method modify the time of the frame that we search
+    //The setTime Method modify the time of the frame that we search.
     public void setTime(String time) {
         this.time = time;
     }
 
-    //The getExt Method return the extension of the output file
+    //The getExt Method return the extension of the output file.
     public String getExt() {
         return ext;
     }
 
-    //the setExt Method modify the extension od the output file
+    //The setExt method modify the extension od the output file.
     public void setExt(String ext) {
         this.ext = ext;
     }
