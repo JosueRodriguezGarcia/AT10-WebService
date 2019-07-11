@@ -42,10 +42,10 @@ public class AudioConvert implements IConvert{
             File target = new File(criteria.getDestPath());
             //Audio Attributes
             AudioAttributes audio = new AudioAttributes();
-            audio.setCodec(criteria.getaCodec());
-            audio.setBitRate(criteria.getaBit());
-            audio.setChannels(criteria.getaChannel());
-            audio.setSamplingRate(criteria.getaRate());
+            audio.setCodec(criteria.getAudioCodec());
+            audio.setBitRate(criteria.getAudioBit());
+            audio.setChannels(criteria.getAudioChannel());
+            audio.setSamplingRate(criteria.getAudioRate());
             //Encoding attributes
             EncodingAttributes attrs = new EncodingAttributes();
             attrs.setFormat(criteria.getNewFormat());

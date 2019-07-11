@@ -135,10 +135,10 @@ public class Controller {
         criterion.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
         criterion.setDestPath("C:\\_pg\\tmp\\conversions\\" + newName + extension);
         criterion.setNewFormat(newFormat);
-        criterion.setaCodec(acodec);
-        criterion.setaBit(new Integer(aBit));
-        criterion.setaChannel(new Integer(aChannel));
-        criterion.setaRate(new Integer(aRate));
+        criterion.setAudioCodec(acodec);
+        criterion.setAudioBit(new Integer(aBit));
+        criterion.setAudioChannel(new Integer(aChannel));
+        criterion.setAudioRate(new Integer(aRate));
         AudioConvert audio = new AudioConvert(criterion);
         audio.convert();
         return new AudioResponse(fileName, fileDownloadUri, file.getContentType(),
