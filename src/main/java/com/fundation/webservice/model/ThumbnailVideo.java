@@ -44,6 +44,7 @@ public class ThumbnailVideo {
             process.waitFor();
             in.close();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
