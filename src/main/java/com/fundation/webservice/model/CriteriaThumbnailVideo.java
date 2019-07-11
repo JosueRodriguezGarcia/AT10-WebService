@@ -20,32 +20,32 @@ public class CriteriaThumbnailVideo extends CriteriaConvert {
     private String time;
     private String ext;
 
-    //The getName method return the name of the output file.
+    //Returns the name of the output file.
     public String getName() {
         return name;
     }
 
-    //The setName method modify the name of the output file.
+    //Modifies the name of the output file.
     public void setName(String name) {
         this.name = name;
     }
 
-    //The getTime Method return the time of the frame that we search.
+    //Returns the time of the frame that we search.
     public String getTime() {
         return time;
     }
 
-    //The setTime Method modify the time of the frame that we search.
+    //Modifies the time of the frame that we search.
     public void setTime(String time) {
         this.time = time;
     }
 
-    //The getExt Method return the extension of the output file.
+    //Return the extension of the output file.
     public String getExt() {
         return ext;
     }
 
-    //The setExt method modify the extension od the output file.
+    //Modifies the extension od the output file.
     public void setExt(String ext) {
         this.ext = ext;
     }
