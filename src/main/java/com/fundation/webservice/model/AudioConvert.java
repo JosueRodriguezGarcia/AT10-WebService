@@ -23,25 +23,32 @@ import java.io.File;
  * @version 1.0
  */
 public class AudioConvert implements IConvert{
-    private CriteriaAudio criterion;
+    private CriteriaAudio criteria;
 
-    public AudioConvert(CriteriaAudio criterion) {
-        this.criterion = criterion;
+    /**
+     *
+     * @param criteria is defined in the constructor for use in convert class.
+     */
+    public AudioConvert(CriteriaAudio criteria) {
+        this.criteria = criteria;
     }
 
+    /**
+     * Class convert is takes care of change to the different audio formats.
+     */
     public void convert() {
         try {
-            File source = new File(criterion.getSrcPath());
-            File target = new File(criterion.getDestPath());
+            File source = new File(criteria.getSrcPath());
+            File target = new File(criteria.getDestPath());
             //Audio Attributes
             AudioAttributes audio = new AudioAttributes();
-            audio.setCodec(criterion.getaCodec());
-            audio.setBitRate(criterion.getaBit());
-            audio.setChannels(criterion.getaChannel());
-            audio.setSamplingRate(criterion.getaRate());
+            audio.setCodec(criteria.getaCodec());
+            audio.setBitRate(criteria.getaBit());
+            audio.setChannels(criteria.getaChannel());
+            audio.setSamplingRate(criteria.getaRate());
             //Encoding attributes
             EncodingAttributes attrs = new EncodingAttributes();
-            attrs.setFormat(criterion.getNewFormat());
+            attrs.setFormat(criteria.getNewFormat());
             attrs.setAudioAttributes(audio);
             //Encode
             Encoder encoder = new Encoder();
