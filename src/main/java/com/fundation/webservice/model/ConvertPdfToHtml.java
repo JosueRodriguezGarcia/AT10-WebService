@@ -27,16 +27,13 @@ public class ConvertPdfToHtml implements IConvert{
     }
 
     public void convert() {
-        String s = null;
-
         try {
-            Process p = Runtime.getRuntime().exec("\\Users\\AlejandroSanchez\\Desktop\\alszla\\_i\\poppler\\bin\\pdftohtml.exe -c -noframes " + criteriaPdfToHtml.getSrcPath() + " " + criteriaPdfToHtml.getDestPath());
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while ((s = stdInput.readLine()) != null) { }
+            Process pdfToHtml = Runtime.getRuntime().exec("./3rdparty/poppler/bin/pdftohtml.exe -c -noframes " + criteriaPdfToHtml.getSrcPath() + " " + criteriaPdfToHtml.getDestPath());
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(pdfToHtml.getInputStream()));
             System.exit(0);
         }
-       catch (IOException e) {
-           e.printStackTrace();
+        catch (IOException e) {
+            e.printStackTrace();
             System.exit(-1);
         }
     }
