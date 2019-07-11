@@ -11,6 +11,7 @@ package com.fundation.webservice.model;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
 /**
  * Implements Thumbnail class an convert Method
  *
@@ -19,29 +20,30 @@ import java.io.InputStreamReader;
  */
 public class ThumbnailVideo {
     CriteriaThumbnailVideo criteria;
+
     public ThumbnailVideo(CriteriaThumbnailVideo criteria) {
-        this.criteria =  criteria;
+        this.criteria = criteria;
     }
-    public void convert(){
-        try{
+
+    public void convert() {
+        try {
             String cmd = "ffmpeg -i "
                     + criteria.getSrcPath()
                     + " -ss "
                     + criteria.getTime()
                     + " -vframes 1 -s 128x128 "
                     + criteria.getDestPath()
-                    + criteria.getName()+"."
+                    + criteria.getName() + "."
                     + criteria.getExt();
-            Process p = Runtime.getRuntime().exec(cmd);
-            BufferedReader in = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-            String line ;
-            while((line = in.readLine()) != null){
+            Process process = Runtime.getRuntime().exec(cmd);
+            BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            String line;
+            while ((line = in.readLine()) != null) {
                 System.out.println(line);
             }
-            p.waitFor();
+            process.waitFor();
             in.close();
-        }catch(Exception e){
-
+        } catch (Exception e) {
         }
     }
 }
