@@ -29,13 +29,13 @@ public class KeyFrameVideo {
     public void convert() {
         try {
             String cmd = "ffmpeg -i "
-                    + criteria.getSrcPath()
-                    + " -vcodec libx264 -x264-params keyint="
-                    + criteria.getFrames()
-                    + ":scenecut=0 -acodec copy "
-                    + criteria.getDestPath()
-                    + criteria.getName() + "."
-                    + criteria.getExt();
+                + criteria.getSrcPath()
+                + " -vcodec libx264 -x264-params keyint="
+                + criteria.getFrames()
+                + ":scenecut=0 -acodec copy "
+                + criteria.getDestPath()
+                + criteria.getName() + "."
+                + criteria.getExt();
             System.out.println(cmd);
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
