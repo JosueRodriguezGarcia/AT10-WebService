@@ -46,10 +46,24 @@ public class Metadata {
         }
     }
 
+    //
     public void xmp() {
         try {
             //String[] cli = { "cmd.exe", "/c", criteriaMetadata.getBIN_PATH() + "exiftool -X " + " > " + criteriaMetadata.getDestPath()};
             String[] cli = { "cmd.exe", "/c", "c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\3rdparty\\exiftool\\exiftool.exe -X c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\PS2TTT_intro.avi > c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\xmp.xmp"};
+            Process process = new ProcessBuilder(cli).start();
+            System.exit(0);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+    }
+
+    public void json() {
+        try {
+            System.out.println(System.getProperty("use.dir"));
+            String[] cli = { "cmd.exe", "/c", "c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\3rdparty\\exiftool\\exiftool.exe -json c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\PS2TTT_intro.avi > c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\json.json"};
             Process process = new ProcessBuilder(cli).start();
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
             System.exit(0);
@@ -60,20 +74,10 @@ public class Metadata {
         }
     }
 
-    public void json() {
-        String s = null;
-        try {
-            String[] cli = { "cmd.exe", "/c", "c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\3rdparty\\exiftool\\exiftool.exe -json c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\PS2TTT_intro.avi > c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\json.json"};
-            Process process = new ProcessBuilder(cli).start();
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            System.out.println(System.getProperty("use.dir"));
-            System.exit(0);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
+    public void sideFile(String format) {
+
     }
+
 
     public HashMap<String, String> parseInfo() {
         HashMap<String, String> pairs = new HashMap<String, String>();
