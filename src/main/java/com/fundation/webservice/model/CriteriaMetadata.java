@@ -16,4 +16,9 @@ package com.fundation.webservice.model;
  * @version 1.0
  */
 public class CriteriaMetadata extends CriteriaConvert {
+    public final String BIN_PATH = "./3rdparty/exiftool/";
+
+    public String getBIN_PATH() {
+        return BIN_PATH;
+    }
 }
