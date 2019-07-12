@@ -40,7 +40,7 @@ public class CriteriaThumbnailVideo extends CriteriaConvert {
         this.time = time;
     }
 
-    //Return the extension of the output file.
+    //Returns the extension of the output file.
     public String getExt() {
         return ext;
     }
