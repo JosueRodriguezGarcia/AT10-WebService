@@ -8,55 +8,44 @@
  * with Jalasoft.
  */
 package com.fundation.webservice.model;
+
 /**
- * Implements the criteria for create a Thunbnail
+ * Implements the criteria for create a Thumbnail.
  *
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class CriteriaThumbnailVideo extends CriteriaConvert{
+public class CriteriaThumbnailVideo extends CriteriaConvert {
     private String name;
     private String time;
-    private String length;
-    private String Width;
     private String ext;
 
+    //Returns the name of the output file.
     public String getName() {
         return name;
     }
 
+    //Modifies the name of the output file.
     public void setName(String name) {
         this.name = name;
     }
 
+    //Returns the time of the frame that we search.
     public String getTime() {
         return time;
     }
 
+    //Modifies the time of the frame that we search.
     public void setTime(String time) {
         this.time = time;
     }
 
-    public String getLength() {
-        return length;
-    }
-
-    public void setLength(String length) {
-        this.length = length;
-    }
-
-    public String getWidth() {
-        return Width;
-    }
-
-    public void setWidth(String width) {
-        Width = width;
-    }
-
+    //Returns the extension of the output file.
     public String getExt() {
         return ext;
     }
 
+    //Modifies the extension od the output file.
     public void setExt(String ext) {
         this.ext = ext;
     }

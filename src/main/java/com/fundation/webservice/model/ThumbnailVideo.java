@@ -13,7 +13,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * Implements Thumbnail class an convert Method
+ * Implements Thumbnail class an convert Method.
  *
  * @author Josue Rodriguez
  * @version 1.0
@@ -25,6 +25,7 @@ public class ThumbnailVideo {
         this.criteria = criteria;
     }
 
+    //The convert method capture a thumbnail of a frame specific.
     public void convert() {
         try {
             String cmd = "ffmpeg -i "
