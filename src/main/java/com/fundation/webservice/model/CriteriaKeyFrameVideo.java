@@ -20,12 +20,12 @@ public class CriteriaKeyFrameVideo extends CriteriaConvert{
     private String name;
     private String ext;
 
-    //Return the interval of frame for each keyframe
+    //Returns the interval of frame for each keyframe.
     public String getFrames() {
         return frames;
     }
 
-    //Modifies the interval of frame for each keyframe
+    //Modifies the interval of frame for each keyframe.
     public void setFrames(String frames) {
         this.frames = frames;
     }
