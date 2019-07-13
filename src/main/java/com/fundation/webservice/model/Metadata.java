@@ -16,8 +16,8 @@ import java.io.InputStreamReader;
 import java.io.File;
 
 /**
- * Implements an class that displays, processes and returns metadata info/files in several formats:
- * Currently XMP, JSON, Java Map structure.
+ * Implements an class that processes and writes metadata info into in several metadata formats:
+ * Currently supports XMP, JSON and Java Map structure.
  *
  * @author Alejandro Sanchez
  * @version 1.0
@@ -26,26 +26,6 @@ public class Metadata {
     private final String USER_DIR = System.getProperty("user.dir") + "/";
     private final String TOOLS_DIR = "3rdparty/";
     private final String EXIFTOOL_DIR = "exiftool/";
-
-    // Displays on console the file metadata
-    public void display(File file) {
-        try {
-            String[] cli = { "cmd.exe",
-                    "/c",
-                    USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe " + file.getAbsolutePath()};
-            Process process = new ProcessBuilder(cli).start();
-            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line = null;
-            while ((line = input.readLine()) != null) {
-                System.out.println(line);
-            }
-            input.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("", e);
-        }
-    }
 
     // Writes an xmp file containing the file metadata.
     // The xmp file is stored in the same directory where the file is located
