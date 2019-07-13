@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.File;
 
 /**
  * Implements an class that processes, displays and returns metadata info/files in several formats:
@@ -22,23 +23,17 @@ import java.io.InputStreamReader;
  * @version 1.0
  */
 public class Metadata {
-    CriteriaMetadata criteriaMetadata;
-    String USER_DIR = System.getProperty("user.dir");
-    String TOOLS_DIR = "./3rdparty/";
-    String EXIFTOOL_DIR = "exiftool/";
+    private final String USER_DIR = System.getProperty("user.dir");
+    private final String TOOLS_DIR = "./3rdparty/";
+    private final String EXIFTOOL_DIR = "exiftool/";
 
-
-    public Metadata(CriteriaMetadata criteriaMetadata) {
-        this.criteriaMetadata = criteriaMetadata;
-    }
-
-    public void showInfo() {
+    public void showInfo(File file) {
         String output = null;
 
         try {
-            Process p = Runtime.getRuntime().exec("./3rdparty/exiftool/exiftool.exe -json " + criteriaMetadata.getSrcPath());
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while ((output = stdInput.readLine()) != null) {
+            Process p = Runtime.getRuntime().exec("./3rdparty/exiftool/exiftool.exe -json " + file.getAbsolutePath());
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            while ((output = input.readLine()) != null) {
                 System.out.println(output);
             }
             System.exit(0);
@@ -63,11 +58,17 @@ public class Metadata {
         }
     }
 
-    public void json() {
+    public void json(File file) {
+        String filenameWithoutExtension = null;
+        int dotPosition = file.getName().lastIndexOf(".");
+        if (dotPosition != -1) {
+            filenameWithoutExtension = file.getName().substring(0, dotPosition);
+        }
+
         try {
             //System.out.println(System.getProperty("user.dir"));
             //String[] cli = { "cmd.exe", "/c", System.getProperty("user.dir") + "./3rdparty/exiftool/exiftool.exe -json " + criteriaMetadata.getSrcPath() + " > c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\json.json"};
-            String[] cli = { "cmd.exe", "/c", USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe -json " + criteriaMetadata.getSrcPath() + " > " + criteriaMetadata.getDestPath()};
+            String[] cli = { "cmd.exe", "/c", USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe -json " + file.getAbsolutePath() + " > " + file.getParent() + "/" + filenameWithoutExtension + ".json"};
             Process process = new ProcessBuilder(cli).start();
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
             System.exit(0);
