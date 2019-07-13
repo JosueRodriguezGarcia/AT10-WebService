@@ -25,8 +25,8 @@ import java.io.File;
 public class AudioConvert implements IConvert{
     private CriteriaAudio criterion;
 
-    public AudioConvert(CriteriaAudio criterion) {
-        this.criterion = criterion;
+    public AudioConvert(CriteriaAudio criteria) {
+        this.criterion = criteria;
     }
 
     public void convert() {
