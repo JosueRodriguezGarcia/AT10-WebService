@@ -9,15 +9,15 @@
  */
 package com.fundation.webservice.model;
 
+import java.util.Map;
 import java.util.HashMap;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.File;
 
 /**
- * Implements an class that processes, displays and returns metadata info/files in several formats:
- * Currently XMP, JSON.
+ * Implements an class that displays, processes and returns metadata info/files in several formats:
+ * Currently XMP, JSON, Java Map structure.
  *
  * @author Alejandro Sanchez
  * @version 1.0
@@ -27,37 +27,53 @@ public class Metadata {
     private final String TOOLS_DIR = "3rdparty/";
     private final String EXIFTOOL_DIR = "exiftool/";
 
-    public void showInfo(File file) {
-        String output = null;
-
+    // Displays on console the file metadata
+    public void display(File file) {
         try {
-            Process p = Runtime.getRuntime().exec("./3rdparty/exiftool/exiftool.exe -json " + file.getAbsolutePath());
-            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while ((output = input.readLine()) != null) {
-                System.out.println(output);
-            }
-            System.exit(0);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
-    }
-
-    //
-    public void xmp() {
-        try {
-            //String[] cli = { "cmd.exe", "/c", criteriaMetadata.getBIN_PATH() + "exiftool -X " + " > " + criteriaMetadata.getDestPath()};
-            String[] cli = { "cmd.exe", "/c", "c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\3rdparty\\exiftool\\exiftool.exe -X c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\PS2TTT_intro.avi > c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\xmp.xmp"};
+            String[] cli = { "cmd.exe",
+                    "/c",
+                    USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe " + file.getAbsolutePath()};
             Process process = new ProcessBuilder(cli).start();
-            System.exit(0);
+            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line = null;
+            while ((line = input.readLine()) != null) {
+                System.out.println(line);
+            }
+            input.close();
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException("", e);
         }
     }
 
+    // Writes an xmp file containing the file metadata.
+    // The xmp file is stored in the same directory where the file is located
+    public void xmp(File file) {
+        String filenameWithoutExtension = null;
+        int dotPosition = file.getName().lastIndexOf(".");
+        if (dotPosition != -1) {
+            filenameWithoutExtension = file.getName().substring(0, dotPosition);
+        }
+        try {
+            String[] cli = { "cmd.exe",
+                    "/c",
+                    USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe -X " +
+                            file.getAbsolutePath() +
+                            " > " +
+                            file.getParent() + "/" + filenameWithoutExtension + ".xmp"};
+            Process process = new ProcessBuilder(cli).start();
+            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            input.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("", e);
+        }
+    }
+
+    // Writes a json file containing the file metadata.
+    // The xmp file is stored in the same directory where the file is located
     public void json(File file) {
         String filenameWithoutExtension = null;
         int dotPosition = file.getName().lastIndexOf(".");
@@ -74,16 +90,35 @@ public class Metadata {
             Process process = new ProcessBuilder(cli).start();
             BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
             input.close();
-            System.exit(0);
         }
-        catch (IOException e) {
+        catch (Exception e) {
             e.printStackTrace();
-            System.exit(-1);
+            throw new RuntimeException("", e);
         }
     }
 
-    public HashMap<String, String> parseInfo() {
-        HashMap<String, String> pairs = new HashMap<String, String>();
-        return pairs;
+    // Returns a Map structure containing the metadata info as key/value pairs
+    public Map<String, String> parse(File file) {
+        Map<String, String> result = new HashMap<String, String>();
+        try{
+            String[] cli = { "cmd.exe",
+                    "/c",
+                    USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe " + file.getAbsolutePath()};
+            Process process = new ProcessBuilder(cli).start();
+            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line = null;
+            while ((line = input.readLine()) != null) {
+                String[] pair = line.split(":",2);
+                if ((pair != null) && (pair.length == 2)) {
+                        result.put(pair[0].trim(), pair[1].trim());
+                }
+            }
+            input.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("", e);
+        }
+        return result;
     }
 }
