@@ -23,7 +23,7 @@ import java.io.File;
  * @version 1.0
  */
 public class Metadata {
-    private final String USER_DIR = System.getProperty("user.dir");
+    private final String USER_DIR = System.getProperty("user.dir") + "/";
     private final String TOOLS_DIR = "3rdparty/";
     private final String EXIFTOOL_DIR = "exiftool/";
 
@@ -67,7 +67,7 @@ public class Metadata {
         try {
             String[] cli = { "cmd.exe",
                 "/c",
-                USER_DIR + "/" + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe -json " +
+                USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe -json " +
                     file.getAbsolutePath() +
                     " > " +
                     file.getParent() + "/" + filenameWithoutExtension + ".json"};
