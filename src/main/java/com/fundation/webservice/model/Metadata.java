@@ -28,11 +28,11 @@ public class Metadata {
     private final String EXIFTOOL_DIR = "exiftool/";
 
     /**
-     * Writes an xmp file containing the file metadata.
-     * The xmp file is stored in the same directory where the file is located.
+     * This method writes a xmp file containing the param file metadata info returned by exiftool in XMP format.
+     * The xmp file is stored in the same directory where the param file is located.
      *
      * @param file
-     *            The handle (provided by a File object) to the file that is going to be read by exiftool
+     *            The handle (provided by a File object) to the file that is going to be read by exiftool.
      */
     public void xmp(File file) {
         String filenameWithoutExtension = null;
@@ -58,11 +58,11 @@ public class Metadata {
     }
 
     /**
-     * Writes a json file containing the file metadata.
-     * The json file is stored in the same directory where the file is located.
+     * This method writes a json file containing the param file metadata info returned by exiftool in JSON format.
+     * The json file is stored in the same directory where the param file is located.
      *
      * @param file
-     *            The handle (provided by a File object) to the file that is going to be read by exiftool
+     *            The handle (provided by a File object) to the file that is going to be read by exiftool.
      */
     public void json(File file) {
         String filenameWithoutExtension = null;
@@ -87,12 +87,14 @@ public class Metadata {
         }
     }
 
-    // Returns a Map structure containing the metadata info as key/value pairs
     /**
-     * Returns a Map structure containing the metadata info as key/value pairs.
+     * This method parses the metadata info returned by exiftool and stores it as a Map structure containing
+     * keyname/value pairs.
      *
      * @param file
-     *            The handle (provided by a File object) to the file that is going to be read by exiftool
+     *            The handle (provided by a File object) to the param file that is going to be read by exiftool.
+     *
+     * @return a Map structure contaning the pairs provided by exiftool
      */
     public Map<String, String> parse(File file) {
         Map<String, String> result = new HashMap<String, String>();
