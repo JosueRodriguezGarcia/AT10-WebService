@@ -62,8 +62,11 @@ public class Metadata {
 
     public void json() {
         try {
-            System.out.println(System.getProperty("use.dir"));
-            String[] cli = { "cmd.exe", "/c", "c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\3rdparty\\exiftool\\exiftool.exe -json c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\PS2TTT_intro.avi > c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\json.json"};
+            String USER_DIR = System.getProperty("user.dir");
+            String TOOL_DIR = "./3rdparty/exiftool/";
+            //System.out.println(System.getProperty("user.dir"));
+            //String[] cli = { "cmd.exe", "/c", System.getProperty("user.dir") + "./3rdparty/exiftool/exiftool.exe -json " + criteriaMetadata.getSrcPath() + " > c:\\Users\\AlejandroSanchez\\Desktop\\alszla\\AT10-WebService\\rsrc\\json.json"};
+            String[] cli = { "cmd.exe", "/c", USER_DIR + TOOL_DIR + "exiftool.exe -json " + criteriaMetadata.getSrcPath() + " > " + criteriaMetadata.getDestPath()};
             Process process = new ProcessBuilder(cli).start();
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
             System.exit(0);
