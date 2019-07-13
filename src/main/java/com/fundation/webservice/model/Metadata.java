@@ -27,8 +27,13 @@ public class Metadata {
     private final String TOOLS_DIR = "3rdparty/";
     private final String EXIFTOOL_DIR = "exiftool/";
 
-    // Writes an xmp file containing the file metadata.
-    // The xmp file is stored in the same directory where the file is located
+    /**
+     * Writes an xmp file containing the file metadata.
+     * The xmp file is stored in the same directory where the file is located.
+     *
+     * @param file
+     *            The handle (provided by a File object) to the file that is going to be read by exiftool
+     */
     public void xmp(File file) {
         String filenameWithoutExtension = null;
         int dotPosition = file.getName().lastIndexOf(".");
@@ -52,8 +57,13 @@ public class Metadata {
         }
     }
 
-    // Writes a json file containing the file metadata.
-    // The xmp file is stored in the same directory where the file is located
+    /**
+     * Writes a json file containing the file metadata.
+     * The json file is stored in the same directory where the file is located.
+     *
+     * @param file
+     *            The handle (provided by a File object) to the file that is going to be read by exiftool
+     */
     public void json(File file) {
         String filenameWithoutExtension = null;
         int dotPosition = file.getName().lastIndexOf(".");
@@ -78,6 +88,12 @@ public class Metadata {
     }
 
     // Returns a Map structure containing the metadata info as key/value pairs
+    /**
+     * Returns a Map structure containing the metadata info as key/value pairs.
+     *
+     * @param file
+     *            The handle (provided by a File object) to the file that is going to be read by exiftool
+     */
     public Map<String, String> parse(File file) {
         Map<String, String> result = new HashMap<String, String>();
         try{
