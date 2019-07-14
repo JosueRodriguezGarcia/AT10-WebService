@@ -64,21 +64,20 @@ public class Metadata extends Run{
      * @param file
      *            The handle (provided by a File object) to the param file that is going to be read by exiftool.
      *
-     * @return a Map structure contaning the pairs provided by exiftool
+     * @return a Map structure containing the pairs provided by exiftool
      */
-    public Map<String, String> parse(File file) {
+    public Map<String, String> parseToMap(File file) {
         Map<String, String> result = new HashMap<String, String>();
         try{
-            String[] cli = { "cmd.exe",
-                    "/c",
-                    USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe " + file.getAbsolutePath()};
-            Process process = new ProcessBuilder(cli).start();
+            initCommandLine();
+            commandLine.add(file.getAbsolutePath());
+            Process process = new ProcessBuilder(commandLine).start();
             BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line = null;
             while ((line = input.readLine()) != null) {
                 String[] pair = line.split(":",2);
                 if ((pair != null) && (pair.length == 2)) {
-                        result.put(pair[0].trim(), pair[1].trim());
+                    result.put(pair[0].trim(), pair[1].trim());
                 }
             }
             input.close();
@@ -90,13 +89,24 @@ public class Metadata extends Run{
         return result;
     }
 
+    /**
+     * Safe initialization of the list structure that stores the command line string to be passed to the
+     * run() method.
+     */
     public void initCommandLine() {
-        commandLine.clear();
-        commandLine.add("cmd.exe");
-        commandLine.add("/c");
+        super.initCommandLine();
         commandLine.add(USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe");
     }
 
+    /**
+     * This method is used to determine the name of the output file.
+     * The output file is going to be named after the original file, but the extension will be replaced according
+     * to the metadata format that the client asks for.
+     *
+     * @param file
+     *            The handle (provided by a File object) to the param file that is going to be read by exiftool.
+     * @return the name of a file without its extension.
+     */
     public String fileNameWithoutExtension(File file) {
         String fileNameWithoutExtension = null;
         int dotPosition = file.getName().lastIndexOf(".");
