@@ -18,9 +18,9 @@ import java.io.InputStreamReader;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class KeyFrameVideo {
-    CriteriaKeyFrameVideo criteria;
-    public KeyFrameVideo(CriteriaKeyFrameVideo criteria) {
+public class KeyFrameInVideo {
+    CriteriaKeyFrameInVideo criteria;
+    public KeyFrameInVideo(CriteriaKeyFrameInVideo criteria) {
         this.criteria = criteria;
     }
 
