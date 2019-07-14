@@ -25,6 +25,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -42,6 +43,8 @@ public class Controller {
     private UploadService uploadService;
     @Autowired
     private DownloadService downloadService;
+
+    Checksum checksum = new Checksum();
 
     // Default Request is a GET method
     @RequestMapping("/")
@@ -118,7 +121,7 @@ public class Controller {
     }
 
     // POST asset to be converted along with the required conversion criteria.
-    @PostMapping("/uploadAudio")
+    /*@PostMapping("/uploadAudio")
     public AudioResponse upload(@RequestParam("audio") MultipartFile file,
             @RequestParam(value = "newFormat", defaultValue = "") String newFormat,
             @RequestParam(value = "acodec", defaultValue = "") String acodec,
@@ -145,7 +148,7 @@ public class Controller {
         audio.convert();
         return new AudioResponse(fileName, fileDownloadUri, file.getContentType(),
                 file.getSize(), newFormat, acodec, aBit, aChannel, aRate);
-    }
+    }*/
 
     // prueba input, output y conf con audio
     @PostMapping("/convert")
@@ -155,25 +158,47 @@ public class Controller {
             @RequestParam("output") String[] output) {
         String fileName = uploadService.storeFile(asset);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/")
-                .path(output[0] + output[1]).toUriString();
+                .path(output[0] + ".zip").toUriString();
 
-        CriteriaAudio criteria = new CriteriaAudio();
-        criteria.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
-        criteria.setDestPath("C:\\_pg\\tmp\\conversions\\" + output[0] + output[1]);
-        criteria.setNewFormat(config[0]);
-        criteria.setAudioCodec(config[1]);
-        criteria.setAudioBit(new Integer(config[2]));
-        criteria.setAudioChannel(new Integer(config[3]));
-        criteria.setAudioRate(new Integer(config[4]));
-        AudioConvert audio = new AudioConvert(criteria);
-        audio.convert();
-        File convertedFile = new File("C:\\_pg\\tmp\\conversions\\limbert.mp3");
-        Metadata metaDataFile = new Metadata();
-        metaDataFile.writeXmpFile(convertedFile);
-        
-        FileOutputStream fos = new FileOutputStream("C:\\_pg\\tmp\\conversions\\limbert.zip");
-        return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
-                config[0], config[1], config[2], config[3], config[4]);
+        String inputChecksumString = "";
+        try {
+            inputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\uploads\\pruebawav.wav" ,"MD5");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(input[0].equals(inputChecksumString)){
+            new File("C:/_pg/tmp/conversions/" + output[0] + "/").mkdirs();
+            CriteriaAudio criteria = new CriteriaAudio();
+            criteria.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
+            criteria.setDestPath("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0] + output[1]);
+            criteria.setNewFormat(config[0]);
+            criteria.setAudioCodec(config[1]);
+            criteria.setAudioBit(new Integer(config[2]));
+            criteria.setAudioChannel(new Integer(config[3]));
+            criteria.setAudioRate(new Integer(config[4]));
+            AudioConvert audio = new AudioConvert(criteria);
+            audio.convert();
+
+            String outputChecksumString = "";
+
+            try {
+                outputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\conversions\\limbert\\limbert.mp3","MD5");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            File convertedFile = new File("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0] + output[1]);
+
+            Metadata metaDataFile = new Metadata();
+            metaDataFile.writeXmpFile(convertedFile);
+            FolderZipped.zipFolder(output[0]);
+            return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
+                    config[0], config[1], config[2], config[3], config[4], outputChecksumString);
+        } else {
+            System.out.print("error");
+            return null;
+        }
     }
 
     // Endpoint for downloading converted assets
