@@ -98,7 +98,6 @@ public class Metadata {
      */
     public Map<String, String> parse(File file) {
         Map<String, String> result = new HashMap<String, String>();
-
         try{
             String[] cli = { "cmd.exe",
                     "/c",
