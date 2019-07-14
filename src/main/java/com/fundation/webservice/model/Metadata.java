@@ -40,6 +40,7 @@ public class Metadata {
         if (dotPosition != -1) {
             filenameWithoutExtension = file.getName().substring(0, dotPosition);
         }
+
         try {
             String[] cli = { "cmd.exe",
                     "/c",
