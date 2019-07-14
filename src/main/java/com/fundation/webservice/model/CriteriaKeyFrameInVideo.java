@@ -15,37 +15,61 @@ package com.fundation.webservice.model;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class CriteriaKeyFrameInVideo extends CriteriaConvert{
+public class CriteriaKeyFrameInVideo extends CriteriaConvert {
     private String frames;
     private String name;
     private String ext;
 
-    //Returns the interval of frame for each keyframe.
+    /**
+     * Method that returns the interval of frame for each keyframe.
+     *
+     * @return The number of frames for each interval of keyframe
+     */
     public String getFrames() {
         return frames;
     }
 
-    //Modifies the interval of frame for each keyframe.
+    /**
+     * Method that modifies the interval of frame for each keyframe.
+     *
+     * @param frames The frames parameter define the number of frames for each interval of keyframe in output file.
+     */
     public void setFrames(String frames) {
         this.frames = frames;
     }
 
-    //Returns the name of the output file.
+    /**
+     * Method that returns the name of the output file.
+     *
+     * @return The a String with the mane of output file
+     */
     public String getName() {
         return name;
     }
 
-    //Modifies the name of the output file.
+    /**
+     * Method that modifies the name of the output file.
+     *
+     * @param name The name parameter define name of output file.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
-    //Returns the extension of the output file.
+    /**
+     * Method that return the extension of the output file.
+     *
+     * @return The extension of output file.
+     */
     public String getExt() {
         return ext;
     }
 
-    //Modifies the extension od the output file.
+    /**
+     * Method that Modifies the extension od the output file.
+     *
+     * @param ext The ext parameter define extension of output file.
+     */
     public void setExt(String ext) {
         this.ext = ext;
     }
