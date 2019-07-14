@@ -13,36 +13,37 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * Implements KeyframeVideo class an convert Method.
+ * Implements the criteria for create a Keyframes.
  *
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class KeyFrameInVideo {
+public class KeyFrameOfVideo {
     CriteriaKeyFrameVideo criteria;
-    public KeyFrameInVideo(CriteriaKeyFrameVideo criteria) {
+
+    public KeyFrameOfVideo(CriteriaKeyFrameVideo criteria) {
         this.criteria = criteria;
     }
 
     /**
-     * The convert method add a keyframe for every certain amount of frame.
+     * The convert method get the keyframe depending of the number of frame.
      */
     public void convert() {
         try {
             String cmd = "ffmpeg -i "
                 + criteria.getSrcPath()
-                + " -vcodec libx264 -x264-params keyint="
+                + " -vf thumbnail="
                 + criteria.getFrames()
-                + ":scenecut=0 -acodec copy "
+                + " -vsync 0 "
                 + criteria.getDestPath()
-                + criteria.getName() + "."
+                + criteria.getName() + "%d."
                 + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;
-            do{
+            do {
                 line = in.readLine();
-            }while(line != null);
+            } while (line != null);
             process.waitFor();
             in.close();
         } catch (Exception e) {
