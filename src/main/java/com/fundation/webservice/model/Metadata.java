@@ -48,27 +48,13 @@ public class Metadata extends Run{
      * @param file
      *            The handle (provided by a File object) to the file that is going to be read by exiftool.
      */
-    public void json(File file) {
-        String filenameWithoutExtension = null;
-        int dotPosition = file.getName().lastIndexOf(".");
-        if (dotPosition != -1) {
-            filenameWithoutExtension = file.getName().substring(0, dotPosition);
-        }
-        try {
-            String[] cli = { "cmd.exe",
-                "/c",
-                USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe -json " +
-                    file.getAbsolutePath() +
-                    " > " +
-                    file.getParent() + "/" + filenameWithoutExtension + ".json"};
-            Process process = new ProcessBuilder(cli).start();
-            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            input.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("", e);
-        }
+    public void writeJsonFile(File file) {
+        initCommandLine();
+        commandLine.add(file.getAbsolutePath());
+        commandLine.add("-json");
+        commandLine.add(">");
+        commandLine.add(file.getParent() + "/" + fileNameWithoutExtension(file) + ".json");
+        run();
     }
 
     /**
