@@ -22,9 +22,7 @@ import java.io.File;
  * @author Alejandro Sanchez
  * @version 1.0
  */
-public class Metadata {
-    private final String USER_DIR = System.getProperty("user.dir") + "/";
-    private final String TOOLS_DIR = "3rdparty/";
+public class Metadata extends Run{
     private final String EXIFTOOL_DIR = "exiftool/";
 
     /**
@@ -34,27 +32,13 @@ public class Metadata {
      * @param file
      *            The handle (provided by a File object) to the file that is going to be read by exiftool.
      */
-    public void xmp(File file) {
-        String filenameWithoutExtension = null;
-        int dotPosition = file.getName().lastIndexOf(".");
-        if (dotPosition != -1) {
-            filenameWithoutExtension = file.getName().substring(0, dotPosition);
-        }
-        try {
-            String[] cli = { "cmd.exe",
-                    "/c",
-                    USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe -X " +
-                            file.getAbsolutePath() +
-                            " > " +
-                            file.getParent() + "/" + filenameWithoutExtension + ".xmp"};
-            Process process = new ProcessBuilder(cli).start();
-            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            input.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("", e);
-        }
+    public void writeXmpFile(File file) {
+        initCommandLine();
+        commandLine.add(file.getAbsolutePath());
+        commandLine.add("-X");
+        commandLine.add(">");
+        commandLine.add(file.getParent() + "/" + fileNameWithoutExtension(file) + ".xmp");
+        run();
     }
 
     /**
@@ -118,5 +102,21 @@ public class Metadata {
             throw new RuntimeException("", e);
         }
         return result;
+    }
+
+    public void initCommandLine() {
+        commandLine.clear();
+        commandLine.add("cmd.exe");
+        commandLine.add("/c");
+        commandLine.add(USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe");
+    }
+
+    public String fileNameWithoutExtension(File file) {
+        String fileNameWithoutExtension = null;
+        int dotPosition = file.getName().lastIndexOf(".");
+        if (dotPosition != -1) {
+            fileNameWithoutExtension = file.getName().substring(0, dotPosition);
+        }
+        return fileNameWithoutExtension;
     }
 }
