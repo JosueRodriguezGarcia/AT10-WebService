@@ -20,7 +20,6 @@ import java.io.InputStreamReader;
  */
 public class KeyFrameVideo {
     CriteriaKeyFrameVideo criteria;
-
     public KeyFrameVideo(CriteriaKeyFrameVideo criteria) {
         this.criteria = criteria;
     }
@@ -36,13 +35,12 @@ public class KeyFrameVideo {
                 + criteria.getDestPath()
                 + criteria.getName() + "."
                 + criteria.getExt();
-            System.out.println(cmd);
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;
-            while ((line = in.readLine()) != null) {
-                System.out.println(line);
-            }
+            do{
+                line = in.readLine();
+            }while(line != null);
             process.waitFor();
             in.close();
         } catch (Exception e) {
