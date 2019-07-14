@@ -27,6 +27,7 @@ import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
@@ -169,6 +170,8 @@ public class Controller {
         File convertedFile = new File("C:\\_pg\\tmp\\conversions\\limbert.mp3");
         Metadata metaDataFile = new Metadata();
         metaDataFile.writeXmpFile(convertedFile);
+        
+        FileOutputStream fos = new FileOutputStream("C:\\_pg\\tmp\\conversions\\limbert.zip");
         return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
                 config[0], config[1], config[2], config[3], config[4]);
     }
