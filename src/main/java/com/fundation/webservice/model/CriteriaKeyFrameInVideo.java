@@ -15,7 +15,7 @@ package com.fundation.webservice.model;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class CriteriaKeyFrameVideo extends CriteriaConvert{
+public class CriteriaKeyFrameInVideo extends CriteriaConvert{
     private String frames;
     private String name;
     private String ext;
