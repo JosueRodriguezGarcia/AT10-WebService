@@ -24,7 +24,9 @@ public class KeyFrameVideo {
         this.criteria = criteria;
     }
 
-    //The convert method add a keyframe for every certain amount of frame.
+    /**
+     * The convert method add a keyframe for every certain amount of frame.
+     */
     public void convert() {
         try {
             String cmd = "ffmpeg -i "
