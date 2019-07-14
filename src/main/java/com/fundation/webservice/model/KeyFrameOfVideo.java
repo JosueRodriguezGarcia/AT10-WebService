@@ -31,13 +31,13 @@ public class KeyFrameOfVideo {
     public void convert() {
         try {
             String cmd = "ffmpeg -i "
-                    + criteria.getSrcPath()
-                    + " -vf thumbnail="
-                    + criteria.getFrames()
-                    + " -vsync 0 "
-                    + criteria.getDestPath()
-                    + criteria.getName() + "%d."
-                    + criteria.getExt();
+                + criteria.getSrcPath()
+                + " -vf thumbnail="
+                + criteria.getFrames()
+                + " -vsync 0 "
+                + criteria.getDestPath()
+                + criteria.getName() + "%d."
+                + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;
