@@ -10,6 +10,7 @@
 package com.fundation.webservice.controller;
 
 import com.fundation.webservice.model.*;
+import com.sun.xml.internal.ws.api.addressing.WSEndpointReference;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -165,6 +166,9 @@ public class Controller {
         criteria.setAudioRate(new Integer(config[4]));
         AudioConvert audio = new AudioConvert(criteria);
         audio.convert();
+        File convertedFile = new File("C:\\_pg\\tmp\\conversions\\limbert.mp3");
+        Metadata metaDataFile = new Metadata();
+        metaDataFile.writeXmpFile(convertedFile);
         return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
                 config[0], config[1], config[2], config[3], config[4]);
     }
