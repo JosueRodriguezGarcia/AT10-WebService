@@ -39,6 +39,7 @@ public class Run {
         try {
             Process process = new ProcessBuilder(commandLine).start();
             BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            process.waitFor();
             input.close();
         }
         catch (Exception e) {
