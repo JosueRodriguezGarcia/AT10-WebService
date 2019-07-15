@@ -10,10 +10,12 @@
 package com.fundation.webservice.model;
 
 import java.io.BufferedReader;
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Superclass that inherits to classes that intend to run executable binaries.
@@ -22,11 +24,20 @@ import java.util.List;
  * @version 1.0
  */
 public class Run {
-    protected String USER_DIR = System.getProperty("user.dir") + "/";
-    protected String TOOLS_DIR = "3rdparty/";
+    protected String USER_DIR;
+    protected String TOOLS_DIR;
     protected List<String> commandLine;
 
     public Run () {
+        USER_DIR = System.getProperty("user.dir") + "/";
+        try (InputStream input = new FileInputStream(USER_DIR + "config.properties")) {
+            Properties properties = new Properties();
+            properties.load(input);
+            TOOLS_DIR = properties.getProperty("dir.tools");
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
         this.commandLine = new ArrayList<>();
     }
 
