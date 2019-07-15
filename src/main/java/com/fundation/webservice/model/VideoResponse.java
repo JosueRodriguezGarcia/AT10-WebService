@@ -22,32 +22,35 @@ public class VideoResponse {
     private long size;
     private String newFormat;
     //audio
-    private String aCodec;
-    private String aBit;
-    private String aChannel;
-    private String aRate;
+    private String audioCodec;
+    private String audioBit;
+    private String audioChannel;
+    private String audioRate;
     //video
-    private String vCodec;
-    private String vTag;
-    private String vBit;
-    private String vRate;
+    private String videoCodec;
+    private String videoTag;
+    private String videoBit;
+    private String videoRate;
+
+    private String checksum;
 
     public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size,
-            String newFormat, String aCodec, String aBit, String aChannel, String aRate,
-            String vCodec, String vTag, String vBit, String vRate) {
+                         String newFormat, String audioCodec, String audioBit, String audioChannel, String audioRate,
+                         String videoCodec, String videoTag, String videoBit, String videoRate, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
         this.newFormat = newFormat;
-        this.aCodec = aCodec;
-        this.aBit = aBit;
-        this.aChannel = aChannel;
-        this.aRate = aRate;
-        this.vCodec = vCodec;
-        this.vTag = vTag;
-        this.vBit = vBit;
-        this.vRate = vRate;
+        this.audioCodec = audioCodec;
+        this.audioBit = audioBit;
+        this.audioChannel = audioChannel;
+        this.audioRate = audioRate;
+        this.videoCodec = videoCodec;
+        this.videoTag = videoTag;
+        this.videoBit = videoBit;
+        this.videoRate = videoRate;
+        this.checksum = checksum;
     }
 
     public String getFileName() {
@@ -70,35 +73,37 @@ public class VideoResponse {
         return newFormat;
     }
 
-    public String getaCodec() {
-        return aCodec;
+    public String getAudioCodec() {
+        return audioCodec;
     }
 
-    public String getaBit() {
-        return aBit;
+    public String getAudioBit() {
+        return audioBit;
     }
 
-    public String getaChannel() {
-        return aChannel;
+    public String getAudioChannel() {
+        return audioChannel;
     }
 
-    public String getaRate() {
-        return aRate;
+    public String getAudioRate() {
+        return audioRate;
     }
 
-    public String getvCodec() {
-        return vCodec;
+    public String getVideoCodec() {
+        return videoCodec;
     }
 
-    public String getvTag() {
-        return vTag;
+    public String getVideoTag() {
+        return videoTag;
     }
 
-    public String getvBit() {
-        return vBit;
+    public String getVideoBit() {
+        return videoBit;
     }
 
-    public String getvRate() {
-        return vRate;
+    public String getVideoRate() {
+        return videoRate;
     }
+
+    public String getChecksum(){ return checksum; }
 }

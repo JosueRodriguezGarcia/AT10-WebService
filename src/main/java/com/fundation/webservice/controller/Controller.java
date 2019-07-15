@@ -10,7 +10,6 @@
 package com.fundation.webservice.controller;
 
 import com.fundation.webservice.model.*;
-import com.sun.xml.internal.ws.api.addressing.WSEndpointReference;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,15 +24,13 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.FileOutputStream;
 
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
  *
- * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas
  * @version 1.0
  */
 @RestController
@@ -46,7 +43,10 @@ public class Controller {
 
     Checksum checksum = new Checksum();
 
-    // Default Request is a GET method
+    /**
+     * Default Request is a GET method
+     * @return
+     */
     @RequestMapping("/")
     public String home() {
         return "AT-10 File Conversion Service";
@@ -82,77 +82,75 @@ public class Controller {
                 pdf.getSize(), name, dpi, ext, formatColor);
     }
 
-    // POST asset to be converted along with the required conversion criteria.
-    @PostMapping("/uploadVideo")
-    public VideoResponse upload(@RequestParam("video") MultipartFile file,
-                                @RequestParam(value = "newFormat", defaultValue = "") String newFormat,
-                                @RequestParam(value = "acodec", defaultValue = "") String acodec,
-                                @RequestParam(value = "aBit", defaultValue = "") String aBit,
-                                @RequestParam(value = "aChannel", defaultValue = "") String aChannel,
-                                @RequestParam(value = "aRate", defaultValue = "") String aRate,
-                                @RequestParam(value = "vcodec", defaultValue = "") String vcodec,
-                                @RequestParam(value = "vTag", defaultValue = "") String vTag,
-                                @RequestParam(value = "vBit", defaultValue = "") String vBit,
-                                @RequestParam(value = "vRate", defaultValue = "") String vRate,
-                                @RequestParam(value = "newName", defaultValue = "") String newName,
-                                @RequestParam(value = "ext", defaultValue = "") String extension) {
-        String fileName = uploadService.storeFile(file);
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(newName + extension)
-                .toUriString();
-        //Converting Video
-        CriteriaVideo criterion = new CriteriaVideo();
-        criterion.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
-        criterion.setDestPath("C:\\_pg\\tmp\\conversions\\" + newName + extension);
-        criterion.setNewFormat(newFormat);
-        criterion.setaCodec(acodec);
-        criterion.setaBit(new Integer(aBit));
-        criterion.setaChannel(new Integer(aChannel));
-        criterion.setaRate(new Integer(aRate));
-        criterion.setvCodec(vcodec);
-        criterion.setvTag(vTag);
-        criterion.setvBit(new Integer(vBit));
-        criterion.setvRate(new Integer(vRate));
-        VideoConvert video = new VideoConvert(criterion);
-        video.convert();
-        return new VideoResponse(fileName, fileDownloadUri, file.getContentType(),
-                file.getSize(), newFormat, acodec, aBit, aChannel, aRate, vcodec, vTag, vBit, vRate);
+    /**
+     *
+     * @param asset defines upload file
+     * @param input defines (at the moment) the checksum of the upload file
+     * @param config defines all the configurations for the output file
+     * @param output defines the name and the extension of the output result file
+     * @return
+     *
+     * POST asset to be converted along with the required conversion criteria.
+     * input, output and conf with video
+     */
+    @PostMapping("/convertVideo")
+    public VideoResponse convertInputVideo(@RequestParam("asset") MultipartFile asset,
+            @RequestParam("input") String[] input,
+            @RequestParam("config") String[] config,
+            @RequestParam("output") String[] output) {
+        String fileName = uploadService.storeFile(asset);
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/")
+                .path(output[0] + ".zip").toUriString();
+
+        String inputChecksumString = "";
+        try {
+            inputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\uploads\\" + asset.getOriginalFilename() ,"MD5");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        if(input[0].equals(inputChecksumString)){
+            new File("C:/_pg/tmp/conversions/" + output[0] + "/").mkdirs();
+            CriteriaVideo criteria = new CriteriaVideo();
+            criteria.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
+            criteria.setDestPath("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0] + output[1]);
+            criteria.setNewFormat(config[0]);
+            criteria.setAudioCodec(config[1]);
+            criteria.setAudioBit(new Integer(config[2]));
+            criteria.setAudioChannel(new Integer(config[3]));
+            criteria.setAudioRate(new Integer(config[4]));
+            criteria.setVideoCodec(config[5]);
+            criteria.setVideoTag(config[6]);
+            criteria.setVideoBit(new Integer(config[7]));
+            criteria.setVideoRate(new Integer(config[8]));
+            VideoConvert video = new VideoConvert(criteria);
+            video.convert();
+            String outputChecksumString = "";
+
+            try {
+                outputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\conversions\\fileout\\fileout.avi","MD5");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            File convertedFile = new File("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0] + output[1]);
+
+            Metadata metaDataFile = new Metadata();
+            metaDataFile.writeXmpFile(convertedFile);
+            FolderZipped.zipFolder(output[0]);
+
+            return new VideoResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
+                    config[0], config[1], config[2], config[3], config[4], config[5], config[6], config[7], config[8], outputChecksumString);
+        } else {
+            System.out.print("Error");
+            return null;
+        }
     }
 
     // POST asset to be converted along with the required conversion criteria.
-    /*@PostMapping("/uploadAudio")
-    public AudioResponse upload(@RequestParam("audio") MultipartFile file,
-            @RequestParam(value = "newFormat", defaultValue = "") String newFormat,
-            @RequestParam(value = "acodec", defaultValue = "") String acodec,
-            @RequestParam(value = "aBit", defaultValue = "") String aBit,
-            @RequestParam(value = "aChannel", defaultValue = "") String aChannel,
-            @RequestParam(value = "aRate", defaultValue = "") String aRate,
-            @RequestParam(value = "newName", defaultValue = "") String newName,
-            @RequestParam(value = "ext", defaultValue = "") String extension) {
-        String fileName = uploadService.storeFile(file);
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/download/")
-                .path(newName + extension)
-                .toUriString();
-        //Converting Audio
-        CriteriaAudio criterion = new CriteriaAudio();
-        criterion.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
-        criterion.setDestPath("C:\\_pg\\tmp\\conversions\\" + newName + extension);
-        criterion.setNewFormat(newFormat);
-        criterion.setAudioCodec(acodec);
-        criterion.setAudioBit(new Integer(aBit));
-        criterion.setAudioChannel(new Integer(aChannel));
-        criterion.setAudioRate(new Integer(aRate));
-        AudioConvert audio = new AudioConvert(criterion);
-        audio.convert();
-        return new AudioResponse(fileName, fileDownloadUri, file.getContentType(),
-                file.getSize(), newFormat, acodec, aBit, aChannel, aRate);
-    }*/
-
     // prueba input, output y conf con audio
-    @PostMapping("/convert")
-    public AudioResponse convertInput(@RequestParam("asset") MultipartFile asset,
+    @PostMapping("/convertAudio")
+    public AudioResponse convertInputAudio(@RequestParam("asset") MultipartFile asset,
             @RequestParam("input") String[] input,
             @RequestParam("config") String[] config,
             @RequestParam("output") String[] output) {

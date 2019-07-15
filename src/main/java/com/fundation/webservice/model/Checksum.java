@@ -30,13 +30,4 @@ public class Checksum {
         }
         return result;
     }
-
-//    public static void main(String args[]) {
-//        try {
-//            System.out.println(getChecksum("C:\\Users\\LimbertVargas\\Desktop\\Limbert\\limbert\\limbert.mp3"));
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 }

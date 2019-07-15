@@ -18,15 +18,15 @@ package com.fundation.webservice.model;
 public class CriteriaVideo extends CriteriaConvert{
     private String newFormat;
     //audio
-    private String aCodec;
-    private int aBit;
-    private int aChannel;
-    private int aRate;
+    private String audioCodec;
+    private int audioBit;
+    private int audioChannel;
+    private int audioRate;
     //video
-    private String vCodec;
-    private String vTag;
-    private int vBit;
-    private int vRate;
+    private String videoCodec;
+    private String videoTag;
+    private int videoBit;
+    private int videoRate;
 
     public String getNewFormat() {
         return newFormat;
@@ -36,67 +36,67 @@ public class CriteriaVideo extends CriteriaConvert{
         this.newFormat = newFormat;
     }
 
-    public String getaCodec() {
-        return aCodec;
+    public String getAudioCodec() {
+        return audioCodec;
     }
 
-    public void setaCodec(String aCodec) {
-        this.aCodec = aCodec;
+    public void setAudioCodec(String audioCodec) {
+        this.audioCodec = audioCodec;
     }
 
-    public int getaBit() {
-        return aBit;
+    public int getAudioBit() {
+        return audioBit;
     }
 
-    public void setaBit(int aBit) {
-        this.aBit = aBit;
+    public void setAudioBit(int audioBit) {
+        this.audioBit = audioBit;
     }
 
-    public int getaChannel() {
-        return aChannel;
+    public int getAudioChannel() {
+        return audioChannel;
     }
 
-    public void setaChannel(int aChannel) {
-        this.aChannel = aChannel;
+    public void setAudioChannel(int audioChannel) {
+        this.audioChannel = audioChannel;
     }
 
-    public int getaRate() {
-        return aRate;
+    public int getAudioRate() {
+        return audioRate;
     }
 
-    public void setaRate(int aRate) {
-        this.aRate = aRate;
+    public void setAudioRate(int audioRate) {
+        this.audioRate = audioRate;
     }
 
-    public String getvCodec() {
-        return vCodec;
+    public String getVideoCodec() {
+        return videoCodec;
     }
 
-    public void setvCodec(String vCodec) {
-        this.vCodec = vCodec;
+    public void setVideoCodec(String videoCodec) {
+        this.videoCodec = videoCodec;
     }
 
-    public String getvTag() {
-        return vTag;
+    public String getVideoTag() {
+        return videoTag;
     }
 
-    public void setvTag(String vTag) {
-        this.vTag = vTag;
+    public void setVideoTag(String videoTag) {
+        this.videoTag = videoTag;
     }
 
-    public int getvBit() {
-        return vBit;
+    public int getVideoBit() {
+        return videoBit;
     }
 
-    public void setvBit(int vBit) {
-        this.vBit = vBit;
+    public void setVideoBit(int videoBit) {
+        this.videoBit = videoBit;
     }
 
-    public int getvRate() {
-        return vRate;
+    public int getVideoRate() {
+        return videoRate;
     }
 
-    public void setvRate(int vRate) {
-        this.vRate = vRate;
+    public void setVideoRate(int videoRate) {
+        this.videoRate = videoRate;
     }
 }
