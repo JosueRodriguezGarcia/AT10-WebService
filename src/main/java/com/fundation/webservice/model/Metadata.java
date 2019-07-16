@@ -36,7 +36,7 @@ public class Metadata extends Run{
         commandLine.add(file.getAbsolutePath());
         commandLine.add("-X");
         commandLine.add(">");
-        commandLine.add(file.getParent() + "/" + file.getName() + ".xmp");
+        commandLine.add(file.getAbsolutePath() + ".xmp");
         run();
     }
 
@@ -51,7 +51,7 @@ public class Metadata extends Run{
         commandLine.add(file.getAbsolutePath());
         commandLine.add("-json");
         commandLine.add(">");
-        commandLine.add(file.getParent() + "/" + file.getName() + ".json");
+        commandLine.add(file.getAbsolutePath() + ".json");
         run();
     }
 
@@ -93,22 +93,5 @@ public class Metadata extends Run{
     public void initCommandLine() {
         super.initCommandLine();
         commandLine.add(USER_DIR + TOOLS_DIR + EXIFTOOL_DIR + "exiftool.exe");
-    }
-
-    /**
-     * This method is used to determine the name of the output file.
-     * The output file is going to be named after the original file, but the extension will be replaced according
-     * to the metadata format that the client asks for.
-     *
-     * @param file The handle (provided by a File object) to the param file that is going to be read by exiftool.
-     * @return the name of a file without its extension.
-     */
-    public String fileNameWithoutExtension(File file) {
-        String fileNameWithoutExtension = null;
-        int dotPosition = file.getName().lastIndexOf(".");
-        if (dotPosition != -1) {
-            fileNameWithoutExtension = file.getName().substring(0, dotPosition);
-        }
-        return fileNameWithoutExtension;
     }
 }
