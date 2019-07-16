@@ -23,7 +23,7 @@ import java.io.File;
  * @version 1.0
  */
 public class Metadata extends Run{
-    private final String EXIFTOOL_DIR = "exiftool/";
+    private final String EXIFTOOL_DIR = Directories.EXIFTOOL_DIR.getDir();
 
     /**
      * This method writes a xmp file containing the param file metadata info returned by exiftool in XMP format.
@@ -36,7 +36,7 @@ public class Metadata extends Run{
         commandLine.add(file.getAbsolutePath());
         commandLine.add("-X");
         commandLine.add(">");
-        commandLine.add(file.getParent() + "/" + fileNameWithoutExtension(file) + ".xmp");
+        commandLine.add(file.getParent() + "/" + file.getName() + ".xmp");
         run();
     }
 
@@ -51,7 +51,7 @@ public class Metadata extends Run{
         commandLine.add(file.getAbsolutePath());
         commandLine.add("-json");
         commandLine.add(">");
-        commandLine.add(file.getParent() + "/" + fileNameWithoutExtension(file) + ".json");
+        commandLine.add(file.getParent() + "/" + file.getName() + ".json");
         run();
     }
 

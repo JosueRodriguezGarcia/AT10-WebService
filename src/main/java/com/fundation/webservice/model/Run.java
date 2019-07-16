@@ -22,8 +22,8 @@ import java.util.List;
  * @version 1.0
  */
 public class Run {
-    protected String USER_DIR = System.getProperty("user.dir") + "/";
-    protected String TOOLS_DIR = "3rdparty/";
+    final static String USER_DIR = System.getProperty("user.dir") + "/";
+    final static String TOOLS_DIR = Directories.TOOLS_DIR.getDir();
     protected List<String> commandLine;
 
     public Run () {
