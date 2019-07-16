@@ -36,7 +36,7 @@ public class Metadata extends Run{
         commandLine.add(file.getAbsolutePath());
         commandLine.add("-X");
         commandLine.add(">");
-        commandLine.add(file.getParent() + "/" + fileNameWithoutExtension(file) + ".xmp");
+        commandLine.add(file.getParent() + "/" + file.getName() + ".xmp");
         run();
     }
 
@@ -51,7 +51,7 @@ public class Metadata extends Run{
         commandLine.add(file.getAbsolutePath());
         commandLine.add("-json");
         commandLine.add(">");
-        commandLine.add(file.getParent() + "/" + fileNameWithoutExtension(file) + ".json");
+        commandLine.add(file.getParent() + "/" + file.getName() + ".json");
         run();
     }
 
