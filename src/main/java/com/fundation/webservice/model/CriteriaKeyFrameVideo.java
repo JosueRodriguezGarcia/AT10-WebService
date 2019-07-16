@@ -38,39 +38,4 @@ public class CriteriaKeyFrameVideo extends CriteriaConvert {
         this.frames = frames;
     }
 
-    /**
-     * Method that returns the name of the output file.
-     *
-     * @return The a String with the mane of output file
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Method that modifies the name of the output file.
-     *
-     * @param name The name parameter define name of output file.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * Method that return the extension of the output file.
-     *
-     * @return The extension of output file.
-     */
-    public String getExt() {
-        return ext;
-    }
-
-    /**
-     * Method that Modifies the extension od the output file.
-     *
-     * @param ext The ext parameter define extension of output file.
-     */
-    public void setExt(String ext) {
-        this.ext = ext;
-    }
 }

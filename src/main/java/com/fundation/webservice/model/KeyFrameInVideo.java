@@ -35,8 +35,8 @@ public class KeyFrameInVideo {
                 + criteria.getFrames()
                 + ":scenecut=0 -acodec copy "
                 + criteria.getDestPath()
-                + criteria.getName() + "."
-                + criteria.getExt();
+                + criteria.getNameOutputFile()+ "."
+                + criteria.getExtOutputFile();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;

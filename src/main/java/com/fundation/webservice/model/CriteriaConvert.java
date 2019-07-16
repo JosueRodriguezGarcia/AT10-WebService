@@ -16,6 +16,8 @@ package com.fundation.webservice.model;
 public class CriteriaConvert {
     private String srcPath;
     private String destPath;
+    private String nameOutputFile;
+    private String extOutputFile;
 
     public String getSrcPath() {
         return srcPath;
@@ -31,5 +33,41 @@ public class CriteriaConvert {
 
     public void setDestPath(String destPath) {
         this.destPath = destPath;
+    }
+
+    /**
+     * Method that returns the name of the output file.
+     *
+     * @return The a String with the mane of output file
+     */
+    public String getNameOutputFile() {
+        return nameOutputFile;
+    }
+
+    /**
+     * Method that modifies the name of the output file.
+     *
+     * @param nameOutputFile The name parameter define name of output file.
+     */
+    public void setNameOutputFile(String nameOutputFile) {
+        this.nameOutputFile = nameOutputFile;
+    }
+
+    /**
+     * Method that return the extension of the output file.
+     *
+     * @return The extension of output file.
+     */
+    public String getExtOutputFile() {
+        return extOutputFile;
+    }
+
+    /**
+     * Method that Modifies the extension od the output file.
+     *
+     * @param extOutputFile The ext parameter define extension of output file.
+     */
+    public void setExtOutputFile(String extOutputFile) {
+        this.extOutputFile = extOutputFile;
     }
 }

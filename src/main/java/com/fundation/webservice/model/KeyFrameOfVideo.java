@@ -14,7 +14,7 @@ import java.io.InputStreamReader;
 
 /**
  * Implements the criteria for create a Keyframes.
- *
+ *l
  * @author Josue Rodriguez
  * @version 1.0
  */
@@ -36,8 +36,8 @@ public class KeyFrameOfVideo {
                 + criteria.getFrames()
                 + " -vsync 0 "
                 + criteria.getDestPath()
-                + criteria.getName() + "%d."
-                + criteria.getExt();
+                + criteria.getNameOutputFile() + "%d."
+                + criteria.getExtOutputFile();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;
