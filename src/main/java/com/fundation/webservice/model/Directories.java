@@ -19,10 +19,10 @@ public enum Directories {
     RSRC_DIR("rsrc/"),
     TOOLS_DIR("3rdparty/"),
     EXIFTOOL_DIR("exiftool/"),
-    FFMPEG_DIR("ffmpeg/"),
+    FFMPEG_DIR("ffmpeg/bin/"),
     IMAGEMAGIC_DIR("ImageMagic/"),
     PANDOC_DIR("pandoc/"),
-    POPPLER_DIR("poppler/");
+    POPPLER_DIR("poppler/bin/");
 
     private String dir;
 
