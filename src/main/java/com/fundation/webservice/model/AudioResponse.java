@@ -27,8 +27,10 @@ public class AudioResponse {
     private String aChannel;
     private String aRate;
 
+    private String checksum;
+
     public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-            String newFormat, String aCodec, String aBit, String aChannel, String aRate) {
+            String newFormat, String aCodec, String aBit, String aChannel, String aRate, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -38,6 +40,7 @@ public class AudioResponse {
         this.aBit = aBit;
         this.aChannel = aChannel;
         this.aRate = aRate;
+        this.checksum = checksum;
     }
 
     public String getFileName() {
@@ -75,4 +78,6 @@ public class AudioResponse {
     public String getaRate() {
         return aRate;
     }
+
+    public String getChecksum() { return checksum; }
 }

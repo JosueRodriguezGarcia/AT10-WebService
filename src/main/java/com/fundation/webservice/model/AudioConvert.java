@@ -25,8 +25,8 @@ import java.io.File;
 public class AudioConvert implements IConvert{
     private CriteriaAudio criterion;
 
-    public AudioConvert(CriteriaAudio criterion) {
-        this.criterion = criterion;
+    public AudioConvert(CriteriaAudio criteria) {
+        this.criterion = criteria;
     }
 
     public void convert() {
@@ -35,10 +35,10 @@ public class AudioConvert implements IConvert{
             File target = new File(criterion.getDestPath());
             //Audio Attributes
             AudioAttributes audio = new AudioAttributes();
-            audio.setCodec(criterion.getaCodec());
-            audio.setBitRate(criterion.getaBit());
-            audio.setChannels(criterion.getaChannel());
-            audio.setSamplingRate(criterion.getaRate());
+            audio.setCodec(criterion.getAudioCodec());
+            audio.setBitRate(criterion.getAudioBit());
+            audio.setChannels(criterion.getAudioChannel());
+            audio.setSamplingRate(criterion.getAudioRate());
             //Encoding attributes
             EncodingAttributes attrs = new EncodingAttributes();
             attrs.setFormat(criterion.getNewFormat());

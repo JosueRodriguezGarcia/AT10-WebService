@@ -17,10 +17,10 @@ package com.fundation.webservice.model;
  */
 public class CriteriaAudio extends CriteriaConvert {
     private String newFormat;
-    private String aCodec;
-    private int aBit;
-    private int aChannel;
-    private int aRate;
+    private String audioCodec;
+    private int audioBit;
+    private int audioChannel;
+    private int audioRate;
 
     public String getNewFormat() {
         return newFormat;
@@ -30,35 +30,35 @@ public class CriteriaAudio extends CriteriaConvert {
         this.newFormat = newFormat;
     }
 
-    public String getaCodec() {
-        return aCodec;
+    public String getAudioCodec() {
+        return audioCodec;
     }
 
-    public void setaCodec(String aCodec) {
-        this.aCodec = aCodec;
+    public void setAudioCodec(String audioCodec) {
+        this.audioCodec = audioCodec;
     }
 
-    public int getaBit() {
-        return aBit;
+    public int getAudioBit() {
+        return audioBit;
     }
 
-    public void setaBit(int aBit) {
-        this.aBit = aBit;
+    public void setAudioBit(int audioBit) {
+        this.audioBit = audioBit;
     }
 
-    public int getaChannel() {
-        return aChannel;
+    public int getAudioChannel() {
+        return audioChannel;
     }
 
-    public void setaChannel(int aChannel) {
-        this.aChannel = aChannel;
+    public void setAudioChannel(int audioChannel) {
+        this.audioChannel = audioChannel;
     }
 
-    public int getaRate() {
-        return aRate;
+    public int getAudioRate() {
+        return audioRate;
     }
 
-    public void setaRate(int aRate) {
-        this.aRate = aRate;
+    public void setAudioRate(int audioRate) {
+        this.audioRate = audioRate;
     }
 }

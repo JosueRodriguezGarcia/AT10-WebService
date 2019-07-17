@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2019 Jalasoft.
  *
  * This software is the confidential and proprietary information of Jalasoft.
@@ -12,91 +12,187 @@ package com.fundation.webservice.model;
 /**
  * Implements the model class File and the getter and setter´s methods
  *
- * @author Maday Alcala
+ * @author Maday Alcala, Limbert Vargas
  * @version 1.0
  */
 public class CriteriaVideo extends CriteriaConvert{
     private String newFormat;
-    //audio
-    private String aCodec;
-    private int aBit;
-    private int aChannel;
-    private int aRate;
-    //video
-    private String vCodec;
-    private String vTag;
-    private int vBit;
-    private int vRate;
 
+    /**
+     * Audio variables.
+     */
+    private String audioCodec;
+    private int audioBit;
+    private int audioChannel;
+    private int audioRate;
+
+    /**
+     * video variables.
+     */
+    private String videoCodec;
+    private String videoTag;
+    private int videoBit;
+    private int videoRate;
+
+    /**
+     * Uses for return output format file.
+     *
+     * @return output format file.
+     */
     public String getNewFormat() {
         return newFormat;
     }
 
+    /**
+     * Uses for modified output format file.
+     *
+     * @param newFormat output format file.
+     */
     public void setNewFormat(String newFormat) {
         this.newFormat = newFormat;
     }
 
-    public String getaCodec() {
-        return aCodec;
+    /**
+     * Uses for return audio codec format.
+     *
+     * @return audio codec format.
+     */
+    public String getAudioCodec() {
+        return audioCodec;
     }
 
-    public void setaCodec(String aCodec) {
-        this.aCodec = aCodec;
+    /**
+     * Uses for modified audio codec format.
+     *
+     * @param audioCodec audio codec format.
+     */
+    public void setAudioCodec(String audioCodec) {
+        this.audioCodec = audioCodec;
     }
 
-    public int getaBit() {
-        return aBit;
+    /**
+     * Uses for return bit rate of the output file.
+     *
+     * @return bit rate of the output file.
+     */
+    public int getAudioBit() {
+        return audioBit;
     }
 
-    public void setaBit(int aBit) {
-        this.aBit = aBit;
+    /**
+     * Uses for modified bit rate of the output file.
+     *
+     * @param audioBit bit rate of the output file.
+     */
+    public void setAudioBit(int audioBit) {
+        this.audioBit = audioBit;
     }
 
-    public int getaChannel() {
-        return aChannel;
+    /**
+     * Uses for return number of channels required in the output file.
+     *
+     * @return number of channels required in the output file.
+     */
+    public int getAudioChannel() {
+        return audioChannel;
     }
 
-    public void setaChannel(int aChannel) {
-        this.aChannel = aChannel;
+    /**
+     * Uses for modified number of channels required in the output file.
+     *
+     * @param audioChannel number of channels required in the output file.
+     */
+    public void setAudioChannel(int audioChannel) {
+        this.audioChannel = audioChannel;
     }
 
-    public int getaRate() {
-        return aRate;
+    /**
+     * Uses for return audio rate of the output file.
+     *
+     * @return audio rate of the output file.
+     */
+    public int getAudioRate() {
+        return audioRate;
     }
 
-    public void setaRate(int aRate) {
-        this.aRate = aRate;
+    /**
+     * Uses for modified audio rate of the output file.
+     *
+     * @param audioRate audio rate of the output file.
+     */
+    public void setAudioRate(int audioRate) {
+        this.audioRate = audioRate;
     }
 
-    public String getvCodec() {
-        return vCodec;
+    /**
+     * Uses for return video codec format of the output video file.
+     *
+     * @return video codec format of the output video file.
+     */
+    public String getVideoCodec() {
+        return videoCodec;
     }
 
-    public void setvCodec(String vCodec) {
-        this.vCodec = vCodec;
+    /**
+     * Uses for modified video codec format of the output video file.
+     *
+     * @param videoCodec video codec format of the output video file.
+     */
+    public void setVideoCodec(String videoCodec) {
+        this.videoCodec = videoCodec;
     }
 
-    public String getvTag() {
-        return vTag;
+    /**
+     * Uses for return video tag of the output video file.
+     *
+     * @return video tag of the output video file.
+     */
+    public String getVideoTag() {
+        return videoTag;
     }
 
-    public void setvTag(String vTag) {
-        this.vTag = vTag;
+    /**
+     * Uses for modified video tag of the output video file.
+     *
+     * @param videoTag video tag of the output video file.
+     */
+    public void setVideoTag(String videoTag) {
+        this.videoTag = videoTag;
     }
 
-    public int getvBit() {
-        return vBit;
+    /**
+     * Uses for return video bit rate.
+     *
+     * @return video bit rate.
+     */
+    public int getVideoBit() {
+        return videoBit;
     }
 
-    public void setvBit(int vBit) {
-        this.vBit = vBit;
+    /**
+     * Uses for modified video bit rate.
+     *
+     * @param videoBit video bit rate.
+     */
+    public void setVideoBit(int videoBit) {
+        this.videoBit = videoBit;
     }
 
-    public int getvRate() {
-        return vRate;
+    /**
+     * Uses for return rate of the output video file.
+     *
+     * @return rate of the output video file.
+     */
+    public int getVideoRate() {
+        return videoRate;
     }
 
-    public void setvRate(int vRate) {
-        this.vRate = vRate;
+    /**
+     * Uses for modified rate of the output video file.
+     *
+     * @param videoRate rate of the output video file.
+     */
+    public void setVideoRate(int videoRate) {
+        this.videoRate = videoRate;
     }
 }
