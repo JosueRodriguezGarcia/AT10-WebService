@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
  * @version 1.0
  */
 public class CriteriaKeyFrameVideoTest {
-
     CriteriaKeyFrameVideo criteriaTest = new CriteriaKeyFrameVideo();
 
     @Before
