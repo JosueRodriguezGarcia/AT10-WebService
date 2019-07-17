@@ -39,9 +39,10 @@ public class ThumbnailVideo {
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;
-            while ((line = in.readLine()) != null) {
-                System.out.println(line);
+            do {
+                line = in.readLine();
             }
+            while (line != null);
             process.waitFor();
             in.close();
         } catch (Exception e) {
