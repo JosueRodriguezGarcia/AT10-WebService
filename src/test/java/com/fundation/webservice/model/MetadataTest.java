@@ -16,6 +16,8 @@ import org.junit.Test;
 import java.io.File;
 
 /**
+ * This class serves as JUnit test class for the Metadata class from our model entity.
+ *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
@@ -25,8 +27,10 @@ public class MetadataTest {
     @Test
     public void initCommandLine_stringResult() {
         metadata.initCommandLine();
-        String actual = metadata.commandLine.get(0) + " " + metadata.commandLine.get(1) + " " + metadata.commandLine.get(2);
-        assertEquals("cmd.exe /c " + metadata.USER_DIR + metadata.TOOLS_DIR + "exiftool/exiftool.exe" , actual);
+        String actual = metadata.commandLine.get(0) + " " + metadata.commandLine.get(1) + " "
+                + metadata.commandLine.get(2);
+        assertEquals("cmd.exe /c " + metadata.USER_DIR + metadata.TOOLS_DIR
+                + "exiftool/exiftool.exe" , actual);
     }
 
     @Test
