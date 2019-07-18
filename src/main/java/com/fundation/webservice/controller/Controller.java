@@ -235,4 +235,37 @@ public class Controller {
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename()
             + "\"").body(resource);
     }
+    @PostMapping("/convertKeyframe")
+    public KeyFrameResponse convertKeyFrame(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String[] input,
+                                      @RequestParam("config") String[] config, @RequestParam("output") String[] output) {
+        String fileName = uploadService.storeFile(asset);
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(output[0]
+                + ".zip").toUriString();
+        String inputChecksumString = "";
+
+        if(input[0].equals(inputChecksumString)){
+            new File("C:/_pg/tmp/conversions/" + output[0] + "/").mkdirs();
+            CriteriaKeyFrameVideo criteria = new CriteriaKeyFrameVideo();
+            criteria.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
+            criteria.setDestPath("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0] + output[1]);
+            criteria.setFrames(config[0]);
+            criteria.setName(config[1]);
+            criteria.setExt(config[2]);
+
+            KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo(criteria);
+            keyFrameOfVideo.convert();
+
+            File convertedFile = new File("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0]
+                    + output[1]);
+            Metadata metaDataFile = new Metadata();
+            metaDataFile.writeXmpFile(convertedFile);
+            FolderZipped.zipFolder(output[0]);
+
+            return new KeyFrameResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), config[0],
+                    config[1], config[2], config[3]);
+        } else {
+            System.out.print("Error");
+            return null;
+        }
+    }
 }
