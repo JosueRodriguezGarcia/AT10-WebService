@@ -17,4 +17,6 @@ import java.io.File;
  */
 public interface IConvert2 {
     void convert(File file);
+
+    void convert(CriteriaConvert criteriaConvert);
 }
