@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2019 Jalasoft.
- *
+ * <p>
  * This software is the confidential and proprietary information of Jalasoft.
  * ("Confidential Information"). You shall not
  * disclose such Confidential Information and shall use it only in
@@ -25,7 +25,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
+import java.io.*;
+import java.util.Properties;
 
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
@@ -44,6 +45,17 @@ public class Controller {
     private DownloadService downloadService;
 
     Checksum checksum = new Checksum();
+    Properties prop = new Properties();
+    InputStream output;
+    {
+        try {
+            output = new FileInputStream("application.properties");
+
+            prop.load(output);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+    }
 
     /**
      * Default Request is a GET method
@@ -107,18 +119,19 @@ public class Controller {
      */
     @PostMapping("/convertVideo")
     public VideoResponse convertVideo(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String[] input,
-            @RequestParam("config") String[] config, @RequestParam("output") String[] output) {
+                                      @RequestParam("config") String[] config, @RequestParam("output") String[] output) {
         String fileName = uploadService.storeFile(asset);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(output[0]
-            + ".zip").toUriString();
+                + ".zip").toUriString();
         String inputChecksumString = "";
 
         try {
             inputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\uploads\\" + asset.getOriginalFilename(),
-                "MD5");
+                    "MD5");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception e) { e.printStackTrace(); }
-        if(input[0].equals(inputChecksumString)){
+        if (input[0].equals(inputChecksumString)) {
             new File("C:/_pg/tmp/conversions/" + output[0] + "/").mkdirs();
             CriteriaVideo criteria = new CriteriaVideo();
             criteria.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
@@ -134,22 +147,28 @@ public class Controller {
             criteria.setVideoRate(new Integer(config[8]));
             VideoConvert video = new VideoConvert(criteria);
             video.convert();
+
+            String aux = prop.getProperty("file.uploadDir");
+            System.out.println(aux);
+
             String outputChecksumString = "";
 
             try {
                 outputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\conversions\\fileout\\fileout.avi",
-                    "MD5");
-            } catch (Exception e) { e.printStackTrace(); }
+                        "MD5");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             File convertedFile = new File("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0]
-                + output[1]);
+                    + output[1]);
             Metadata metaDataFile = new Metadata();
             metaDataFile.writeXmpFile(convertedFile);
             FolderZipped.zipFolder(output[0]);
 
             return new VideoResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), config[0],
-                config[1], config[2], config[3], config[4], config[5], config[6], config[7], config[8],
-                outputChecksumString);
+                    config[1], config[2], config[3], config[4], config[5], config[6], config[7], config[8],
+                    outputChecksumString);
         } else {
             System.out.print("Error");
             return null;
@@ -167,19 +186,18 @@ public class Controller {
      */
     @PostMapping("/convertAudio")
     public AudioResponse convertAudio(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String[] input,
-            @RequestParam("config") String[] config, @RequestParam("output") String[] output) {
+                                      @RequestParam("config") String[] config, @RequestParam("output") String[] output) {
         String fileName = uploadService.storeFile(asset);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(output[0]
-            + ".zip").toUriString();
+                + ".zip").toUriString();
         String inputChecksumString = "";
 
         try {
-            inputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\uploads\\pruebawav.wav" ,"MD5");
-        }
-        catch (Exception e) {
+            inputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\uploads\\pruebawav.wav", "MD5");
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        if(input[0].equals(inputChecksumString)){
+        if (input[0].equals(inputChecksumString)) {
             new File("C:/_pg/tmp/conversions/" + output[0] + "/").mkdirs();
             CriteriaAudio criteria = new CriteriaAudio();
             criteria.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
@@ -195,19 +213,19 @@ public class Controller {
             String outputChecksumString = "";
             try {
                 outputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\conversions\\limbert\\limbert.mp3",
-                    "MD5");
+                        "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             File convertedFile = new File("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0]
-                + output[1]);
+                    + output[1]);
 
             Metadata metaDataFile = new Metadata();
             metaDataFile.writeXmpFile(convertedFile);
             FolderZipped.zipFolder(output[0]);
             return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), config[0],
-                config[1], config[2], config[3], config[4], outputChecksumString);
+                    config[1], config[2], config[3], config[4], outputChecksumString);
         } else {
             System.out.print("error");
             return null;
@@ -226,13 +244,15 @@ public class Controller {
         String contentType = null;
         try {
             contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
-        } catch (Exception ex) { ex.printStackTrace(); }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
         // Default content type if type could not be determined
         if (contentType == null) {
             contentType = "application/octet-stream";
         }
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType))
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename()
-            + "\"").body(resource);
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename()
+                        + "\"").body(resource);
     }
 }
