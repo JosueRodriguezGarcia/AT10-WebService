@@ -10,9 +10,10 @@ public class KeyFrameResponse {
     private String frame;
     private String nameOutputFile;
     private String extOutputFile;
+    private String checksum;
 
     public KeyFrameResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                         String newFormat, String frame, String nameOutputFile, String extOutputFile) {
+                         String newFormat, String frame, String nameOutputFile, String extOutputFile, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -22,6 +23,7 @@ public class KeyFrameResponse {
         this.frame = frame;
         this.nameOutputFile = nameOutputFile;
         this.extOutputFile = extOutputFile;
+        this.checksum = checksum;
     }
 
     public String getFileName() {
@@ -54,5 +56,9 @@ public class KeyFrameResponse {
 
     public String getExtOutputFile() {
         return extOutputFile;
+    }
+
+    public String getChecksum() {
+        return checksum;
     }
 }
