@@ -22,18 +22,18 @@ import static org.junit.Assert.assertTrue;
 public class ConvertWordToImageTest {
     @Test
     public void convert_docx_jpg() {
-        CriteriaPdfToImage pruebaImagen = new CriteriaPdfToImage();
-        pruebaImagen.setSrcPath(Directories.RSRC_DIR.getDir() + "BugLifeCycleFAQ.docx");
-        pruebaImagen.setDestPath(Directories.RSRC_DIR.getDir());
-        pruebaImagen.setName("pepino");
-        pruebaImagen.setExt(".jpg");
-        pruebaImagen.setDpi(300);
-        pruebaImagen.setFormatColor("RGB");
+        CriteriaPdfToImage criteriaPdfToImage = new CriteriaPdfToImage();
+        criteriaPdfToImage.setSrcPath(Directories.RSRC_DIR.getDir() + "BugLifeCycleFAQ.docx");
+        criteriaPdfToImage.setDestPath(Directories.RSRC_DIR.getDir());
+        criteriaPdfToImage.setName("outputImage");
+        criteriaPdfToImage.setExt(".jpg");
+        criteriaPdfToImage.setDpi(300);
+        criteriaPdfToImage.setFormatColor("RGB");
         IConvert2 convertWordToImage = new ConvertWordToImage();
-        convertWordToImage.convert(pruebaImagen);
-        String actual = Directories.RSRC_DIR.getDir() + pruebaImagen.getName() + "0" + pruebaImagen.getExt();
-        File output = new File(actual);
-        assertTrue(output.exists());
+        convertWordToImage.convert(criteriaPdfToImage);
+        String actual = Directories.RSRC_DIR.getDir() + criteriaPdfToImage.getName() + "0" + criteriaPdfToImage.getExt();
+        File outputFile = new File(actual);
+        assertTrue(outputFile.exists());
     }
 
     public String filenameWithoutExtension(File file) {
