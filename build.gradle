@@ -38,4 +38,12 @@ dependencies {
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.0'
     // https://mvnrepository.com/artifact/ws.schild/jave-all-deps
     compile group: 'ws.schild', name: 'jave-all-deps', version: '2.5.0'
+    // https://mvnrepository.com/artifact/com.lowagie.text/com.springsource.com.lowagie.text
+    compile group: 'com.lowagie.text', name: 'com.springsource.com.lowagie.text', version: '2.0.8'
+    implementation 'org.eclipse.birt.runtime.3_7_1:com.lowagie.text:2.1.7'
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas
+    compile group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.1.0'
+    implementation 'org.apache.poi:poi-scratchpad:4.1.0'
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad
+    compile group: 'org.apache.poi', name: 'poi-scratchpad', version: '3.9'
 }
