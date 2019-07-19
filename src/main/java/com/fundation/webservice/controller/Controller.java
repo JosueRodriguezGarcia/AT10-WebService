@@ -30,7 +30,7 @@ import java.io.File;
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
  *
- * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas, Josue Rodriguez
  * @version 1.0
  */
 @RestController
@@ -58,14 +58,14 @@ public class Controller {
     /**
      * POST asset to be converted along with the required conversion criteria.
      *
-     * @param pdf defines upload file.
-     * @param name defines de name of the file output.
-     * @param dpi defines format of dot point for inch.
-     * @param ext define the extension of the output file.
+     * @param pdf         defines upload file.
+     * @param name        defines de name of the file output.
+     * @param dpi         defines format of dot point for inch.
+     * @param ext         define the extension of the output file.
      * @param formatColor defines the different format colors of the output file.
      * @return defines all parameters of the output file.
      */
-    @PostMapping("/uploadPdf")
+    @PostMapping("/convertPdf")
     public PdfResponse upload(@RequestParam("pdf") MultipartFile pdf, @RequestParam(value = "name", defaultValue = "")
             String name, @RequestParam(value = "dpi", defaultValue = "") String dpi, @RequestParam(value = "extension",
             defaultValue = "") String ext, @RequestParam(value = "formatColor", defaultValue = "") String formatColor) {
@@ -99,8 +99,8 @@ public class Controller {
     /**
      * POST asset to be converted along with the required conversion criteria input, output and conf with video.
      *
-     * @param asset defines upload file.
-     * @param input defines (at the moment) the checksum of the upload file.
+     * @param asset  defines upload file.
+     * @param input  defines (at the moment) the checksum of the upload file.
      * @param config defines all the configurations for the output file.
      * @param output defines the name and the extension of the output result file.
      * @return all array string parameters.
@@ -162,8 +162,8 @@ public class Controller {
     /**
      * POST asset to be converted along with the required conversion criteria input, output y conf with audio.
      *
-     * @param asset defines upload file.
-     * @param input defines (at the moment) the checksum of the upload file.
+     * @param asset  defines upload file.
+     * @param input  defines (at the moment) the checksum of the upload file.
      * @param config defines all the configurations for the output file.
      * @param output defines the name and the extension of the output result file.
      * @return all array string parameters.
@@ -218,6 +218,7 @@ public class Controller {
 
     /**
      * Endpoint for downloading converted assets
+     *
      * @param fileName donload the convert file with added file name
      * @param request
      * @return
@@ -250,37 +251,22 @@ public class Controller {
         try {
             inputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\uploads\\" + asset.getOriginalFilename(),
                     "MD5");
-        }catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (input[0].equals(inputChecksumString)) {
             new File("C:/_pg/tmp/conversions/" + output[0] + "/").mkdirs();
             CriteriaKeyFrameVideo criteria = new CriteriaKeyFrameVideo();
             criteria.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
-            criteria.setDestPath("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0] + output[1]);
+            criteria.setDestPath("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\");
             criteria.setFrames(config[0]);
-            criteria.setName(config[1]);
-            criteria.setExt(config[2]);
-
+            criteria.setName(output[0]);
+            criteria.setExt(output[1]);
             KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo(criteria);
             keyFrameOfVideo.convert();
-
-            String outputChecksumString = "";
-            try {
-                outputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\conversions\\limbert\\limbert.mp3",
-                        "MD5");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            File convertedFile = new File("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0]
-                    + output[1]);
-            Metadata metaDataFile = new Metadata();
-            metaDataFile.writeXmpFile(convertedFile);
             FolderZipped.zipFolder(output[0]);
 
-            return new KeyFrameResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), config[0],
-                    config[1], config[2], config[3],outputChecksumString);
+            return new KeyFrameResponse(fileName, fileDownloadUri);
         } else {
             System.out.print("Error");
             return null;
