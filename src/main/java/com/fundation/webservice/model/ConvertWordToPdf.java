@@ -34,7 +34,7 @@ public class ConvertWordToPdf extends Run implements IConvert2{
      */
     public void convert(CriteriaConvert criteriaConvert) {
         initCommandLine();
-        commandLine.add(criteriaConvert.getDestPath());
+        commandLine.add(criteriaConvert.getSrcPath());
         run();
     }
 
