@@ -14,12 +14,15 @@ package com.fundation.webservice.model;
  */
 public class CriteriaImage extends CriteriaConvert{
     private String name;
-    private int dpi;
+    private int rotation;
     private String ext;
-    private String formatColor;
     private String resolution;
     private int quality;
 
+    /**
+     * These are the getters and setters for the image conversion criteria.
+     * @return
+     */
     public String getName() {
         return name;
     }
@@ -28,12 +31,12 @@ public class CriteriaImage extends CriteriaConvert{
         this.name = name;
     }
 
-    public int getDpi() {
-        return dpi;
+    public int getRotation() {
+        return rotation;
     }
 
-    public void setDpi(int dpi) {
-        this.dpi = dpi;
+    public void setRotation(int rotation) {
+        this.rotation = rotation;
     }
 
     public String getExt() {
@@ -42,14 +45,6 @@ public class CriteriaImage extends CriteriaConvert{
 
     public void setExt(String ext) {
         this.ext = ext;
-    }
-
-    public String getFormatColor() {
-        return formatColor;
-    }
-
-    public void setFormatColor(String formatColor) {
-        this.formatColor = formatColor;
     }
 
     public String getResolution() {

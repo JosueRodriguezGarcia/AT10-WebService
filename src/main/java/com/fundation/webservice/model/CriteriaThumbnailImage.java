@@ -17,7 +17,6 @@ package com.fundation.webservice.model;
  */
 public class CriteriaThumbnailImage extends CriteriaConvert {
     private String name;
-    private String time;
     private String ext;
 
     //Returns the name of the output file.
@@ -28,16 +27,6 @@ public class CriteriaThumbnailImage extends CriteriaConvert {
     //Modifies the name of the output file.
     public void setName(String name) {
         this.name = name;
-    }
-
-    //Returns the time of the frame that we search.
-    public String getTime() {
-        return time;
-    }
-
-    //Modifies the time of the frame that we search.
-    public void setTime(String time) {
-        this.time = time;
     }
 
     //Returns the extension of the output file.
