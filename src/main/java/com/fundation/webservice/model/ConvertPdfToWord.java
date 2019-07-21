@@ -23,17 +23,22 @@ import com.itextpdf.text.pdf.parser.SimpleTextExtractionStrategy;
 import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
 
 /**
- * @author Josue Rodriguez
+ * Performs document conversion from PDF format to docx formats.
+ * This class is limited to text extraction only.
+ *
+ * @author Josue Rodriguez, Alejandro Sánchez Luizaga
  * @version 1.0
  */
 public class ConvertPdfToWord implements IConvert{
-    CriteriaPdfToWord criterion;
-    ConvertPdfToWord(CriteriaPdfToWord criterion){
-        this.criterion = criterion;
-    }
-    public void convert() {
+    /**
+     * Implements convert(CriteriaConvert) from IConvert interface.
+     * Conversion is performed via Apache poi utility.
+     *
+     * @param criteriaConvert holds the source and destination file paths.
+     */
+    public void convert(CriteriaConvert criteriaConvert) {
         XWPFDocument doc = new XWPFDocument();
-        String pdf = criterion.getSrcPath();
+        String pdf = criteriaConvert.getSrcPath();
         try {
             PdfReader reader = new PdfReader(pdf);
             PdfReaderContentParser parser = new PdfReaderContentParser(reader);
@@ -45,7 +50,7 @@ public class ConvertPdfToWord implements IConvert{
                 run.setText(text);
                 run.addBreak(BreakType.PAGE);
             }
-            FileOutputStream out = new FileOutputStream(criterion.getDestPath());
+            FileOutputStream out = new FileOutputStream(criteriaConvert.getDestPath());
             doc.write(out);
             out.close();
             reader.close();
