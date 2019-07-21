@@ -15,29 +15,26 @@ import java.io.File;
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class ConvertWordToImage extends Run implements IConvert2{
-    //ConvertWordToPdf convertWordToPdf;
-    //ConvertPdfToImage convertPdfToImage;
-
-    public ConvertWordToImage() {
-        //this.convertWordToPdf = convertWordToPdf;
-        //this.convertPdfToImage = convertPdfToImage;
-    }
-
-    public void convert(File file) {
-
-    }
-
+public class ConvertWordToImage extends Run{
+    /**
+     * Wrapper method that integrates WordToPdf's convert(CriteriaConvert) and PdfToImage's convert()
+     *
+     * @param criteriaConvert
+     */
     public void convert(CriteriaConvert criteriaConvert) {
         File inputFile = new File(criteriaConvert.getSrcPath());
         ConvertWordToPdf convertWordToPdf = new ConvertWordToPdf();
-        convertWordToPdf.convert(inputFile);
+        convertWordToPdf.convert(criteriaConvert);
         String intermediateName = filenameWithoutExtension(inputFile);
         criteriaConvert.setSrcPath(USER_DIR + Directories.RSRC_DIR.getDir() + intermediateName + ".pdf");
-        ConvertPdfToImage convertPdfToImage = new ConvertPdfToImage((CriteriaPdfToImage) criteriaConvert);
-        convertPdfToImage.convert();
+        ConvertPdfToImage convertPdfToImage = new ConvertPdfToImage();
+        convertPdfToImage.convert((CriteriaPdfToImage) criteriaConvert);
     }
 
+    /**
+     * Safe initialization of the list structure that stores the command line string to be passed to the
+     * run() method.
+     */
     public String filenameWithoutExtension(File file) {
         String filenameWithoutExtension = null;
         int dotPosition = file.getName().lastIndexOf(".");
@@ -46,5 +43,4 @@ public class ConvertWordToImage extends Run implements IConvert2{
         }
         return filenameWithoutExtension;
     }
-
 }

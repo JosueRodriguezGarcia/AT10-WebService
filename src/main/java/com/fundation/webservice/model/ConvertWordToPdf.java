@@ -15,18 +15,8 @@ import java.io.File;
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class ConvertWordToPdf extends Run implements IConvert2{
+public class ConvertWordToPdf extends Run{  // To Do: implements "updated" IConvert
     private final String OFFICETOPDF_DIR = Directories.OFFICETOPDF_DIR.getDir();
-
-    /**
-     *
-     * @param file The handle (provided by a File object) to the file that is going to be read by exiftool.
-     */
-    public void convert(File file) {
-        initCommandLine();
-        commandLine.add(file.getAbsolutePath());
-        run();
-    }
 
     /**
      *

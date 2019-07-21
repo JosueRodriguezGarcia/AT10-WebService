@@ -19,25 +19,19 @@ import java.io.InputStreamReader;
  * @author Alejandro Sanchez
  * @version 1.0
  */
-public class ConvertHtmlToDoc implements IConvert {
-    CriteriaHtmlToDoc criteriaHtmlToDoc;
-
-    public ConvertHtmlToDoc(CriteriaHtmlToDoc criteriaHtmlToDoc) {
-        this.criteriaHtmlToDoc = criteriaHtmlToDoc;
-    }
-
-    public void convert() {
-        String s = null;
-
+public class ConvertHtmlToDoc {      // To Do: implements "updated" IConvert
+    public void convert(CriteriaConvert criteriaConvert) {
         try {
-            Process p = Runtime.getRuntime().exec("\\Users\\AlejandroSanchez\\Desktop\\alszla\\_i\\pandoc\\pandoc.exe -o " + criteriaHtmlToDoc.getDestPath() + " " + criteriaHtmlToDoc.getSrcPath());
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while ((s = stdInput.readLine()) != null) { }
-            System.exit(0);
+            Process process = Runtime.getRuntime().exec("3rdparty/" + "pandoc/" + "pandoc.exe -o " + criteriaConvert.getDestPath() + " " + criteriaConvert.getSrcPath());
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            process.waitFor();
+            stdInput.close();
         }
         catch (IOException e) {
             e.printStackTrace();
-            System.exit(-1);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

@@ -86,8 +86,8 @@ public class Controller {
         criterion.setDpi(new Integer(dpi));
         criterion.setExt(ext);
         criterion.setFormatColor(formatColor);
-        ConvertPdfToImage pdfDocument = new ConvertPdfToImage(criterion);
-        pdfDocument.convert();
+        ConvertPdfToImage pdfDocument = new ConvertPdfToImage();
+        pdfDocument.convert(criterion);
         /**
          * This line compresses the folder with images in a zip file
          */

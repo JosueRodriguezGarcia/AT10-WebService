@@ -22,14 +22,17 @@ import java.io.IOException;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class ConvertPdfToImage implements IConvert{
-    CriteriaPdfToImage criterion;
+public class ConvertPdfToImage{     // To Do: implements "updated" IConvert
+    //CriteriaPdfToImage criterion;
 
+    /*
     public ConvertPdfToImage(CriteriaPdfToImage criterion) {
         this.criterion = criterion;
     }
+     */
 
-    public void convert() {
+    public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaPdfToImage criterion = (CriteriaPdfToImage)criteriaConvert;
         try (final PDDocument document = PDDocument.load(new File(criterion.getSrcPath()))) {
             PDFRenderer pdfRenderer = new PDFRenderer(document);
             for (int page = 0; page < document.getNumberOfPages(); ++page) {
