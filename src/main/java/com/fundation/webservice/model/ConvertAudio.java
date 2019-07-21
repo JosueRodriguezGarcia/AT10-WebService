@@ -17,19 +17,22 @@ import ws.schild.jave.MultimediaObject;
 import java.io.File;
 
 /**
- * Implements the criterion and AudioConvert class.
+ * Implements the criterion and ConvertAudio class.
  *
  * @author Limbert Alvaro Vargas Laura
  * @version 1.0
  */
-public class AudioConvert implements IConvert{
-    private CriteriaAudio criterion;
+public class ConvertAudio {            // To Do: implements "updated" IConvert
+    //private CriteriaAudio criterion;
 
-    public AudioConvert(CriteriaAudio criteria) {
+    /*
+    public ConvertAudio(CriteriaAudio criteria) {
         this.criterion = criteria;
     }
+     */
 
-    public void convert() {
+    public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaAudio criterion = (CriteriaAudio)criteriaConvert;
         try {
             File source = new File(criterion.getSrcPath());
             File target = new File(criterion.getDestPath());

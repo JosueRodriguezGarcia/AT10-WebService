@@ -28,14 +28,17 @@ import java.util.List;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class ConvertPPTtoImage implements IConvert{
-    private CriteriaPPTtoImage criterion;
+public class ConvertPPTtoImage {           // To Do: implements "updated" IConvert
+    //private CriteriaPPTtoImage criterion;
 
+    /*
     public ConvertPPTtoImage(CriteriaPPTtoImage criterion) {
         this.criterion = criterion;
     }
+     */
 
-    public void convert() {
+    public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaPPTtoImage criterion = (CriteriaPPTtoImage) criteriaConvert;
         try {
             File file = new File(criterion.getSrcPath());
             XMLSlideShow ppt = new XMLSlideShow(new FileInputStream(file));

@@ -23,14 +23,17 @@ import java.io.File;
  * @author Maday Alcala Cuba, Limbert Alvaro Vargas Laura
  * @version 1.1
  */
-public class VideoConvert implements IConvert {
-    private CriteriaVideo criterion;
+public class ConvertVideo {           // To Do: implements "updated" IConvert
+    //private CriteriaVideo criterion;
 
-    public VideoConvert(CriteriaVideo criterion) {
+    /*
+    public ConvertVideo(CriteriaVideo criterion) {
         this.criterion = criterion;
     }
+     */
 
-    public void convert() {
+    public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaVideo criterion = (CriteriaVideo) criteriaConvert;
         try {
             File source = new File(criterion.getSrcPath());
             File target = new File(criterion.getDestPath());
