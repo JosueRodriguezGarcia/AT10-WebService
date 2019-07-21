@@ -10,25 +10,25 @@
 package com.fundation.webservice.model;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
  * Implements Thumbnail class an convert Method.
  *
- * @author Maday Alcalá Cuba
+ * @author Maday Alcalá Cuba, Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class ThumbnailImage {
-    CriteriaThumbnailImage criteria;
-
-    public ThumbnailImage(CriteriaThumbnailImage criteria) {
-        this.criteria = criteria;
-    }
-
+public class ThumbnailImage implements IConvert{
     /**
-     * Obtains a thumbnail of an image.
+     * Obtains a 128x128 thumbnail of an image.
+     *
+     * @param criteriaConvert holds the required parameters to create the thumbnail:
+     *     The source file path and the destination folder path.
+     *     The output file name and the output file extension.
      */
-    public void convert() {
+    public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaThumbnailImage criteria = (CriteriaThumbnailImage) criteriaConvert;
         String magick = "3rdparty/ImageMagic/magick ";
         try {
             String cmd = magick
@@ -40,12 +40,18 @@ public class ThumbnailImage {
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;
+            /*
             while ((line = in.readLine()) != null) {
                 System.out.println(line);
             }
+             */
             process.waitFor();
             in.close();
-        } catch (Exception e) {
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
