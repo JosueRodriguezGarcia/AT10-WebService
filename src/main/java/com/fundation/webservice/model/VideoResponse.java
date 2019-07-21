@@ -9,6 +9,8 @@
  */
 package com.fundation.webservice.model;
 
+import javax.xml.soap.SAAJResult;
+
 /**
  * Implements a type of response to an /upload request.
  *
@@ -25,16 +27,33 @@ public class VideoResponse {
      * Audio  variables.
      */
     private String audioCodec;
-    private String audioBit;
+    private String audioBitRate;
     private String audioChannel;
-    private String audioRate;
     /**
      * Video variables.
      */
     private String videoCodec;
-    private String videoTag;
-    private String videoBit;
-    private String videoRate;
+    private String videoBitRate;
+    private String fps;
+
+    /**
+     * Metadata Variable.
+     */
+    private String metadata;
+
+    /**
+     * Thumbnail Variables.
+     */
+    private String thumbnail;
+
+    /**
+     * Keyframe Variables.
+     */
+    private String keyframes;
+
+    /**
+     * Checksum variables.
+     */
     private String checksum;
 
     /**
@@ -45,18 +64,17 @@ public class VideoResponse {
      * @param size defines the size of the file.
      * @param newFormat defines the output format file.
      * @param audioCodec defines the audio codec format.
-     * @param audioBit defines the bit rate of the output file.
+     * @param audioBitRate defines the bit rate of the output file.
      * @param audioChannel defines the number of channels required in the output file.
-     * @param audioRate defines the audio rate of the output file.
      * @param videoCodec defines the video codec format of the output video file.
-     * @param videoTag defines the video tag of the output video file.
-     * @param videoBit defines the video bit rate.
-     * @param videoRate defines the rate of the output video file.
+     * @param videoBitRate defines the video bit rate.
+     * @param fps defines the rate of the output video file.
      * @param checksum defines the checksum of the output or input file.
      */
     public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                         String newFormat, String audioCodec, String audioBit, String audioChannel, String audioRate,
-                         String videoCodec, String videoTag, String videoBit, String videoRate, String checksum) {
+                         String newFormat, String audioCodec, String audioBitRate, String audioChannel,
+                         String videoCodec, String videoBitRate, String fps, String metadata, String thumbnail,
+                         String keyframes, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -67,17 +85,34 @@ public class VideoResponse {
          * Audio constructors.
          */
         this.audioCodec = audioCodec;
-        this.audioBit = audioBit;
+        this.audioBitRate = audioBitRate;
         this.audioChannel = audioChannel;
-        this.audioRate = audioRate;
 
         /**
          * Audio constructors.
          */
         this.videoCodec = videoCodec;
-        this.videoTag = videoTag;
-        this.videoBit = videoBit;
-        this.videoRate = videoRate;
+        this.videoBitRate = videoBitRate;
+        this.fps = fps;
+
+        /**
+         * Metadata constructor.
+         */
+        this.metadata = metadata;
+
+        /**
+         * Thumbnail constructors.
+         */
+        this.thumbnail = thumbnail;
+
+        /**
+         * Keyframe constructor.
+         */
+        this.keyframes =  keyframes;
+
+        /**
+         * Checksum constructor.
+         */
         this.checksum = checksum;
     }
 
@@ -140,8 +175,8 @@ public class VideoResponse {
      *
      * @return bit rate of the output file.
      */
-    public String getAudioBit() {
-        return audioBit;
+    public String getAudioBitRate() {
+        return audioBitRate;
     }
 
     /**
@@ -154,15 +189,6 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for audio rate of the output file.
-     *
-     * @return audio rate of the output file.
-     */
-    public String getAudioRate() {
-        return audioRate;
-    }
-
-    /**
      * Uses for video codec format of the output video file.
      *
      * @return video codec format of the output video file.
@@ -172,21 +198,12 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for video tag of the output video file.
-     *
-     * @return video tag of the output video file.
-     */
-    public String getVideoTag() {
-        return videoTag;
-    }
-
-    /**
      * Uses for video bit rate.
      *
      * @return video bit rate.
      */
-    public String getVideoBit() {
-        return videoBit;
+    public String getVideoBitRate() {
+        return videoBitRate;
     }
 
     /**
@@ -194,8 +211,34 @@ public class VideoResponse {
      *
      * @return rate of the output video file.
      */
-    public String getVideoRate() {
-        return videoRate;
+    public String getFps() {
+        return fps;
+    }
+
+    /**
+     * Uses for metadata of the output file.
+     *
+     * @return
+     */
+    public String getMetadata() {
+        return metadata;
+    }
+
+    /**
+     * Uses for thumbnail of the output file
+     *
+     * @return
+     */
+    public String getThumbnail() {
+        return thumbnail;
+    }
+    /**
+     * Uses for keyframe of the output file
+     *
+     * @return
+     */
+    public String getKeyframes() {
+        return keyframes;
     }
 
     /**
@@ -203,5 +246,6 @@ public class VideoResponse {
      *
      * @return checksum of the output or input file.
      */
+
     public String getChecksum(){ return checksum; }
 }

@@ -15,7 +15,7 @@ import java.io.InputStreamReader;
 /**
  * Implements Thumbnail class an convert Method.
  *
- * @author Josue Rodriguez
+ * @author Josue Rodriguez,
  * @version 1.0
  */
 public class ThumbnailVideo {

@@ -16,7 +16,7 @@ package com.fundation.webservice.model;
  * @version 1.0
  */
 public class CriteriaKeyFrameVideo extends CriteriaConvert {
-    private String frames;
+    private String time;
     private String name;
     private String ext;
 
@@ -25,17 +25,17 @@ public class CriteriaKeyFrameVideo extends CriteriaConvert {
      *
      * @return The number of frames for each interval of keyframe
      */
-    public String getFrames() {
-        return frames;
+    public String getTime() {
+        return time;
     }
 
     /**
      * Method that modifies the interval of frame for each keyframe.
      *
-     * @param frames The frames parameter define the number of frames for each interval of keyframe in output file.
+     * @param time The frames parameter define the number of frames for each interval of keyframe in output file.
      */
-    public void setFrames(String frames) {
-        this.frames = frames;
+    public void setTime(String time) {
+        this.time = time;
     }
 
     /**
