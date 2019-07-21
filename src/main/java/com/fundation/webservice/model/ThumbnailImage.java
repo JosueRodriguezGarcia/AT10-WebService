@@ -39,12 +39,6 @@ public class ThumbnailImage implements IConvert{
                     + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            String line;
-            /*
-            while ((line = in.readLine()) != null) {
-                System.out.println(line);
-            }
-             */
             process.waitFor();
             in.close();
         }
