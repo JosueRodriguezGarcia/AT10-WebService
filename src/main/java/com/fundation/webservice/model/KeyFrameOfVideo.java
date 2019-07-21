@@ -30,7 +30,7 @@ public class KeyFrameOfVideo {
      */
     public void convert() {
         try {
-            String cmd = "ffmpeg -i "
+            String cmd = Directories.TOOLS_DIR.getDir() + Directories.FFMPEG_DIR.getDir() + "ffmpeg -y -i "
                 + criteria.getSrcPath()
                 + " -vf fps=1/"
                 + criteria.getTime()
