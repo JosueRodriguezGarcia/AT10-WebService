@@ -22,9 +22,11 @@ import java.io.File;
 public class ConvertWordToPdfTest {
     @Test
     public void convert_docx_pdf() {
-        File input = new File(Directories.RSRC_DIR.getDir() + "BugLifeCycleFAQ.docx");
+        CriteriaConvert criteria = new CriteriaConvert();
+        criteria.setSrcPath(Directories.RSRC_DIR.getDir() + "BugLifeCycleFAQ.docx");
         ConvertWordToPdf convertWordToPdf = new ConvertWordToPdf();
-        convertWordToPdf.convert(input);
+        convertWordToPdf.convert(criteria);
+        File input = new File(criteria.getSrcPath());
         String actual = Directories.RSRC_DIR.getDir() + filenameWithoutExtension(input) + ".pdf";
         File output = new File(actual);
         assertTrue(output.exists());

@@ -29,7 +29,7 @@ public class ConvertWordToImageTest {
         criteriaPdfToImage.setExt(".jpg");
         criteriaPdfToImage.setDpi(300);
         criteriaPdfToImage.setFormatColor("RGB");
-        IConvert2 convertWordToImage = new ConvertWordToImage();
+        ConvertWordToImage convertWordToImage = new ConvertWordToImage();
         convertWordToImage.convert(criteriaPdfToImage);
         String actual = Directories.RSRC_DIR.getDir() + criteriaPdfToImage.getName() + "0" + criteriaPdfToImage.getExt();
         File outputFile = new File(actual);
