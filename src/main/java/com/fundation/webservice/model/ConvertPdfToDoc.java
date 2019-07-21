@@ -12,6 +12,9 @@ package com.fundation.webservice.model;
 import java.io.File;
 
 /**
+ * Handles document conversion from PDF format to docx format.
+ * This operation is performed as a two-step process.
+ *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
