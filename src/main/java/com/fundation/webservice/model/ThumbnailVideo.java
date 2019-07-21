@@ -28,7 +28,7 @@ public class ThumbnailVideo {
     //The convert method capture a thumbnail of a frame specific.
     public void convert() {
         try {
-            String cmd = Directories.TOOLS_DIR.getDir() + Directories.FFMPEG_DIR.getDir() + "ffmpeg -i "
+            String cmd = Directories.TOOLS_DIR.getDir() + Directories.FFMPEG_DIR.getDir() + "ffmpeg -y -i "
                     + criteria.getSrcPath()
                     + " -ss "
                     + criteria.getTime()
