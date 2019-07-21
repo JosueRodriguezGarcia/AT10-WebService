@@ -32,9 +32,9 @@ public class KeyFrameOfVideo {
         try {
             String cmd = "ffmpeg -i "
                 + criteria.getSrcPath()
-                + " -vf thumbnail="
-                + criteria.getFrames()
-                + " -vsync 0 "
+                + " -vf fps=1/"
+                + criteria.getTime()
+                + " "
                 + criteria.getDestPath()
                 + criteria.getName() + "%d."
                 + criteria.getExt();

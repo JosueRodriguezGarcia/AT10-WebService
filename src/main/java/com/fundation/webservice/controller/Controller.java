@@ -26,6 +26,10 @@ import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
@@ -44,6 +48,9 @@ public class Controller {
     private DownloadService downloadService;
 
     Checksum checksum = new Checksum();
+
+    Properties properties = new Properties();
+
 
     /**
      * Default Request is a GET method
@@ -72,6 +79,7 @@ public class Controller {
         String pdfName = uploadService.storeFile(pdf);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/")
                 .path(name + ".zip").toUriString();
+
         /**
          * creating a new folder for the converted images
          */
@@ -86,8 +94,8 @@ public class Controller {
         criterion.setDpi(new Integer(dpi));
         criterion.setExt(ext);
         criterion.setFormatColor(formatColor);
-        ConvertPdfToImage pdfDocument = new ConvertPdfToImage(criterion);
-        pdfDocument.convert();
+        ConvertPdfToImage pdfDocument = new ConvertPdfToImage();
+        pdfDocument.convert(criterion);
         /**
          * This line compresses the folder with images in a zip file
          */
@@ -112,46 +120,81 @@ public class Controller {
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(output[0]
                 + ".zip").toUriString();
         String inputChecksumString = "";
+        InputStream inputProperties;
+        try {
+            inputProperties = new FileInputStream("application.properties");
+            properties.load(inputProperties);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
 
         try {
-            inputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\uploads\\" + asset.getOriginalFilename(),
+            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(),
                     "MD5");
         } catch (Exception e) {
             e.printStackTrace();
         }
         if (input[0].equals(inputChecksumString)) {
-            new File("C:/_pg/tmp/conversions/" + output[0] + "/").mkdirs();
+            new File(properties.getProperty("file.downloadDir") + output[0] + "/").mkdirs();
             CriteriaVideo criteria = new CriteriaVideo();
-            criteria.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
-            criteria.setDestPath("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0] + output[1]);
+            criteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
+            criteria.setDestPath(properties.getProperty("file.downloadDir") + output[0] + "/" + output[0] + output[1]);
             criteria.setNewFormat(config[0]);
             criteria.setAudioCodec(config[1]);
-            criteria.setAudioBit(new Integer(config[2]));
+            criteria.setAudioBitRate(new Integer(config[2]));
             criteria.setAudioChannel(new Integer(config[3]));
-            criteria.setAudioRate(new Integer(config[4]));
-            criteria.setVideoCodec(config[5]);
-            criteria.setVideoTag(config[6]);
-            criteria.setVideoBit(new Integer(config[7]));
-            criteria.setVideoRate(new Integer(config[8]));
-            VideoConvert video = new VideoConvert(criteria);
-            video.convert();
+//            criteria.setAudioRate(new Integer(config[4]));
+            criteria.setVideoCodec(config[4]);
+//            criteria.setVideoTag(config[6]);
+            criteria.setVideoBitRate(new Integer(config[5]));
+            criteria.setFps(new Integer(config[6]));
+            ConvertVideo video = new ConvertVideo();
+            video.convert(criteria);
             String outputChecksumString = "";
-
             try {
-                outputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\conversions\\fileout\\fileout.avi",
-                        "MD5");
+                outputChecksumString = checksum.getChecksum(properties.getProperty("file.downloadDir") + output[0] + "/"
+                        + output[0] + output[1], "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            if (config[7].equals("json")) {
+                //Creation JSON
+                File convertedFile = new File(properties.getProperty("file.downloadDir") + output[0] + "/" + output[0] + output[1]);
+                Metadata metaDataFile = new Metadata();
+                metaDataFile.writeJsonFile(convertedFile);
+            } else {
+                //Creation XMP
+                File convertedFile = new File(properties.getProperty("file.downloadDir") + output[0] + "/" + output[0] + output[1]);
+                Metadata metaDataFile = new Metadata();
+                metaDataFile.writeXmpFile(convertedFile);
+            }
+            if (config[8].equals("True")) {
+                //Creation thumbnail
+                CriteriaThumbnailVideo criteriaThumbnailVideo = new CriteriaThumbnailVideo();
+                criteriaThumbnailVideo.setSrcPath(properties.getProperty("file.downloadDir") + output[0] + "/" + output[0] + output[1]);
+                criteriaThumbnailVideo.setDestPath(properties.getProperty("file.downloadDir") + output[0] + "/");
+                criteriaThumbnailVideo.setTime(config[9]);
+                criteriaThumbnailVideo.setName(output[0]);
+                criteriaThumbnailVideo.setExt("bmp");
+                ThumbnailVideo thumbnailVideo = new ThumbnailVideo(criteriaThumbnailVideo);
+                thumbnailVideo.convert();
+            }
+            if(config[10].equals("True")){
+                //Creation keyframes
+                CriteriaKeyFrameVideo criteriaKeyFrameVideo = new CriteriaKeyFrameVideo();
+                criteriaKeyFrameVideo.setSrcPath(properties.getProperty("file.downloadDir") + output[0] + "/" + output[0] + output[1]);
+                criteriaKeyFrameVideo.setDestPath(properties.getProperty("file.downloadDir") + output[0] + "/");
+                criteriaKeyFrameVideo.setTime(config[11]);
+                criteriaKeyFrameVideo.setName(output[0]);
+                criteriaKeyFrameVideo.setExt("png");
+                KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo(criteriaKeyFrameVideo);
+                keyFrameOfVideo.convert();
+            }
 
-            File convertedFile = new File("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0]
-                    + output[1]);
-            Metadata metaDataFile = new Metadata();
-            metaDataFile.writeXmpFile(convertedFile);
-            FolderZipped.zipFolder(output[0]);
+            FolderZipped.zipFolder(properties.getProperty("file.downloadDir")+output[0]);
 
             return new VideoResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), config[0],
-                    config[1], config[2], config[3], config[4], config[5], config[6], config[7], config[8],
+                    config[1], config[2], config[3], config[4], config[5], config[6], config[7], config[8],config[10],
                     outputChecksumString);
         } else {
             System.out.print("Error");
@@ -191,8 +234,8 @@ public class Controller {
             criteria.setAudioBit(new Integer(config[2]));
             criteria.setAudioChannel(new Integer(config[3]));
             criteria.setAudioRate(new Integer(config[4]));
-            AudioConvert audio = new AudioConvert(criteria);
-            audio.convert();
+            ConvertAudio audio = new ConvertAudio();
+            audio.convert(criteria);
 
             String outputChecksumString = "";
             try {
@@ -259,7 +302,7 @@ public class Controller {
             CriteriaKeyFrameVideo criteria = new CriteriaKeyFrameVideo();
             criteria.setSrcPath("C:\\_pg\\tmp\\uploads\\" + fileName);
             criteria.setDestPath("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\");
-            criteria.setFrames(config[0]);
+            criteria.setTime(config[0]);
             criteria.setName(output[0]);
             criteria.setExt(output[1]);
             KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo(criteria);

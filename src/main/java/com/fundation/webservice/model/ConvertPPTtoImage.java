@@ -23,19 +23,20 @@ import java.io.FileOutputStream;
 import java.util.List;
 
 /**
- * Implements the model class File and the getter and setter´s methods
+ * Performs document conversion from PPT format to image formats.
  *
- * @author Josue Rodriguez
+ * @author Josue Rodriguez, Alejandro Sánchez Luizaga
  * @version 1.0
  */
 public class ConvertPPTtoImage implements IConvert{
-    private CriteriaPPTtoImage criterion;
-
-    public ConvertPPTtoImage(CriteriaPPTtoImage criterion) {
-        this.criterion = criterion;
-    }
-
-    public void convert() {
+    /**
+     * Implements convert(CriteriaConvert) from IConvert interface.
+     * Conversion is performed via Apache poi utility.
+     *
+     * @param criteriaConvert holds source and destination file paths and output file extension.
+     */
+    public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaPPTtoImage criterion = (CriteriaPPTtoImage) criteriaConvert;
         try {
             File file = new File(criterion.getSrcPath());
             XMLSlideShow ppt = new XMLSlideShow(new FileInputStream(file));

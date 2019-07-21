@@ -11,6 +11,7 @@ package com.fundation.webservice.model;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,7 @@ public class Run {
     protected List<String> commandLine;
 
     public Run () {
-        this.commandLine = new ArrayList<>();
+        this.commandLine = new ArrayList<String>();
     }
 
     /**
@@ -42,9 +43,13 @@ public class Run {
             process.waitFor();
             input.close();
         }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("", e);
+        catch (IOException ioException) {
+            ioException.printStackTrace();
+            return;
+        }
+        catch (InterruptedException interruptedException) {
+            interruptedException.printStackTrace();
+            return;
         }
     }
 

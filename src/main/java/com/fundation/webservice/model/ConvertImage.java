@@ -9,42 +9,33 @@
  */
 package com.fundation.webservice.model;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 /**
- * Implements Thumbnail class an convert Method.
- *
- * @author Josue Rodriguez,
+ * @author Maday Alcala Cuba
  * @version 1.0
  */
-public class ThumbnailVideo {
-    CriteriaThumbnailVideo criteria;
+public class ConvertImage {
+    CriteriaImage criteria;
 
-    public ThumbnailVideo(CriteriaThumbnailVideo criteria) {
+    public ConvertImage(CriteriaImage criteria) {
         this.criteria = criteria;
     }
 
-    //The convert method capture a thumbnail of a frame specific.
+    /**
+     * This method converts an image from one format to another.
+     */
     public void convert() {
+        String magick = "3rdparty/ImageMagic/magick ";
         try {
-            String cmd = "ffmpeg -i "
+            String cmd = magick
                     + criteria.getSrcPath()
-                    + " -ss "
-                    + criteria.getTime()
-                    + " -vframes 1 -s 128x128 "
+                    + " -resize " + criteria.getResolution()
+                    + " -rotate " + criteria.getRotation()
+                    + " -quality " + criteria.getQuality() + " "
                     + criteria.getDestPath()
                     + criteria.getName() + "."
                     + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
-            BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            String line;
-            do {
-                line = in.readLine();
-            }
-            while (line != null);
             process.waitFor();
-            in.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

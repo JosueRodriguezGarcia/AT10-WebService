@@ -13,36 +13,36 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 /**
- * Implements KeyframeVideo class an convert Method.
+ * Implements Thumbnail class an convert Method.
  *
- * @author Josue Rodriguez
+ * @author Maday Alcalá Cuba
  * @version 1.0
  */
-public class KeyFrameInVideo {
-    CriteriaKeyFrameVideo criteria;
-    public KeyFrameInVideo(CriteriaKeyFrameVideo criteria) {
+public class ThumbnailImage {
+    CriteriaThumbnailImage criteria;
+
+    public ThumbnailImage(CriteriaThumbnailImage criteria) {
         this.criteria = criteria;
     }
 
     /**
-     * The convert method add a keyframe for every certain amount of frame.
+     * Obtains a thumbnail of an image.
      */
     public void convert() {
+        String magick = "3rdparty/ImageMagic/magick ";
         try {
-            String cmd = "ffmpeg -i "
-                + criteria.getSrcPath()
-                + " -vcodec libx264 -x264-params keyint="
-                + criteria.getTime()
-                + ":scenecut=0 -acodec copy "
-                + criteria.getDestPath()
-                + criteria.getName() + "."
-                + criteria.getExt();
+            String cmd = magick
+                    + criteria.getSrcPath()
+                    + " -thumbnail 128x128 "
+                    + criteria.getDestPath()
+                    + criteria.getName() + "."
+                    + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;
-            do{
-                line = in.readLine();
-            }while(line != null);
+            while ((line = in.readLine()) != null) {
+                System.out.println(line);
+            }
             process.waitFor();
             in.close();
         } catch (Exception e) {
