@@ -86,8 +86,8 @@ public class Controller {
         criterion.setDpi(new Integer(dpi));
         criterion.setExt(ext);
         criterion.setFormatColor(formatColor);
-        ConvertPdfToImage pdfDocument = new ConvertPdfToImage(criterion);
-        pdfDocument.convert();
+        ConvertPdfToImage pdfDocument = new ConvertPdfToImage();
+        pdfDocument.convert(criterion);
         /**
          * This line compresses the folder with images in a zip file
          */
@@ -132,13 +132,13 @@ public class Controller {
             criteria.setVideoTag(config[6]);
             criteria.setVideoBit(new Integer(config[7]));
             criteria.setVideoRate(new Integer(config[8]));
-            VideoConvert video = new VideoConvert(criteria);
-            video.convert();
+            ConvertVideo video = new ConvertVideo();
+            video.convert(criteria);
             String outputChecksumString = "";
 
             try {
-                outputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\conversions\\fileout\\fileout.avi",
-                    "MD5");
+                outputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\"
+                    + output[0] + output[1], "MD5");
             } catch (Exception e) { e.printStackTrace(); }
 
             File convertedFile = new File("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0]
@@ -189,8 +189,8 @@ public class Controller {
             criteria.setAudioBit(new Integer(config[2]));
             criteria.setAudioChannel(new Integer(config[3]));
             criteria.setAudioRate(new Integer(config[4]));
-            AudioConvert audio = new AudioConvert(criteria);
-            audio.convert();
+            ConvertAudio audio = new ConvertAudio();
+            audio.convert(criteria);
 
             String outputChecksumString = "";
             try {

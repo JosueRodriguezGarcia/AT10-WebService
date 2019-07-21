@@ -10,9 +10,9 @@
 package com.fundation.webservice.model;
 
 /**
- * @author Josue Rodriguez
- * @version 1.0
+ * @author Josue Rodriguez, Alejandro Sánchez Luizaga
+ * @version 1.1
  */
 public interface IConvert {
-    void convert();
+    void convert(CriteriaConvert criteriaConvert);
 }
