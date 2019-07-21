@@ -19,22 +19,22 @@ public class CriteriaThumbnailImage extends CriteriaConvert {
     private String name;
     private String ext;
 
-    //Returns the name of the output file.
+    /**
+     * These are the getters and setters for the thumbnails criteria.
+     * @return
+     */
     public String getName() {
         return name;
     }
 
-    //Modifies the name of the output file.
     public void setName(String name) {
         this.name = name;
     }
 
-    //Returns the extension of the output file.
     public String getExt() {
         return ext;
     }
 
-    //Modifies the extension od the output file.
     public void setExt(String ext) {
         this.ext = ext;
     }

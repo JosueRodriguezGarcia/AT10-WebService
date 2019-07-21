@@ -25,7 +25,9 @@ public class ThumbnailImage {
         this.criteria = criteria;
     }
 
-    //The convert method capture a thumbnail of a frame specific.
+    /**
+     * Obtains a thumbnail of an image.
+     */
     public void convert() {
         String magick = "3rdparty/ImageMagic/magick ";
         try {
