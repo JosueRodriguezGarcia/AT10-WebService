@@ -24,7 +24,7 @@ import static java.awt.RenderingHints.VALUE_INTERPOLATION_BILINEAR;
 import static java.awt.image.BufferedImage.TYPE_INT_RGB;
 
 /**
- * Provides a 18x128 thumbnail from the first page of a PDF document
+ * Provides a 128x128 thumbnail from the first page of a PDF document
  *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
@@ -41,26 +41,18 @@ public class PdfThumbnail implements IConvert{
         CriteriaPdfToImage criterion = (CriteriaPdfToImage)criteriaConvert;
         String magick = Directories.TOOLS_DIR.getDir() + Directories.IMAGEMAGIC_DIR.getDir() + "magick ";
         final int PAGE = 0;
-        final int DIMENSION = 128;
         try (final PDDocument document = PDDocument.load(new File(criterion.getSrcPath()))) {
             PDFRenderer pdfRenderer = new PDFRenderer(document);
             BufferedImage bim = pdfRenderer.renderImageWithDPI(PAGE, criterion.getDpi(), ImageType.valueOf(criterion.getFormatColor()));
             String fileName = criterion.getDestPath() + criterion.getName() + PAGE + criterion.getExt();
             ImageIOUtil.writeImage(bim, fileName, criterion.getDpi());
-
-            int largestDimension = Math.max(bim.getHeight(), bim.getWidth());
-            float scalingFactor = DIMENSION / (float) largestDimension;
-            int scaledHeight = (int) (bim.getHeight() * scalingFactor);
-            int scaledWidth = (int) (bim.getWidth() * scalingFactor);
-
             criterion.setSrcPath(fileName);
-
             String cmd = magick
-                    + criterion.getSrcPath()
-                    + " -thumbnail 128x128 "
-                    + criterion.getDestPath()
-                    + criterion.getName() + "."
-                    + criterion.getExt();
+                + criterion.getSrcPath()
+                + " -thumbnail 128x128 "
+                + criterion.getDestPath()
+                + criterion.getName() + "."
+                + criterion.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             process.waitFor();
