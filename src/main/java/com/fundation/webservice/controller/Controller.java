@@ -132,8 +132,8 @@ public class Controller {
             criteria.setVideoTag(config[6]);
             criteria.setVideoBit(new Integer(config[7]));
             criteria.setVideoRate(new Integer(config[8]));
-            VideoConvert video = new VideoConvert(criteria);
-            video.convert();
+            ConvertVideo video = new ConvertVideo();
+            video.convert(criteria);
             String outputChecksumString = "";
 
             try {
@@ -189,8 +189,8 @@ public class Controller {
             criteria.setAudioBit(new Integer(config[2]));
             criteria.setAudioChannel(new Integer(config[3]));
             criteria.setAudioRate(new Integer(config[4]));
-            AudioConvert audio = new AudioConvert(criteria);
-            audio.convert();
+            ConvertAudio audio = new ConvertAudio();
+            audio.convert(criteria);
 
             String outputChecksumString = "";
             try {
