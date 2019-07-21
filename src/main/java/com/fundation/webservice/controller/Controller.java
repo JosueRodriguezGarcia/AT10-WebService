@@ -137,8 +137,8 @@ public class Controller {
             String outputChecksumString = "";
 
             try {
-                outputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\conversions\\fileout\\fileout.avi",
-                    "MD5");
+                outputChecksumString = checksum.getChecksum("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\"
+                    + output[0] + output[1], "MD5");
             } catch (Exception e) { e.printStackTrace(); }
 
             File convertedFile = new File("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0]
