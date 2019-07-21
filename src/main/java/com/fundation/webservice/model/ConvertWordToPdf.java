@@ -12,15 +12,19 @@ package com.fundation.webservice.model;
 import java.io.File;
 
 /**
+ * Handles document conversion from docx format to PDF format
+ *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class ConvertWordToPdf extends Run{  // To Do: implements "updated" IConvert
+public class ConvertWordToPdf extends Run implements IConvert{
     private final String OFFICETOPDF_DIR = Directories.OFFICETOPDF_DIR.getDir();
 
     /**
+     * Implements convert(CriteriaConvert) from IConvert interface.
+     * Conversion is performed via OfficeToPDF utility.
      *
-     * @param criteriaConvert The handle (provided by a File object) to the file that is going to be read by exiftool.
+     * @param criteriaConvert holds source file path.
      */
     public void convert(CriteriaConvert criteriaConvert) {
         initCommandLine();

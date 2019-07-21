@@ -19,18 +19,19 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @author Josue Rodriguez
+ * Performs document conversion from PDF format to image formats.
+ *
+ * @author Josue Rodriguez, Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class ConvertPdfToImage{     // To Do: implements "updated" IConvert
-    //CriteriaPdfToImage criterion;
-
-    /*
-    public ConvertPdfToImage(CriteriaPdfToImage criterion) {
-        this.criterion = criterion;
-    }
+public class ConvertPdfToImage implements IConvert{
+    /**
+     * Implements convert(CriteriaConvert) from IConvert interface.
+     * Conversion is performed via pdfbox utility.
+     *
+     * @param criteriaConvert holds source and destination file paths, output file name, output file extension and
+     *     output DPI
      */
-
     public void convert(CriteriaConvert criteriaConvert) {
         CriteriaPdfToImage criterion = (CriteriaPdfToImage)criteriaConvert;
         try (final PDDocument document = PDDocument.load(new File(criterion.getSrcPath()))) {

@@ -14,12 +14,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Implements an Html To Doc converter class.
+ * Performs document conversion from HTML format to Docx format.
  *
- * @author Alejandro Sanchez
+ * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class ConvertHtmlToDoc {      // To Do: implements "updated" IConvert
+public class ConvertHtmlToDoc implements IConvert{
+    /**
+     * Implements convert(CriteriaConvert) from IConvert interface.
+     * Conversion is performed via pandoc utility.
+     *
+     * @param criteriaConvert holds the source and destination file paths.
+     */
     public void convert(CriteriaConvert criteriaConvert) {
         try {
             Process process = Runtime.getRuntime().exec("3rdparty/" + "pandoc/" + "pandoc.exe -o " + criteriaConvert.getDestPath() + " " + criteriaConvert.getSrcPath());

@@ -12,14 +12,17 @@ package com.fundation.webservice.model;
 import java.io.File;
 
 /**
+ * Handles document conversion from docx format to image formats
+ * This operation is performed as a two-step process.
+ *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class ConvertWordToImage extends Run{
+public class ConvertWordToImage extends Run implements IConvert{
     /**
-     * Wrapper method that integrates WordToPdf's convert(CriteriaConvert) and PdfToImage's convert()
+     * Wrapper method that integrates WordToPdf's and PdfToImages's convert(CriteriaConvert)
      *
-     * @param criteriaConvert
+     * @param criteriaConvert holds source and destination file paths.
      */
     public void convert(CriteriaConvert criteriaConvert) {
         File inputFile = new File(criteriaConvert.getSrcPath());
