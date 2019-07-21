@@ -40,7 +40,6 @@ public class ConvertPPTtoPdf {
         javax.imageio.ImageIO.write(img, "png", out);
         out.close();
 
-
         //get saved slide-image and save it into pdf
         Image slideImage = Image.getInstance("C:\\Users\\LimbertVargas\\Desktop\\OBSERVERslide.png");//"d:/temp/slideImage.png");
         Document document = new Document();
