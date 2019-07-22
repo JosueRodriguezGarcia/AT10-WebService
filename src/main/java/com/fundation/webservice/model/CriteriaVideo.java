@@ -22,17 +22,17 @@ public class CriteriaVideo extends CriteriaConvert{
      * Audio variables.
      */
     private String audioCodec;
-    private int audioBit;
+    private int audioBitRate;
     private int audioChannel;
-    private int audioRate;
+//    private int audioRate;
 
     /**
      * video variables.
      */
     private String videoCodec;
-    private String videoTag;
-    private int videoBit;
-    private int videoRate;
+//    private String videoTag;
+    private int videoBitRate;
+    private int fps;
 
     /**
      * Uses for return output format file.
@@ -75,17 +75,17 @@ public class CriteriaVideo extends CriteriaConvert{
      *
      * @return bit rate of the output file.
      */
-    public int getAudioBit() {
-        return audioBit;
+    public int getAudioBitRate() {
+        return audioBitRate;
     }
 
     /**
      * Uses for modified bit rate of the output file.
      *
-     * @param audioBit bit rate of the output file.
+     * @param audioBitRate bit rate of the output file.
      */
-    public void setAudioBit(int audioBit) {
-        this.audioBit = audioBit;
+    public void setAudioBitRate(int audioBitRate) {
+        this.audioBitRate = audioBitRate;
     }
 
     /**
@@ -106,23 +106,23 @@ public class CriteriaVideo extends CriteriaConvert{
         this.audioChannel = audioChannel;
     }
 
-    /**
-     * Uses for return audio rate of the output file.
-     *
-     * @return audio rate of the output file.
-     */
-    public int getAudioRate() {
-        return audioRate;
-    }
-
-    /**
-     * Uses for modified audio rate of the output file.
-     *
-     * @param audioRate audio rate of the output file.
-     */
-    public void setAudioRate(int audioRate) {
-        this.audioRate = audioRate;
-    }
+//    /**
+//     * Uses for return audio rate of the output file.
+//     *
+//     * @return audio rate of the output file.
+//     */
+//    public int getAudioRate() {
+//        return audioRate;
+//    }
+//
+//    /**
+//     * Uses for modified audio rate of the output file.
+//     *
+//     * @param audioRate audio rate of the output file.
+//     */
+//    public void setAudioRate(int audioRate) {
+//        this.audioRate = audioRate;
+//    }
 
     /**
      * Uses for return video codec format of the output video file.
@@ -142,40 +142,40 @@ public class CriteriaVideo extends CriteriaConvert{
         this.videoCodec = videoCodec;
     }
 
-    /**
-     * Uses for return video tag of the output video file.
-     *
-     * @return video tag of the output video file.
-     */
-    public String getVideoTag() {
-        return videoTag;
-    }
-
-    /**
-     * Uses for modified video tag of the output video file.
-     *
-     * @param videoTag video tag of the output video file.
-     */
-    public void setVideoTag(String videoTag) {
-        this.videoTag = videoTag;
-    }
+//    /**
+//     * Uses for return video tag of the output video file.
+//     *
+//     * @return video tag of the output video file.
+//     */
+//    public String getVideoTag() {
+//        return videoTag;
+//    }
+//
+//    /**
+//     * Uses for modified video tag of the output video file.
+//     *
+//     * @param videoTag video tag of the output video file.
+//     */
+//    public void setVideoTag(String videoTag) {
+//        this.videoTag = videoTag;
+//    }
 
     /**
      * Uses for return video bit rate.
      *
      * @return video bit rate.
      */
-    public int getVideoBit() {
-        return videoBit;
+    public int getVideoBitRate() {
+        return videoBitRate;
     }
 
     /**
      * Uses for modified video bit rate.
      *
-     * @param videoBit video bit rate.
+     * @param videoBitRate video bit rate.
      */
-    public void setVideoBit(int videoBit) {
-        this.videoBit = videoBit;
+    public void setVideoBitRate(int videoBitRate) {
+        this.videoBitRate = videoBitRate;
     }
 
     /**
@@ -183,16 +183,16 @@ public class CriteriaVideo extends CriteriaConvert{
      *
      * @return rate of the output video file.
      */
-    public int getVideoRate() {
-        return videoRate;
+    public int getFps() {
+        return fps;
     }
 
     /**
      * Uses for modified rate of the output video file.
      *
-     * @param videoRate rate of the output video file.
+     * @param fps rate of the output video file.
      */
-    public void setVideoRate(int videoRate) {
-        this.videoRate = videoRate;
+    public void setFps(int fps) {
+        this.fps = fps;
     }
 }

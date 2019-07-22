@@ -32,7 +32,7 @@ public class KeyFrameInVideo {
             String cmd = "ffmpeg -i "
                 + criteria.getSrcPath()
                 + " -vcodec libx264 -x264-params keyint="
-                + criteria.getFrames()
+                + criteria.getTime()
                 + ":scenecut=0 -acodec copy "
                 + criteria.getDestPath()
                 + criteria.getName() + "."

@@ -17,14 +17,14 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
- * @author Maday Alcala Cuba
- * @version 1.0
+ * @author Maday Alcala Cuba,Josue Rodriguez
+ * @version 1.1
  */
 public class FolderZipped {
-    public static void zipFolder(String name) {
+    public static void zipFolder(String direction) {
         try {
-            String sourceFile = "C:\\_pg\\tmp\\conversions\\" + name;
-            FileOutputStream fos = new FileOutputStream("C:\\_pg\\tmp\\conversions\\" + name + ".zip");
+            String sourceFile = direction;
+            FileOutputStream fos = new FileOutputStream(direction + ".zip");
             ZipOutputStream zipOut = new ZipOutputStream(fos);
             File fileToZip = new File(sourceFile);
             zipFile(fileToZip, fileToZip.getName(), zipOut);
