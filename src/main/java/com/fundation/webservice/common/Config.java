@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2019 Jalasoft.
- *
+ * 
  * This software is the confidential and proprietary information of Jalasoft.
  * ("Confidential Information"). You shall not
  * disclose such Confidential Information and shall use it only in
@@ -17,7 +17,7 @@ package com.fundation.webservice.common;
  */
 
 /**
- * This method let save variables about the connection to the DB.
+ * This class allows to store the values of the file "aplication.setting", this class is used by Util.
  */
 public class Config {
     private static String webserverdb;

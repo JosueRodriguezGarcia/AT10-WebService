@@ -48,38 +48,30 @@ public class DBConnection {
      *  This method let me initConnection.
      */
     private static void initConnection() {
-
-         String WEBSERVER_DB="";
-         String USER_NAME="";
-         String USER_PASSWORD="";
-         String PORT_CONNECTION="";
-         String HOST_NAME="";
+        String WEBSERVER_DB = "";
+        String USER_NAME = "";
+        String USER_PASSWORD = "";
+        String PORT_CONNECTION = "";
+        String HOST_NAME = "";
 
         try {
-             final String USER_DIR;
+            final String USER_DIR;
             USER_DIR = System.getProperty("user.dir");
             try (InputStream input = new FileInputStream(USER_DIR + "/application.properties")) {
                 Properties properties = new Properties();
                 properties.load(input);
                 WEBSERVER_DB = properties.getProperty("dir.webserver_db");
-
                 USER_NAME = properties.getProperty("dir.user_name");
                 USER_PASSWORD = properties.getProperty("dir.user_password");
                 PORT_CONNECTION = properties.getProperty("dir.port_connection");
-                HOST_NAME=properties.getProperty("dir.host_name");
-
-            }
-            catch (Exception ex) {
+                HOST_NAME = properties.getProperty("dir.host_name");
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
             System.out.println(WEBSERVER_DB);
-            conn = DriverManager.getConnection("jdbc:mysql://"+HOST_NAME+":"+PORT_CONNECTION+"/"+WEBSERVER_DB, USER_NAME, USER_PASSWORD);
-            System.out.println("---Conneted---");
+            conn = DriverManager.getConnection("jdbc:mysql://" + HOST_NAME + ":" + PORT_CONNECTION + "/" + WEBSERVER_DB, USER_NAME, USER_PASSWORD);
         } catch (SQLException e) {
-            System.out.println("--Fail---");
-            System.out.println(e);
             e.getMessage();
-
         }
     }
 
