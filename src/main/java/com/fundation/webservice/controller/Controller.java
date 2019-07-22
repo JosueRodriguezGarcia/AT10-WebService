@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.json.JSONObject;
+
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
  *
@@ -114,10 +116,13 @@ public class Controller {
      * @return all array string parameters.
      */
     @PostMapping("/convertVideo")
-    public VideoResponse convertVideo(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String[] input,
-                                      @RequestParam("config") String[] config, @RequestParam("output") String[] output) {
+    public VideoResponse convertVideo(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
+                                      @RequestParam("config") String config, @RequestParam("output") String output) {
+        JSONObject inputJson = new JSONObject(input);
+        JSONObject configJson = new JSONObject(config);
+        JSONObject outputJson = new JSONObject(output);
         String fileName = uploadService.storeFile(asset);
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(output[0]
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
                 + ".zip").toUriString();
         String inputChecksumString = "";
         InputStream inputProperties;
@@ -134,67 +139,82 @@ public class Controller {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if (input[0].equals(inputChecksumString)) {
-            new File(properties.getProperty("file.downloadDir") + output[0] + "/").mkdirs();
+        if (inputJson.getString("checksum").equals(inputChecksumString)) {
+            new File(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/").mkdirs();
             CriteriaVideo criteria = new CriteriaVideo();
             criteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
-            criteria.setDestPath(properties.getProperty("file.downloadDir") + output[0] + "/" + output[0] + output[1]);
-            criteria.setNewFormat(config[0]);
-            criteria.setAudioCodec(config[1]);
-            criteria.setAudioBitRate(new Integer(config[2]));
-            criteria.setAudioChannel(new Integer(config[3]));
+            criteria.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/" +
+                outputJson.getString("name") + outputJson.getString("ext"));
+            criteria.setNewFormat(configJson.getString("newFormat"));
+            criteria.setAudioCodec(configJson.getString("audioCodec"));
+            criteria.setAudioBitRate(new Integer(configJson.getString("audioBitRate")));
+            criteria.setAudioChannel(new Integer(configJson.getString("audioChannel")));
 //            criteria.setAudioRate(new Integer(config[4]));
-            criteria.setVideoCodec(config[4]);
+            criteria.setVideoCodec(configJson.getString("videoCodec"));
 //            criteria.setVideoTag(config[6]);
-            criteria.setVideoBitRate(new Integer(config[5]));
-            criteria.setFps(new Integer(config[6]));
+            criteria.setVideoBitRate(new Integer(configJson.getString("videoBitRate")));
+            criteria.setFps(new Integer(configJson.getString("fps")));
             ConvertVideo video = new ConvertVideo();
             video.convert(criteria);
             String outputChecksumString = "";
             try {
-                outputChecksumString = checksum.getChecksum(properties.getProperty("file.downloadDir") + output[0] + "/"
-                        + output[0] + output[1], "MD5");
+                outputChecksumString = checksum.getChecksum(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"), "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            if (config[7].equals("json")) {
+            if (configJson.getString("metadata").equals("json")) {
                 //Creation JSON
-                File convertedFile = new File(properties.getProperty("file.downloadDir") + output[0] + "/" + output[0] + output[1]);
+                File convertedFile = new File(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeJsonFile(convertedFile);
             } else {
                 //Creation XMP
-                File convertedFile = new File(properties.getProperty("file.downloadDir") + output[0] + "/" + output[0] + output[1]);
+                File convertedFile = new File(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeXmpFile(convertedFile);
             }
-            if (config[8].equals("True")) {
+            if (configJson.getString("thumbnail").equals("True")) {
                 //Creation thumbnail
                 CriteriaThumbnailVideo criteriaThumbnailVideo = new CriteriaThumbnailVideo();
-                criteriaThumbnailVideo.setSrcPath(properties.getProperty("file.downloadDir") + output[0] + "/" + output[0] + output[1]);
-                criteriaThumbnailVideo.setDestPath(properties.getProperty("file.downloadDir") + output[0] + "/");
-                criteriaThumbnailVideo.setTime(config[9]);
-                criteriaThumbnailVideo.setName(output[0]);
+                criteriaThumbnailVideo.setSrcPath(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
+                criteriaThumbnailVideo.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/");
+                criteriaThumbnailVideo.setTime(configJson.getString("thumbnailTime"));
+                criteriaThumbnailVideo.setName(outputJson.getString("name"));
                 criteriaThumbnailVideo.setExt("bmp");
                 ThumbnailVideo thumbnailVideo = new ThumbnailVideo(criteriaThumbnailVideo);
                 thumbnailVideo.convert();
             }
-            if(config[10].equals("True")){
+            if(configJson.getString("keyframe").equals("True")){
                 //Creation keyframes
                 CriteriaKeyFrameVideo criteriaKeyFrameVideo = new CriteriaKeyFrameVideo();
-                criteriaKeyFrameVideo.setSrcPath(properties.getProperty("file.downloadDir") + output[0] + "/" + output[0] + output[1]);
-                criteriaKeyFrameVideo.setDestPath(properties.getProperty("file.downloadDir") + output[0] + "/");
-                criteriaKeyFrameVideo.setTime(config[11]);
-                criteriaKeyFrameVideo.setName(output[0]);
+                criteriaKeyFrameVideo.setSrcPath(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
+                criteriaKeyFrameVideo.setDestPath(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/");
+                criteriaKeyFrameVideo.setTime(configJson.getString("keyframeTime"));
+                criteriaKeyFrameVideo.setName(outputJson.getString("name"));
                 criteriaKeyFrameVideo.setExt("png");
                 KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo(criteriaKeyFrameVideo);
                 keyFrameOfVideo.convert();
             }
 
-            FolderZipped.zipFolder(properties.getProperty("file.downloadDir")+output[0]);
+            FolderZipped.zipFolder(properties.getProperty("file.downloadDir") + outputJson.getString("name"));
 
-            return new VideoResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), config[0],
-                    config[1], config[2], config[3], config[4], config[5], config[6], config[7], config[8],config[10],
+            return new VideoResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
+                    configJson.getString("newFormat"), configJson.getString("audioCodec"),
+                    configJson.getString("audioBitRate"), configJson.getString("audioChannel"),
+                    configJson.getString("videoCodec"), configJson.getString("videoBitRate"),
+                    configJson.getString("fps"), configJson.getString("metadata"),
+                    configJson.getString("thumbnail"),configJson.getString("keyframe"),
                     outputChecksumString);
         } else {
             System.out.print("Error");

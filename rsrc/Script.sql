@@ -1,0 +1,9 @@
+DROP DATABASE IF EXISTS webserverdb;
+CREATE DATABASE webserverdb CHARACTER SET utf8mb4;
+USE webserverdb;
+ 
+CREATE TABLE savedb (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    checksum VARCHAR(255) NOT NULL,
+    timeDate DATE NOT NULL
+);
