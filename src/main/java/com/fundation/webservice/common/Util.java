@@ -19,14 +19,25 @@ import java.util.Properties;
  * @author Jesus Menacho
  * @version 1.0
  */
+
+/**
+ * The methos let me save variable about the connections to db.
+ */
 public class Util {
     private static Util Utilcreation = new Util();
     private static Config config;
 
+    /**
+     * This constructor let me initializer the initUnit.
+     */
     private Util() {
         initUtil();
     }
 
+    /**
+     * This method let me return the instance Util class
+     * @return Util
+     */
     public static Util getInstance() {
         if (Utilcreation == null) {
             Utilcreation = new Util();
@@ -34,6 +45,9 @@ public class Util {
         return Utilcreation;
     }
 
+    /**
+     * This method init the class util.
+     */
     private static void initUtil() {
         final String USER_DIR;
         final String WEBSERVER_DB;
@@ -42,8 +56,8 @@ public class Util {
         final String PORT_CONNECTION;
         final String HOST_NAME;
 
-        USER_DIR = System.getProperty("user.dir") + System.getProperty("user.location");
-        try (InputStream input = new FileInputStream(USER_DIR + "config.properties")) {
+        USER_DIR = System.getProperty("user.dir");
+        try (InputStream input = new FileInputStream(USER_DIR + "/config.properties")) {
             Properties properties = new Properties();
             properties.load(input);
             WEBSERVER_DB = properties.getProperty("dir.webserver_db");
@@ -63,6 +77,10 @@ public class Util {
         System.out.println("existo");
     }
 
+    /**
+     * This method let me obtain the class Config for access to variables.
+     * @return Config.
+     */
     public Config getConfig() {
         return config;
     }

@@ -14,6 +14,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Implements insert in a table .
@@ -42,8 +44,8 @@ public class Query {
     /**
      * This method show informations from the table criteria.
      */
-    public void getAllData() {
-        //List<String> infsavedb = new ArrayList<String>();
+    public List getAllData() {
+        List<String> infsavedb = new ArrayList<String>();
         String sql = "SELECT * FROM savedb";
         try {
             Connection conn = DBConnection.getInstance().getConnection();
@@ -56,7 +58,25 @@ public class Query {
         } catch (SQLException e) {
             e.getMessage();
         }
-        //return infCriterias;
+        return infsavedb;
+    }
+    /**
+     * This method acording the checksum
+     */
+    public void searchChecksum(String checksum) {
+        String sql = "SELECT * FROM savedb where checksum=?";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, checksum);
+            ResultSet result = statement.executeQuery(sql);
+            while (result.next()) {
+
+                System.out.println(result.getInt("id") + "\t" + result.getString("checksum") + "\t" + result.getDate("timeDate") );
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+        }
     }
 
     /**
@@ -72,17 +92,5 @@ public class Query {
         } catch (SQLException e) {
             e.getMessage();
         }
-    }
-
-    public static void main(String Arg[]){
-        Query query=new Query();
-        query.insertChecksum("prueba","2019-07-19");
-        query.insertChecksum("prueba1","2019-06-8");
-        query.insertChecksum("prueba2","2019-05-18");
-        query.insertChecksum("prueba3","2019-04-1");
-
-        query.getAllData();
-        query.deleteByIde("1");
-        query.getAllData();
     }
 }
