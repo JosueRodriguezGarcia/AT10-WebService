@@ -13,44 +13,46 @@ import ws.schild.jave.AudioAttributes;
 import ws.schild.jave.Encoder;
 import ws.schild.jave.EncodingAttributes;
 import ws.schild.jave.MultimediaObject;
-import ws.schild.jave.VideoAttributes;
 
 import java.io.File;
 
 /**
- * Implements the model class File and the Criterion constructor.
+ * This class performs video file transcoding based on the parameters specified through a CriteriaConvert class.
  *
- * @author Maday Alcala Cuba, Limbert Alvaro Vargas Laura
- * @version 1.1
+ * @author Limbert Alvaro Vargas Laura, Alejandro Sánchez Luizaga
+ * @version 1.0
  */
-public class VideoConvert implements IConvert {
-    private CriteriaVideo criterion;
-
-    public VideoConvert(CriteriaVideo criterion) {
-        this.criterion = criterion;
-    }
-
-    public void convert() {
+public class ConvertAudio implements IConvert{
+    /**
+     * Implmentation of convert(CriteriaConvert) method specified through IConvert interface
+     *
+     * @param criteriaConvert holds the requried parameters to perform audio transcoding
+     *     Source file path,
+     *     Destination file path,
+     *     Audio codec,
+     *     Audio bitrate,
+     *     Number of audio channels,
+     *     Audio sampling rate,
+     *     Audio container.
+     */
+    public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaAudio criterion = (CriteriaAudio)criteriaConvert;
         try {
             File source = new File(criterion.getSrcPath());
             File target = new File(criterion.getDestPath());
+
             //Audio Attributes
             AudioAttributes audio = new AudioAttributes();
-            audio.setCodec(criterion.getaCodec());
-            audio.setBitRate(criterion.getaBit());
-            audio.setChannels(criterion.getaChannel());
-            audio.setSamplingRate(criterion.getaRate());
-            //Video Attributes
-            VideoAttributes video = new VideoAttributes();
-            video.setCodec(criterion.getvCodec());
-            video.setTag(criterion.getvTag());
-            video.setBitRate(new Integer(criterion.getvBit()));
-            video.setFrameRate(new Integer(criterion.getvRate()));
+            audio.setCodec(criterion.getAudioCodec());
+            audio.setBitRate(criterion.getAudioBit());
+            audio.setChannels(criterion.getAudioChannel());
+            audio.setSamplingRate(criterion.getAudioRate());
+
             //Encoding attributes
             EncodingAttributes attrs = new EncodingAttributes();
             attrs.setFormat(criterion.getNewFormat());
             attrs.setAudioAttributes(audio);
-            attrs.setVideoAttributes(video);
+
             //Encode
             Encoder encoder = new Encoder();
             encoder.encode(new MultimediaObject(source), target, attrs);

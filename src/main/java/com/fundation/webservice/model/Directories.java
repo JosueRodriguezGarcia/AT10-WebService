@@ -22,7 +22,8 @@ public enum Directories {
     FFMPEG_DIR("ffmpeg/bin/"),
     IMAGEMAGIC_DIR("ImageMagic/"),
     PANDOC_DIR("pandoc/"),
-    POPPLER_DIR("poppler/bin/");
+    POPPLER_DIR("poppler/bin/"),
+    OFFICETOPDF_DIR("officetopdf/");
 
     private String dir;
 

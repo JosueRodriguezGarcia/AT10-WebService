@@ -10,42 +10,42 @@
 package com.fundation.webservice.model;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
  * Implements Thumbnail class an convert Method.
  *
- * @author Josue Rodriguez,
+ * @author Maday Alcalá Cuba, Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class ThumbnailVideo {
-    CriteriaThumbnailVideo criteria;
-
-    public ThumbnailVideo(CriteriaThumbnailVideo criteria) {
-        this.criteria = criteria;
-    }
-
-    //The convert method capture a thumbnail of a frame specific.
-    public void convert() {
+public class ThumbnailImage implements IConvert{
+    /**
+     * Obtains a 128x128 thumbnail of an image.
+     *
+     * @param criteriaConvert holds the required parameters to create the thumbnail:
+     *     The source file path and the destination folder path.
+     *     The output file name and the output file extension.
+     */
+    public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaThumbnailImage criteria = (CriteriaThumbnailImage) criteriaConvert;
+        String magick = "3rdparty/ImageMagic/magick ";
         try {
-            String cmd = Directories.TOOLS_DIR.getDir() + Directories.FFMPEG_DIR.getDir() + "ffmpeg -y -i "
+            String cmd = magick
                     + criteria.getSrcPath()
-                    + " -ss "
-                    + criteria.getTime()
-                    + " -vframes 1 -s 128x128 "
+                    + " -thumbnail 128x128 "
                     + criteria.getDestPath()
                     + criteria.getName() + "."
                     + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
-            String line;
-            do {
-                line = in.readLine();
-            }
-            while (line != null);
             process.waitFor();
             in.close();
-        } catch (Exception e) {
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

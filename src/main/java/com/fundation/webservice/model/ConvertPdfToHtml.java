@@ -14,30 +14,30 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Implements a Pdf To Html converter class.
+ * Performs document conversion from PDF format to HTML format.
  *
- * @author Alejandro Sanchez
+ * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
 public class ConvertPdfToHtml implements IConvert{
-    CriteriaPdfToHtml criteriaPdfToHtml;
-
-    public ConvertPdfToHtml(CriteriaPdfToHtml criteriaConvert) {
-        this.criteriaPdfToHtml = criteriaConvert;
-    }
-
-    public void convert() {
-        String s = null;
-
+    /**
+     * Implements convert(CriteriaConvert) from IConvert interface.
+     * Conversion is performed via pdftohtml from poppler-utils.
+     *
+     * @param criteriaConvert
+     */
+    public void convert(CriteriaConvert criteriaConvert) {
         try {
-            Process p = Runtime.getRuntime().exec("\\Users\\AlejandroSanchez\\Desktop\\alszla\\_i\\poppler\\bin\\pdftohtml.exe -c -noframes " + criteriaPdfToHtml.getSrcPath() + " " + criteriaPdfToHtml.getDestPath());
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            while ((s = stdInput.readLine()) != null) { }
-            System.exit(0);
+            Process process = Runtime.getRuntime().exec("3rdparty/" + "poppler/bin/" + "pdftohtml.exe -c -noframes " + criteriaConvert.getSrcPath() + " " + criteriaConvert.getDestPath());
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            process.waitFor();
+            stdInput.close();
         }
        catch (IOException e) {
            e.printStackTrace();
-            System.exit(-1);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

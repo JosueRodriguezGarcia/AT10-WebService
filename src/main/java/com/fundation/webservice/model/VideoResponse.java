@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2019 Jalasoft.
  *
  * This software is the confidential and proprietary information of Jalasoft.
@@ -9,10 +9,12 @@
  */
 package com.fundation.webservice.model;
 
+import javax.xml.soap.SAAJResult;
+
 /**
  * Implements a type of response to an /upload request.
  *
- * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas
  * @version 1.1
  */
 public class VideoResponse {
@@ -21,84 +23,229 @@ public class VideoResponse {
     private String fileType;
     private long size;
     private String newFormat;
-    //audio
-    private String aCodec;
-    private String aBit;
-    private String aChannel;
-    private String aRate;
-    //video
-    private String vCodec;
-    private String vTag;
-    private String vBit;
-    private String vRate;
+    /**
+     * Audio  variables.
+     */
+    private String audioCodec;
+    private String audioBitRate;
+    private String audioChannel;
+    /**
+     * Video variables.
+     */
+    private String videoCodec;
+    private String videoBitRate;
+    private String fps;
 
+    /**
+     * Metadata Variable.
+     */
+    private String metadata;
+
+    /**
+     * Thumbnail Variables.
+     */
+    private String thumbnail;
+
+    /**
+     * Keyframe Variables.
+     */
+    private String keyframes;
+
+    /**
+     * Checksum variables.
+     */
+    private String checksum;
+
+    /**
+     *
+     * @param fileName defines de name os input file.
+     * @param fileDownloadUri defines destination URL direction.
+     * @param fileType defines de extention of the input file.
+     * @param size defines the size of the file.
+     * @param newFormat defines the output format file.
+     * @param audioCodec defines the audio codec format.
+     * @param audioBitRate defines the bit rate of the output file.
+     * @param audioChannel defines the number of channels required in the output file.
+     * @param videoCodec defines the video codec format of the output video file.
+     * @param videoBitRate defines the video bit rate.
+     * @param fps defines the rate of the output video file.
+     * @param checksum defines the checksum of the output or input file.
+     */
     public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size,
-            String newFormat, String aCodec, String aBit, String aChannel, String aRate,
-            String vCodec, String vTag, String vBit, String vRate) {
+                         String newFormat, String audioCodec, String audioBitRate, String audioChannel,
+                         String videoCodec, String videoBitRate, String fps, String metadata, String thumbnail,
+                         String keyframes, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
         this.newFormat = newFormat;
-        this.aCodec = aCodec;
-        this.aBit = aBit;
-        this.aChannel = aChannel;
-        this.aRate = aRate;
-        this.vCodec = vCodec;
-        this.vTag = vTag;
-        this.vBit = vBit;
-        this.vRate = vRate;
+
+        /**
+         * Audio constructors.
+         */
+        this.audioCodec = audioCodec;
+        this.audioBitRate = audioBitRate;
+        this.audioChannel = audioChannel;
+
+        /**
+         * Audio constructors.
+         */
+        this.videoCodec = videoCodec;
+        this.videoBitRate = videoBitRate;
+        this.fps = fps;
+
+        /**
+         * Metadata constructor.
+         */
+        this.metadata = metadata;
+
+        /**
+         * Thumbnail constructors.
+         */
+        this.thumbnail = thumbnail;
+
+        /**
+         * Keyframe constructor.
+         */
+        this.keyframes =  keyframes;
+
+        /**
+         * Checksum constructor.
+         */
+        this.checksum = checksum;
     }
 
+    /**
+     * Uses for send the file name of the input file.
+     *
+     * @return file name of the input file
+     */
     public String getFileName() {
         return fileName;
     }
 
+    /**
+     * Uses for destination URL direction.
+     *
+     * @return destination URL direction.
+     */
     public String getFileDownloadUri() {
         return fileDownloadUri;
     }
 
+    /**
+     * Uses for extention of the input file.
+     *
+     * @return extention of the input file.
+     */
     public String getFileType() {
         return fileType;
     }
 
+    /**
+     * Uses for size of the file.
+     *
+     * @return size of the file.
+     */
     public long getSize() {
         return size;
     }
 
+    /**
+     * Uses for output format file.
+     *
+     * @return output format file.
+     */
     public String getNewFormat() {
         return newFormat;
     }
 
-    public String getaCodec() {
-        return aCodec;
+    /**
+     * Uses for audio codec format.
+     *
+     * @return audio codec format.
+     */
+    public String getAudioCodec() {
+        return audioCodec;
     }
 
-    public String getaBit() {
-        return aBit;
+    /**
+     * Uses for bit rate of the output file.
+     *
+     * @return bit rate of the output file.
+     */
+    public String getAudioBitRate() {
+        return audioBitRate;
     }
 
-    public String getaChannel() {
-        return aChannel;
+    /**
+     * Uses for number of channels required in the output file.
+     *
+     * @return number of channels required in the output file.
+     */
+    public String getAudioChannel() {
+        return audioChannel;
     }
 
-    public String getaRate() {
-        return aRate;
+    /**
+     * Uses for video codec format of the output video file.
+     *
+     * @return video codec format of the output video file.
+     */
+    public String getVideoCodec() {
+        return videoCodec;
     }
 
-    public String getvCodec() {
-        return vCodec;
+    /**
+     * Uses for video bit rate.
+     *
+     * @return video bit rate.
+     */
+    public String getVideoBitRate() {
+        return videoBitRate;
     }
 
-    public String getvTag() {
-        return vTag;
+    /**
+     * Uses for rate of the output video file.
+     *
+     * @return rate of the output video file.
+     */
+    public String getFps() {
+        return fps;
     }
 
-    public String getvBit() {
-        return vBit;
+    /**
+     * Uses for metadata of the output file.
+     *
+     * @return
+     */
+    public String getMetadata() {
+        return metadata;
     }
 
-    public String getvRate() {
-        return vRate;
+    /**
+     * Uses for thumbnail of the output file
+     *
+     * @return
+     */
+    public String getThumbnail() {
+        return thumbnail;
     }
+    /**
+     * Uses for keyframe of the output file
+     *
+     * @return
+     */
+    public String getKeyframes() {
+        return keyframes;
+    }
+
+    /**
+     * Uses for checksum of the output or input file.
+     *
+     * @return checksum of the output or input file.
+     */
+
+    public String getChecksum(){ return checksum; }
 }
