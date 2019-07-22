@@ -143,7 +143,8 @@ public class Controller {
             new File(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/").mkdirs();
             CriteriaVideo criteria = new CriteriaVideo();
             criteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
-            criteria.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/" + outputJson.getString("name") + outputJson.getString("ext"));
+            criteria.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/" +
+                outputJson.getString("name") + outputJson.getString("ext"));
             criteria.setNewFormat(configJson.getString("newFormat"));
             criteria.setAudioCodec(configJson.getString("audioCodec"));
             criteria.setAudioBitRate(new Integer(configJson.getString("audioBitRate")));
@@ -157,26 +158,33 @@ public class Controller {
             video.convert(criteria);
             String outputChecksumString = "";
             try {
-                outputChecksumString = checksum.getChecksum(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/"
-                        + outputJson.getString("name") + outputJson.getString("ext"), "MD5");
+                outputChecksumString = checksum.getChecksum(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"), "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }
             if (configJson.getString("metadata").equals("json")) {
                 //Creation JSON
-                File convertedFile = new File(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/" + outputJson.getString("name") + outputJson.getString("ext"));
+                File convertedFile = new File(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeJsonFile(convertedFile);
             } else {
                 //Creation XMP
-                File convertedFile = new File(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/" + outputJson.getString("name") + outputJson.getString("ext"));
+                File convertedFile = new File(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeXmpFile(convertedFile);
             }
             if (configJson.getString("thumbnail").equals("True")) {
                 //Creation thumbnail
                 CriteriaThumbnailVideo criteriaThumbnailVideo = new CriteriaThumbnailVideo();
-                criteriaThumbnailVideo.setSrcPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/" + outputJson.getString("name") + outputJson.getString("ext"));
+                criteriaThumbnailVideo.setSrcPath(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
                 criteriaThumbnailVideo.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/");
                 criteriaThumbnailVideo.setTime(configJson.getString("thumbnailTime"));
                 criteriaThumbnailVideo.setName(outputJson.getString("name"));
@@ -187,8 +195,11 @@ public class Controller {
             if(configJson.getString("keyframe").equals("True")){
                 //Creation keyframes
                 CriteriaKeyFrameVideo criteriaKeyFrameVideo = new CriteriaKeyFrameVideo();
-                criteriaKeyFrameVideo.setSrcPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/" + outputJson.getString("name") + outputJson.getString("ext"));
-                criteriaKeyFrameVideo.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/");
+                criteriaKeyFrameVideo.setSrcPath(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
+                criteriaKeyFrameVideo.setDestPath(properties.getProperty("file.downloadDir") +
+                    outputJson.getString("name") + "/");
                 criteriaKeyFrameVideo.setTime(configJson.getString("keyframeTime"));
                 criteriaKeyFrameVideo.setName(outputJson.getString("name"));
                 criteriaKeyFrameVideo.setExt("png");
@@ -196,10 +207,14 @@ public class Controller {
                 keyFrameOfVideo.convert();
             }
 
-            FolderZipped.zipFolder(properties.getProperty("file.downloadDir")+ outputJson.getString("name"));
+            FolderZipped.zipFolder(properties.getProperty("file.downloadDir") + outputJson.getString("name"));
 
-            return new VideoResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), configJson.getString("newFormat"),
-                    configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"), configJson.getString("videoCodec"), configJson.getString("videoBitRate"), configJson.getString("fps"), configJson.getString("metadata"), configJson.getString("thumbnail"),configJson.getString("keyframe"),
+            return new VideoResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
+                    configJson.getString("newFormat"), configJson.getString("audioCodec"),
+                    configJson.getString("audioBitRate"), configJson.getString("audioChannel"),
+                    configJson.getString("videoCodec"), configJson.getString("videoBitRate"),
+                    configJson.getString("fps"), configJson.getString("metadata"),
+                    configJson.getString("thumbnail"),configJson.getString("keyframe"),
                     outputChecksumString);
         } else {
             System.out.print("Error");
