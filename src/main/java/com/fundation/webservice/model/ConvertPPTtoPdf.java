@@ -22,7 +22,7 @@ public class ConvertPPTtoPdf {
     public static void main(String[] args) throws IOException, DocumentException {
 
         //load any ppt file
-        FileInputStream inputStream = new FileInputStream("C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.ppt");//"d:/temp/initialPPT.ppt");
+        FileInputStream inputStream = new FileInputStream("D:\\prueba\\OBSERVER.ppt");//("C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.ppt");
         SlideShow ppt = new SlideShow(inputStream);
         inputStream.close();
         Dimension pgsize = ppt.getPageSize();
@@ -36,14 +36,14 @@ public class ConvertPPTtoPdf {
         graphics.fill(new Rectangle2D.Float(0, 0, pgsize.width,
                 pgsize.height));
         slide.draw(graphics);
-        FileOutputStream out = new FileOutputStream("C:\\Users\\LimbertVargas\\Desktop\\OBSERVERslide.png");//"d:/temp/slideImage.png");
+        FileOutputStream out = new FileOutputStream("D:\\prueba\\OBSERVERslide.png");//("C:\\Users\\LimbertVargas\\Desktop\\OBSERVERslide.png");
         javax.imageio.ImageIO.write(img, "png", out);
         out.close();
 
         //get saved slide-image and save it into pdf
-        Image slideImage = Image.getInstance("C:\\Users\\LimbertVargas\\Desktop\\OBSERVERslide.png");//"d:/temp/slideImage.png");
+        Image slideImage = Image.getInstance("D:\\prueba\\OBSERVERslide.png");//("C:\\Users\\LimbertVargas\\Desktop\\OBSERVERslide.png");
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream("C:\\Users\\LimbertVargas\\Desktop\\OBSERVERpdf.pdf"));//"d:/temp/PPTtoImageTest.pdf"));
+        PdfWriter.getInstance(document, new FileOutputStream("D:\\prueba\\OBSERVERpdf.pdf"));//("C:\\Users\\LimbertVargas\\Desktop\\OBSERVERpdf.pdf"));
         document.setPageSize(new Rectangle(slideImage.getWidth(), slideImage.getHeight()));
         document.open();
         slideImage.setAbsolutePosition(0, 0);
