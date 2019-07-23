@@ -44,7 +44,7 @@ public class Query {
     /**
      * This method show informations from the table criteria.
      */
-    public List getAllData() {
+    public void getAllData() {
         List<String> infsavedb = new ArrayList<String>();
         String sql = "SELECT * FROM savedb";
         try {
@@ -58,7 +58,7 @@ public class Query {
         } catch (SQLException e) {
             e.getMessage();
         }
-        return infsavedb;
+       // return infsavedb;
     }
     /**
      * This method acording the checksum
@@ -92,5 +92,11 @@ public class Query {
         } catch (SQLException e) {
             e.getMessage();
         }
+    }
+    public static void main(String arg []){
+
+        Query  query=new Query();
+        query.getAllData();
+
     }
 }

@@ -20,11 +20,11 @@ package com.fundation.webservice.common;
  * This class allows to store the values of the file "aplication.setting", this class is used by Util.
  */
 public class Config {
-    private static String webserverdb;
-    private static String root;
-    private static String password;
-    private static String port;
-    private static String host;
+    private String webserverdb;
+    private String root;
+    private String password;
+    private String port;
+    private String host;
 
     /**
      * This method return the variable
