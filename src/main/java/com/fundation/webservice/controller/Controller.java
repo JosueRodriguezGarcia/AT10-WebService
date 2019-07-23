@@ -251,9 +251,9 @@ public class Controller {
             criteria.setDestPath("C:\\_pg\\tmp\\conversions\\" + output[0] + "\\" + output[0] + output[1]);
             criteria.setNewFormat(config[0]);
             criteria.setAudioCodec(config[1]);
-            criteria.setAudioBit(new Integer(config[2]));
+            criteria.setAudioBitRate(new Integer(config[2]));
             criteria.setAudioChannel(new Integer(config[3]));
-            criteria.setAudioRate(new Integer(config[4]));
+            //criteria.setAudioRate(new Integer(config[4]));
             ConvertAudio audio = new ConvertAudio();
             audio.convert(criteria);
 

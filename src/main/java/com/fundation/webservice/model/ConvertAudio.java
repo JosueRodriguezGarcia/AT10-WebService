@@ -44,9 +44,8 @@ public class ConvertAudio implements IConvert{
             //Audio Attributes
             AudioAttributes audio = new AudioAttributes();
             audio.setCodec(criterion.getAudioCodec());
-            audio.setBitRate(criterion.getAudioBit());
+            audio.setBitRate(criterion.getAudioBitRate());
             audio.setChannels(criterion.getAudioChannel());
-            audio.setSamplingRate(criterion.getAudioRate());
 
             //Encoding attributes
             EncodingAttributes attrs = new EncodingAttributes();
