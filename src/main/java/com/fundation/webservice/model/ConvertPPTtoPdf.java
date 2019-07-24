@@ -19,36 +19,62 @@ import com.lowagie.text.Rectangle;
 import com.lowagie.text.pdf.PdfWriter;
 
 public class ConvertPPTtoPdf {
-    public static void main(String[] args) throws IOException, DocumentException {
 
-        //load any ppt file
-        FileInputStream inputStream = new FileInputStream("D:\\prueba\\OBSERVER.ppt");//("C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.ppt");
-        SlideShow ppt = new SlideShow(inputStream);
+}
+
+    public void convertPPTXtoImgtoPDF() throws IOException, DocumentException, InvalidFormatException {
+        FileInputStream inputStream = new FileInputStream("vzw.pptx");
+
+        XMLSlideShow ppt = new XMLSlideShow(OPCPackage.open(inputStream));
+
         inputStream.close();
         Dimension pgsize = ppt.getPageSize();
+        float scale = 1;
+        int width = (int) (pgsize.width * scale);
+        int height = (int) (pgsize.height * scale);
 
-        //take first slide and save it as an image
-        Slide slide = ppt.getSlides()[0];
-        BufferedImage img = new BufferedImage(pgsize.width, pgsize.height,
-                BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = img.createGraphics();
-        graphics.setPaint(Color.white);
-        graphics.fill(new Rectangle2D.Float(0, 0, pgsize.width,
-                pgsize.height));
-        slide.draw(graphics);
-        FileOutputStream out = new FileOutputStream("D:\\prueba\\OBSERVERslide.png");//("C:\\Users\\LimbertVargas\\Desktop\\OBSERVERslide.png");
-        javax.imageio.ImageIO.write(img, "png", out);
-        out.close();
+        int i = 1;
+        int totalSlides = ppt.getSlides().size();
 
-        //get saved slide-image and save it into pdf
-        Image slideImage = Image.getInstance("D:\\prueba\\OBSERVERslide.png");//("C:\\Users\\LimbertVargas\\Desktop\\OBSERVERslide.png");
+        for (XSLFSlide slide : ppt.getSlides()) {
+
+            BufferedImage img = new BufferedImage(pgsize.width, pgsize.height,
+                    BufferedImage.TYPE_INT_RGB);
+            Graphics2D graphics = img.createGraphics();
+            graphics.setPaint(Color.white);
+            graphics.fill(new Rectangle2D.Float(0, 0, pgsize.width,
+                    pgsize.height));
+            graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+            graphics.setColor(Color.white);
+            graphics.clearRect(0, 0, width, height);
+            graphics.scale(scale, scale);
+
+            slide.draw(graphics);
+            FileOutputStream out = new FileOutputStream("images/" + i + ".png");
+            javax.imageio.ImageIO.write(img, "png", out);
+            out.close();
+            i++;
+        }
+
         Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream("D:\\prueba\\OBSERVERpdf.pdf"));//("C:\\Users\\LimbertVargas\\Desktop\\OBSERVERpdf.pdf"));
-        document.setPageSize(new Rectangle(slideImage.getWidth(), slideImage.getHeight()));
-        document.open();
-        slideImage.setAbsolutePosition(0, 0);
-        document.add(slideImage);
-        document.close();
+        PdfWriter.getInstance(document, new FileOutputStream("filenew.pdf"));
+        com.lowagie.text.pdf.PdfPTable table = new com.lowagie.text.pdf.PdfPTable(1);
 
+
+        for (int j = 1; j <= totalSlides; j++) {
+            Image slideImage = Image.getInstance("images/" + j + ".png");
+
+            document.setPageSize(new Rectangle(slideImage.getWidth(), slideImage.getHeight()));
+            document.open();
+            slideImage.setAbsolutePosition(0, 0);
+
+            table.addCell(new com.lowagie.text.pdf.PdfPCell(slideImage, true));
+
+        }
+        document.add(table);
+        document.close();
     }
 }
