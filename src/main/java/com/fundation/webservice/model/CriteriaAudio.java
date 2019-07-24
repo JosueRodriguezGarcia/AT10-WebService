@@ -18,9 +18,8 @@ package com.fundation.webservice.model;
 public class CriteriaAudio extends CriteriaConvert {
     private String newFormat;
     private String audioCodec;
-    private int audioBit;
+    private int audioBitRate;
     private int audioChannel;
-    private int audioRate;
 
     public String getNewFormat() {
         return newFormat;
@@ -38,12 +37,12 @@ public class CriteriaAudio extends CriteriaConvert {
         this.audioCodec = audioCodec;
     }
 
-    public int getAudioBit() {
-        return audioBit;
+    public int getAudioBitRate() {
+        return audioBitRate;
     }
 
-    public void setAudioBit(int audioBit) {
-        this.audioBit = audioBit;
+    public void setAudioBitRate(int audioBitRate) {
+        this.audioBitRate = audioBitRate;
     }
 
     public int getAudioChannel() {
@@ -52,13 +51,5 @@ public class CriteriaAudio extends CriteriaConvert {
 
     public void setAudioChannel(int audioChannel) {
         this.audioChannel = audioChannel;
-    }
-
-    public int getAudioRate() {
-        return audioRate;
-    }
-
-    public void setAudioRate(int audioRate) {
-        this.audioRate = audioRate;
     }
 }

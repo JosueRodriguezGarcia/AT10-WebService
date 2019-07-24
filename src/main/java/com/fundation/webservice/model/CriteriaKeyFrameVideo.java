@@ -21,16 +21,16 @@ public class CriteriaKeyFrameVideo extends CriteriaConvert {
     private String ext;
 
     /**
-     * Method that returns the interval of frame for each keyframe.
+     * Method that returns the interval of time for each keyframe.
      *
-     * @return The number of frames for each interval of keyframe
+     * @return The number of time for each interval of keyframe
      */
     public String getTime() {
         return time;
     }
 
     /**
-     * Method that modifies the interval of frame for each keyframe.
+     * Method that modifies the interval of time for each keyframe.
      *
      * @param time The frames parameter define the number of frames for each interval of keyframe in output file.
      */
