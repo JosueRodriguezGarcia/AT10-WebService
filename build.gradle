@@ -48,7 +48,6 @@ dependencies {
     compile group: 'org.apache.poi', name: 'poi-scratchpad', version: '3.9'
     compile group: 'org.json', name: 'json', version: '20180813'
 
-    // https://mvnrepository.com/artifact/com.aspose/aspose-slides
-    compile group: 'com.aspose', name: 'aspose-slides', version: '14.7.0'
-
+    // https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans
+    compile group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.1.0'
 }
