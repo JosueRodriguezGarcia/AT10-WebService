@@ -189,8 +189,8 @@ public class Controller {
                 criteriaThumbnailVideo.setTime(configJson.getString("thumbnailTime"));
                 criteriaThumbnailVideo.setName(outputJson.getString("name"));
                 criteriaThumbnailVideo.setExt("bmp");
-                ThumbnailVideo thumbnailVideo = new ThumbnailVideo(criteriaThumbnailVideo);
-                thumbnailVideo.convert();
+                ThumbnailVideo thumbnailVideo = new ThumbnailVideo();
+                thumbnailVideo.convert(criteriaThumbnailVideo);
             }
             if(configJson.getString("keyframe").equals("True")){
                 //Creation keyframes

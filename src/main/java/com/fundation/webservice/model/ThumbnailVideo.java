@@ -19,14 +19,8 @@ import java.io.InputStreamReader;
  * @version 1.0
  */
 public class ThumbnailVideo {
-    CriteriaThumbnailVideo criteria;
-
-    public ThumbnailVideo(CriteriaThumbnailVideo criteria) {
-        this.criteria = criteria;
-    }
-
     //The convert method capture a thumbnail of a frame specific.
-    public void convert() {
+    public void convert(CriteriaThumbnailVideo criteria) {
         try {
             String cmd = Directories.TOOLS_DIR.getDir() + Directories.FFMPEG_DIR.getDir() + "ffmpeg -y -i "
                     + criteria.getSrcPath()
