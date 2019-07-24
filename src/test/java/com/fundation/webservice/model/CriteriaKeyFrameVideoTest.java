@@ -27,14 +27,14 @@ public class CriteriaKeyFrameVideoTest {
     public void setUp() {
         criteriaTest.setSrcPath(Directories.RSRC_DIR.getDir() + "videoTest.ogg");
         criteriaTest.setDestPath(Directories.RSRC_DIR.getDir());
-        criteriaTest.setFrames("1000");
+        criteriaTest.setTime("60");
         criteriaTest.setName("output");
         criteriaTest.setExt("mp4");
     }
 
     @Test
     public void getFrames() {
-        assertEquals("1000", criteriaTest.getFrames());
+        assertEquals("60", criteriaTest.getTime());
     }
 
     @Test

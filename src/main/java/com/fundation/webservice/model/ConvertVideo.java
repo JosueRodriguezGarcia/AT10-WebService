@@ -52,11 +52,9 @@ public class ConvertVideo implements IConvert{
             audio.setCodec(criterion.getAudioCodec());
             audio.setBitRate(criterion.getAudioBitRate());
             audio.setChannels(criterion.getAudioChannel());
-//            audio.setSamplingRate(criterion.getAudioRate());
             //Video Attributes
             VideoAttributes video = new VideoAttributes();
             video.setCodec(criterion.getVideoCodec());
-//            video.setTag(criterion.getVideoTag());
             video.setBitRate(new Integer(criterion.getVideoBitRate()));
             video.setFrameRate(new Integer(criterion.getFps()));
             //Encoding attributes
