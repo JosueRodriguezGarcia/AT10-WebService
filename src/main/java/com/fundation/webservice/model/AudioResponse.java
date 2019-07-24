@@ -129,5 +129,7 @@ public class AudioResponse {
      *
      * @return checksum of the file.
      */
-    public String getChecksum() { return checksum; }
+    public String getChecksum() {
+        return checksum;
+    }
 }
