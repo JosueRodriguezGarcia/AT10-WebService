@@ -49,10 +49,10 @@ public class ConvertVideoTest {
         File output =  new File(criteriaVideo.getDestPath());
         long size = output.length();
         boolean actual = false;
+        //Verify that Size > 0
         if (size >0){
             actual = true;
         }
         assertTrue(actual);
     }
-    
 }
