@@ -46,4 +46,5 @@ dependencies {
     //implementation 'org.apache.poi:poi-scratchpad:4.1.0'
     // https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad
     compile group: 'org.apache.poi', name: 'poi-scratchpad', version: '3.9'
+    compile group: 'org.json', name: 'json', version: '20180813'
 }
