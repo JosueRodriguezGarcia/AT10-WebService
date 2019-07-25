@@ -1,21 +1,41 @@
+/*
+ * Copyright (c) 2019 Jalasoft.
+ *
+ * This software is the confidential and proprietary information of Jalasoft.
+ * ("Confidential Information"). You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Jalasoft.
+ */
 package com.fundation.webservice.model;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+/**
+ * Handles document conversion from ppt or pptx format to PDF format
+ *
+ * @author Limbert Alvaro Vargas Laura
+ * @version 1.0
+ */
+public class ConvertPPTtoPdf  extends Run implements IConvert {
+    private final String OFFICETOPDF_DIR = Directories.OFFICETOPDF_DIR.getDir();
 
-public class ConvertPPTtoPdf {
-    private static final String PATH_TO_EXE = "C:\\Users\\LimbertVargas\\Desktop\\AT10-WebService\\3rdparty\\officetopdf\\OfficeToPDF.exe";
-    private static final String PATH_TO_TEMPLATE = "C:\\Users\\LimbertVargas\\Desktop\\OBSERVER.ppt";
-    private static final String PATH_TO_OUTPUT = "C:\\Users\\LimbertVargas\\Desktop\\pruebaOutput.pdf";
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Process process;
-        process = new ProcessBuilder(PATH_TO_EXE, PATH_TO_TEMPLATE, PATH_TO_OUTPUT).start();
-        process.waitFor();
+    /**
+     * Implements convert(CriteriaConvert) from IConvert interface.
+     * Conversion is performed via OfficeToPDF tool.
+     *
+     * @param criteriaConvert hold the source file path.
+     */
+    public void convert(CriteriaConvert criteriaConvert){
+        initCommandLine();
+        commandLine.add(criteriaConvert.getSrcPath());
+        run();
+    }
 
-        System.out.println("Result of Office processing: " + process.exitValue());
-        File file = new File(PATH_TO_OUTPUT);
-        byte[] fileContent = Files.readAllBytes(file.toPath());
-        System.out.println(fileContent.length);
+    /**
+     * Initializates the list structure that stores the command line string to be passed to the
+     * run() method.
+     */
+    public void initCommandLine(){
+        super.initCommandLine();
+        commandLine.add(USER_DIR + TOOLS_DIR + OFFICETOPDF_DIR + "officetopdf.exe");
     }
 }
