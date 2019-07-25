@@ -7,7 +7,7 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-package com.fundation.webservice.controller;
+/*package com.fundation.webservice.controller;
 
 import com.fundation.webservice.model.*;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,7 +31,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.json.JSONObject;
+import org.json.JSONObject;*/
 
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
@@ -39,12 +39,12 @@ import org.json.JSONObject;
  * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas, Josue Rodriguez
  * @version 1.0
  */
-@RestController
+/*@RestController
 public class Controller {
     /**
      * @Services injection through Spring @Autowired
      */
-    @Autowired
+  /*  @Autowired
     private UploadService uploadService;
     @Autowired
     private DownloadService downloadService;
@@ -59,7 +59,7 @@ public class Controller {
      *
      * @return name of output message in postman
      */
-    @RequestMapping("/")
+  /*  @RequestMapping("/")
     public String home() {
         return "AT-10 File Conversion Service";
     }
@@ -74,7 +74,7 @@ public class Controller {
      * @param formatColor defines the different format colors of the output file.
      * @return defines all parameters of the output file.
      */
-    @PostMapping("/convertPdf")
+  /*  @PostMapping("/convertPdf")
     public PdfResponse upload(@RequestParam("pdf") MultipartFile pdf, @RequestParam(value = "name", defaultValue = "")
             String name, @RequestParam(value = "dpi", defaultValue = "") String dpi, @RequestParam(value = "extension",
             defaultValue = "") String ext, @RequestParam(value = "formatColor", defaultValue = "") String formatColor) {
@@ -85,11 +85,11 @@ public class Controller {
         /**
          * creating a new folder for the converted images
          */
-        new File("C:/_pg/tmp/conversions/" + name + "/").mkdirs();
+ /*       new File("C:/_pg/tmp/conversions/" + name + "/").mkdirs();
         /**
          * Converting pdf into images
          */
-        CriteriaPdfToImage criterion = new CriteriaPdfToImage();
+ /*       CriteriaPdfToImage criterion = new CriteriaPdfToImage();
         criterion.setSrcPath("C:\\_pg\\tmp\\uploads\\" + pdfName);
         criterion.setDestPath("C:\\_pg\\tmp\\conversions\\" + name + "\\");
         criterion.setName(name);
@@ -101,7 +101,7 @@ public class Controller {
         /**
          * This line compresses the folder with images in a zip file
          */
-        FolderZipped.zipFolder(name);
+  /*      FolderZipped.zipFolder(name);
         return new PdfResponse(pdfName, fileDownloadUri, pdf.getContentType(),
                 pdf.getSize(), name, dpi, ext, formatColor);
     }
@@ -115,7 +115,7 @@ public class Controller {
      * @param output defines the name and the extension of the output result file.
      * @return all array string parameters.
      */
-    @PostMapping("/convertVideo")
+  /*  @PostMapping("/convertVideo")
     public VideoResponse convertVideo(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
                                       @RequestParam("config") String config, @RequestParam("output") String output) {
         JSONObject inputJson = new JSONObject(input);
@@ -231,7 +231,7 @@ public class Controller {
      * @param output defines the name and the extension of the output result file.
      * @return all array string parameters.
      */
-    @PostMapping("/convertAudio")
+/*    @PostMapping("/convertAudio")
     public AudioResponse convertAudio(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String[] input,
                                       @RequestParam("config") String[] config, @RequestParam("output") String[] output) {
         String fileName = uploadService.storeFile(asset);
@@ -286,7 +286,7 @@ public class Controller {
      * @param request
      * @return
      */
-    @GetMapping("/download/{fileName:.+}")
+/*    @GetMapping("/download/{fileName:.+}")
     public ResponseEntity<Resource> download(@PathVariable String fileName, HttpServletRequest request) {
         Resource resource = downloadService.loadFileAsResource(fileName);
         String contentType = null;
@@ -335,4 +335,4 @@ public class Controller {
             return null;
         }
     }
-}
+}*/
