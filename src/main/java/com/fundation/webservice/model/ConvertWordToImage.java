@@ -31,7 +31,7 @@ public class ConvertWordToImage extends Run implements IConvert{
         String intermediateName = filenameWithoutExtension(inputFile);
         criteriaConvert.setSrcPath(USER_DIR + Directories.RSRC_DIR.getDir() + intermediateName + ".pdf");
         ConvertPdfToImage convertPdfToImage = new ConvertPdfToImage();
-        convertPdfToImage.convert((CriteriaPdfToImage) criteriaConvert);
+        convertPdfToImage.convert(criteriaConvert);
     }
 
     /**
