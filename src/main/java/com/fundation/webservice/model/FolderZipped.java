@@ -17,10 +17,17 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 /**
+ * Implement the FolderZipped class and the getter and setter´s methods 
+ *
  * @author Maday Alcala Cuba,Josue Rodriguez
  * @version 1.1
  */
 public class FolderZipped {
+    /**
+     * Method that create a .zip
+     *
+     * @param direction The direction defines the direction thre folder to zip.
+     */
     public static void zipFolder(String direction) {
         try {
             String sourceFile = direction;
@@ -35,7 +42,16 @@ public class FolderZipped {
         }
     }
 
+    /**
+     * Method that add document to new zip.
+     *
+     * @param fileToZip The fileToZip defines the direction of the zip.
+     * @param fileName The fileName defines the name for the zip.
+     * @param zipOut The zipOut define the direction of the output zip.
+     * @throws IOException Exception.
+     */
     private static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
+        final int BYTE = 1024;
         if (fileToZip.isHidden()) {
             return;
         }
@@ -56,7 +72,7 @@ public class FolderZipped {
         FileInputStream fis = new FileInputStream(fileToZip);
         ZipEntry zipEntry = new ZipEntry(fileName);
         zipOut.putNextEntry(zipEntry);
-        byte[] bytes = new byte[1024];
+        byte[] bytes = new byte[BYTE];
         int length;
         while ((length = fis.read(bytes)) >= 0) {
             zipOut.write(bytes, 0, length);

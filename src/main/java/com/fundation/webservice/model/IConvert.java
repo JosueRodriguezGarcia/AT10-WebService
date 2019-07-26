@@ -10,6 +10,8 @@
 package com.fundation.webservice.model;
 
 /**
+ * Implement the Iconvert interface.
+ * 
  * @author Josue Rodriguez, Alejandro Sánchez Luizaga
  * @version 1.1
  */

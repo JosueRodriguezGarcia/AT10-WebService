@@ -10,7 +10,7 @@
 package com.fundation.webservice.model;
 
 /**
- * Implements the model class File and the getter and setter´s methods
+ * Implement the model class File and the getter and setter´s methods
  *
  * @author Maday Alcala, Limbert Vargas
  * @version 1.0
@@ -18,19 +18,13 @@ package com.fundation.webservice.model;
 public class CriteriaVideo extends CriteriaConvert{
     private String newFormat;
 
-    /**
-     * Audio variables.
-     */
+    //Audio variables.
     private String audioCodec;
     private int audioBitRate;
     private int audioChannel;
-//    private int audioRate;
 
-    /**
-     * video variables.
-     */
+    //video variables.
     private String videoCodec;
-//    private String videoTag;
     private int videoBitRate;
     private int fps;
 
@@ -106,24 +100,6 @@ public class CriteriaVideo extends CriteriaConvert{
         this.audioChannel = audioChannel;
     }
 
-//    /**
-//     * Uses for return audio rate of the output file.
-//     *
-//     * @return audio rate of the output file.
-//     */
-//    public int getAudioRate() {
-//        return audioRate;
-//    }
-//
-//    /**
-//     * Uses for modified audio rate of the output file.
-//     *
-//     * @param audioRate audio rate of the output file.
-//     */
-//    public void setAudioRate(int audioRate) {
-//        this.audioRate = audioRate;
-//    }
-
     /**
      * Uses for return video codec format of the output video file.
      *
@@ -141,24 +117,6 @@ public class CriteriaVideo extends CriteriaConvert{
     public void setVideoCodec(String videoCodec) {
         this.videoCodec = videoCodec;
     }
-
-//    /**
-//     * Uses for return video tag of the output video file.
-//     *
-//     * @return video tag of the output video file.
-//     */
-//    public String getVideoTag() {
-//        return videoTag;
-//    }
-//
-//    /**
-//     * Uses for modified video tag of the output video file.
-//     *
-//     * @param videoTag video tag of the output video file.
-//     */
-//    public void setVideoTag(String videoTag) {
-//        this.videoTag = videoTag;
-//    }
 
     /**
      * Uses for return video bit rate.
