@@ -33,6 +33,9 @@ import java.util.Properties;
 
 import org.json.JSONObject;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
  *
@@ -49,6 +52,9 @@ public class Controller {
     @Autowired
     private DownloadService downloadService;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Controller.class);
+
+
     Checksum checksum = new Checksum();
 
     Properties properties = new Properties();
@@ -61,6 +67,11 @@ public class Controller {
      */
     @RequestMapping("/")
     public String home() {
+        LOGGER.trace("This is a trace message");
+        LOGGER.debug("This is a debug message");
+        LOGGER.info("This is a info message");
+        LOGGER.warn("This is a warn message");
+        LOGGER.error("This is a error message");
         return "AT-10 File Conversion Service";
     }
 
