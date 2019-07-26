@@ -12,7 +12,7 @@ package com.fundation.webservice.model;
 /**
  * Implements a type of response to an /upload request.
  *
- * @author Maday Alcala Cuba, Josue Rodriguez
+ * @author Maday Alcala Cuba, Josue Rodriguez Garcia.
  * @version 1.0
  */
 public class AudioResponse {
@@ -29,15 +29,15 @@ public class AudioResponse {
     /**
      * Method constructor  of the audio response class initial the all variable.
      *
-     * @param fileName
-     * @param fileDownloadUri
-     * @param fileType
-     * @param size
-     * @param newFormat
-     * @param aCodec
-     * @param aBitRate
-     * @param aChannel
-     * @param checksum
+     * @param fileName new name for ouptup file.
+     * @param fileDownloadUri url for dwonloader the output file .zip.
+     * @param fileType infoamtion the file type of output file. 
+     * @param size show the size of output file.
+     * @param newFormat new format of output file convertetd.
+	 * @param aCodec Codec use for convertion.
+     * @param aBitRate Bit rate of new output file  
+     * @param aChannel number of channel for the new output file.
+     * @param checksum information of the checksum for output file. 
      */
     public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
                          String newFormat, String aCodec, String aBitRate, String aChannel, String checksum) {
