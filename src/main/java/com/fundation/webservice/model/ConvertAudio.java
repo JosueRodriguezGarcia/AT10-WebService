@@ -24,9 +24,9 @@ import java.io.File;
  */
 public class ConvertAudio implements IConvert{
     /**
-     * Implmentation of convert(CriteriaConvert) method specified through IConvert interface
+     * Implements of convert(CriteriaConvert) method specified through IConvert interface.
      *
-     * @param criteriaConvert holds the requried parameters to perform audio transcoding
+     * @param criteriaConvert holds the requried parameters to perform audio transcoding.
      *     Source file path,
      *     Destination file path,
      *     Audio codec,

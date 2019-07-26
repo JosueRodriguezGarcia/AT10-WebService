@@ -54,7 +54,7 @@ public class Run {
     }
 
     /**
-     * Safe initialization of the list structure that stores the command line string to be pass to run() method.
+     * Safes initialization of the list structure that stores the command line string to be pass to run() method.
      */
     public void initCommandLine() {
         commandLine.clear();
