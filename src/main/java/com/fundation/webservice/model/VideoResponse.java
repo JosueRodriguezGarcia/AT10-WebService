@@ -73,7 +73,7 @@ public class VideoResponse {
         this.audioBitRate = audioBitRate;
         this.audioChannel = audioChannel;
 
-        //Audio constructors.
+        //Video constructors.
         this.videoCodec = videoCodec;
         this.videoBitRate = videoBitRate;
         this.fps = fps;
@@ -92,7 +92,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for send the file name of the input file.
+     * Method that uses for send the file name of the input file.
      *
      * @return file name of the input file
      */
@@ -101,7 +101,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for destination URL direction.
+     * Method that uses for destination URL direction.
      *
      * @return destination URL direction.
      */
@@ -110,7 +110,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for extention of the input file.
+     * Method that uses for extention of the input file.
      *
      * @return extention of the input file.
      */
@@ -119,7 +119,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for size of the file.
+     * Method that uses for size of the file.
      *
      * @return size of the file.
      */
@@ -128,7 +128,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for output format file.
+     * Method that uses for output format file.
      *
      * @return output format file.
      */
@@ -137,7 +137,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for audio codec format.
+     * Method that uses for audio codec format.
      *
      * @return audio codec format.
      */
@@ -146,7 +146,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for bit rate of the output file.
+     * Method that uses for bit rate of the output file.
      *
      * @return bit rate of the output file.
      */
@@ -155,7 +155,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for number of channels required in the output file.
+     * Method that uses for number of channels required in the output file.
      *
      * @return number of channels required in the output file.
      */
@@ -164,7 +164,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for video codec format of the output video file.
+     * Method that uses for video codec format of the output video file.
      *
      * @return video codec format of the output video file.
      */
@@ -173,7 +173,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for video bit rate.
+     * Method that uses for video bit rate.
      *
      * @return video bit rate.
      */
@@ -182,7 +182,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for rate of the output video file.
+     * Method that uses for rate of the output video file.
      *
      * @return rate of the output video file.
      */
@@ -191,7 +191,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for metadata of the output file.
+     * Method that uses for metadata of the output file.
      *
      * @return
      */
@@ -200,7 +200,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for thumbnail of the output file
+     * Method that uses for thumbnail of the output file
      *
      * @return
      */
@@ -208,7 +208,7 @@ public class VideoResponse {
         return thumbnail;
     }
     /**
-     * Uses for keyframe of the output file
+     * Method that uses for keyframe of the output file
      *
      * @return
      */
@@ -217,7 +217,7 @@ public class VideoResponse {
     }
 
     /**
-     * Uses for checksum of the output or input file.
+     * Method that uses for checksum of the output or input file.
      *
      * @return checksum of the output or input file.
      */

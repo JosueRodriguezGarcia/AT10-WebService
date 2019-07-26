@@ -21,7 +21,7 @@ import java.io.InputStreamReader;
  */
 public class ThumbnailImage implements IConvert{
     /**
-     * Obtains a 128x128 thumbnail of an image.
+     * Method that Obtains a 128x128 thumbnail of an image.
      *
      * @param criteriaConvert holds the required parameters to create the thumbnail:
      *     The source file path and the destination folder path.
