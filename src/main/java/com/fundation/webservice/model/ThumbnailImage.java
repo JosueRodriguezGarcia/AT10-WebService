@@ -31,12 +31,8 @@ public class ThumbnailImage implements IConvert{
         CriteriaThumbnailImage criteria = (CriteriaThumbnailImage) criteriaConvert;
         String magick = "3rdparty/ImageMagic/magick ";
         try {
-            String cmd = magick
-                    + criteria.getSrcPath()
-                    + " -thumbnail 128x128 "
-                    + criteria.getDestPath()
-                    + criteria.getName() + "."
-                    + criteria.getExt();
+            String cmd = magick + criteria.getSrcPath() + " -thumbnail 128x128 " + criteria.getDestPath() + criteria.
+                    getName() + "." + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             process.waitFor();

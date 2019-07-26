@@ -25,17 +25,12 @@ public class KeyFrameInVideo {
     }
 
     /**
-     * The convert method add a keyframe for every certain amount of frame.
+     * Converts method add a keyframe for every certain amount of frame.
      */
     public void convert() {
         try {
-            String cmd = "ffmpeg -i "
-                + criteria.getSrcPath()
-                + " -vcodec libx264 -x264-params keyint="
-                + criteria.getTime()
-                + ":scenecut=0 -acodec copy "
-                + criteria.getDestPath()
-                + criteria.getName() + "."
+            String cmd = "ffmpeg -i " + criteria.getSrcPath() + " -vcodec libx264 -x264-params keyint="
+                + criteria.getTime() + ":scenecut=0 -acodec copy " + criteria.getDestPath() + criteria.getName() + "."
                 + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));

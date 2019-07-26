@@ -26,7 +26,7 @@ public class Metadata extends Run{
     private final String EXIFTOOL_DIR = Directories.EXIFTOOL_DIR.getDir();
 
     /**
-     * This method writes a xmp file containing the param file metadata info returned by exiftool in XMP format.
+     * Writes a xmp file containing the param file metadata info returned by exiftool in XMP format.
      * The xmp file is stored in the same directory where the param file is located.
      *
      * @param file The handle (provided by a File object) to the file that is going to be read by exiftool.
@@ -41,8 +41,8 @@ public class Metadata extends Run{
     }
 
     /**
-     * This method writes a json file containing the param file metadata info returned by exiftool in JSON format.
-     * The json file is stored in the same directory where the param file is located.
+     * Writes a json file containing the param file metadata info returned by exiftool in JSON format.
+     * Stores the json file in the same directory where the param file is located.
      *
      * @param file The handle (provided by a File object) to the file that is going to be read by exiftool.
      */

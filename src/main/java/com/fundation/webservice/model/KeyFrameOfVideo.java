@@ -26,18 +26,13 @@ public class KeyFrameOfVideo {
     }
 
     /**
-     * The convert method get the keyframe depending of the number of frame.
+     * Converts method get the keyframe depending of the number of frame.
      */
     public void convert() {
         try {
             String cmd = Directories.TOOLS_DIR.getDir() + Directories.FFMPEG_DIR.getDir() + "ffmpeg -y -i "
-                + criteria.getSrcPath()
-                + " -vf fps=1/"
-                + criteria.getTime()
-                + " "
-                + criteria.getDestPath()
-                + criteria.getName() + "%d."
-                + criteria.getExt();
+                + criteria.getSrcPath() + " -vf fps=1/" + criteria.getTime() + " " + criteria.getDestPath()
+                + criteria.getName() + "%d." + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;

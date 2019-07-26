@@ -9,8 +9,6 @@
  */
 package com.fundation.webservice.model;
 
-import javax.xml.soap.SAAJResult;
-
 /**
  * Implements a type of response to an /upload request.
  *
@@ -23,41 +21,30 @@ public class VideoResponse {
     private String fileType;
     private long size;
     private String newFormat;
-    /**
-     * Audio  variables.
-     */
+
+    //Audio  variables.
     private String audioCodec;
     private String audioBitRate;
     private String audioChannel;
-    /**
-     * Video variables.
-     */
+
+     //Video variables.
     private String videoCodec;
     private String videoBitRate;
     private String fps;
 
-    /**
-     * Metadata Variable.
-     */
+    //Metadata Variable.
     private String metadata;
 
-    /**
-     * Thumbnail Variables.
-     */
+    //Thumbnail Variables.
     private String thumbnail;
 
-    /**
-     * Keyframe Variables.
-     */
+    //Keyframe Variables.
     private String keyframes;
 
-    /**
-     * Checksum variables.
-     */
+    //Checksum variables.
     private String checksum;
 
     /**
-     *
      * @param fileName defines de name os input file.
      * @param fileDownloadUri defines destination URL direction.
      * @param fileType defines de extention of the input file.
@@ -71,48 +58,36 @@ public class VideoResponse {
      * @param fps defines the rate of the output video file.
      * @param checksum defines the checksum of the output or input file.
      */
-    public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                         String newFormat, String audioCodec, String audioBitRate, String audioChannel,
-                         String videoCodec, String videoBitRate, String fps, String metadata, String thumbnail,
-                         String keyframes, String checksum) {
+    public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size, String newFormat,
+                         String audioCodec, String audioBitRate, String audioChannel, String videoCodec,
+                         String videoBitRate, String fps, String metadata, String thumbnail, String keyframes,
+                         String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
         this.newFormat = newFormat;
 
-        /**
-         * Audio constructors.
-         */
+        //Audio constructors.
         this.audioCodec = audioCodec;
         this.audioBitRate = audioBitRate;
         this.audioChannel = audioChannel;
 
-        /**
-         * Audio constructors.
-         */
+        //Audio constructors.
         this.videoCodec = videoCodec;
         this.videoBitRate = videoBitRate;
         this.fps = fps;
 
-        /**
-         * Metadata constructor.
-         */
+        //Metadata constructor.
         this.metadata = metadata;
 
-        /**
-         * Thumbnail constructors.
-         */
+        //Thumbnail constructors.
         this.thumbnail = thumbnail;
 
-        /**
-         * Keyframe constructor.
-         */
+        //Keyframe constructor.
         this.keyframes =  keyframes;
 
-        /**
-         * Checksum constructor.
-         */
+        //Checksum constructor.
         this.checksum = checksum;
     }
 
@@ -246,6 +221,7 @@ public class VideoResponse {
      *
      * @return checksum of the output or input file.
      */
-
-    public String getChecksum(){ return checksum; }
+    public String getChecksum(){
+        return checksum;
+    }
 }
