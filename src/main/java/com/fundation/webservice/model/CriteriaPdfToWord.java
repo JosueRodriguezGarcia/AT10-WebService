@@ -10,6 +10,8 @@
 package com.fundation.webservice.model;
 
 /**
+ * Implements a CriteriaPdfToword class (specific to PDF -> WORD conversion) that extends a CriteriaConvert superclass.
+ * 
  * @author Josue Rodriguez
  * @version 1.0
  */

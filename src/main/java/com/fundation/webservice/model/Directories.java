@@ -24,9 +24,7 @@ public enum Directories {
     PANDOC_DIR("pandoc/"),
     POPPLER_DIR("poppler/bin/"),
     OFFICETOPDF_DIR("officetopdf/");
-
     private String dir;
-
     Directories(String dir) {
         this.dir = dir;
     }

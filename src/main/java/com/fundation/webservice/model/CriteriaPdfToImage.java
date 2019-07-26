@@ -10,6 +10,8 @@
 package com.fundation.webservice.model;
 
 /**
+ *
+ *
  * @author Josue Rodriguez
  * @version 1.0
  */
@@ -38,54 +40,54 @@ public class CriteriaPdfToImage extends CriteriaConvert{
     }
 
 	/**
-     * Method that returns the interval of time for each keyframe.
+     * Method that returns the PDI to get the image.
      *
-     * @return The number of time for each interval of keyframe
+     * @return The PDI to get the image.
      */
     public int getDpi() {
         return dpi;
     }
 
 	/**
-     * Method that modifies the interval of time for each keyframe.
+     * Method that modifies the values of PDI for image.
      *
-     * @param time The frames parameter define the number of frames for each interval of keyframe in output file.
+     * @param dpi The dpi parameter define the PDI for get the image.
      */
     public void setDpi(int dpi) {
         this.dpi = dpi;
     }
 
 	/**
-     * Method that returns the interval of time for each keyframe.
+     * Method that returns the extentions of the output file.
      *
-     * @return The number of time for each interval of keyframe
+     * @return The extention for output file.
      */
     public String getExt() {
         return ext;
     }
 
 	/**
-     * Method that modifies the interval of time for each keyframe.
+     * Method that modifies the extetion of output file.
      *
-     * @param time The frames parameter define the number of frames for each interval of keyframe in output file.
+     * @param time The exp parameter define the extetion of output file.
      */
     public void setExt(String ext) {
         this.ext = ext;
     }
 
 	/**
-     * Method that returns the interval of time for each keyframe.
+     * Method that returns the format color of outfile file.
      *
-     * @return The number of time for each interval of keyframe
+     * @return The the format color of output file
      */
     public String getFormatColor() {
         return formatColor;
     }
 
 	/**
-     * Method that modifies the interval of time for each keyframe.
+     * Method that modifies the format color of output file.
      *
-     * @param time The frames parameter define the number of frames for each interval of keyframe in output file.
+     * @param time The formatColor parameter define color format of output file.
      */
     public void setFormatColor(String formatColor) {
         this.formatColor = formatColor;
