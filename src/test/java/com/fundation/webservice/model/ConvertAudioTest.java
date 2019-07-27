@@ -23,10 +23,10 @@ import static org.junit.Assert.assertTrue;
  */
 public class ConvertAudioTest {
     @Test
-    public void convert_audioFile(){
-        CriteriaAudio criteriaAudio =  new CriteriaAudio();
-        criteriaAudio.setSrcPath(Directories.RSRC_DIR.getDir()+"audioTest.ogg");
-        criteriaAudio.setDestPath(Directories.RSRC_DIR.getDir()+"audioOutputTest.mp3");
+    public void convert_audioFile() {
+        CriteriaAudio criteriaAudio = new CriteriaAudio();
+        criteriaAudio.setSrcPath(Directories.RSRC_DIR.getDir() + "audioTest.ogg");
+        criteriaAudio.setDestPath(Directories.RSRC_DIR.getDir() + "audioOutputTest.mp3");
         criteriaAudio.setAudioCodec("libmp3lame");
         criteriaAudio.setAudioBitRate(128000);
         criteriaAudio.setAudioChannel(2);
