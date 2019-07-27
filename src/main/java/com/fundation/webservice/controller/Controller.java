@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2019 Jalasoft.
- * <p>
+ *
  * This software is the confidential and proprietary information of Jalasoft.
  * ("Confidential Information"). You shall not
  * disclose such Confidential Information and shall use it only in
@@ -204,7 +204,6 @@ public class Controller {
         if (inputJson.getString("checksum").equals(inputChecksumString)) {
             CriteriaPdfToImage criterion = new CriteriaPdfToImage();
             criterion.setSrcPath(properties.getProperty("file.uploadDir") + pdfName);
-            //criterion.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "\\");
             criterion.setDestPath(inputJson.getString("destPath") + outputJson.getString("name") + "\\");
             criterion.setName(outputJson.getString("name"));
             criterion.setDpi(new Integer(configJson.getString("dpi")));
@@ -212,9 +211,6 @@ public class Controller {
             criterion.setFormatColor(configJson.getString("formatColor"));
             ConvertPdfToImage pdfDocument = new ConvertPdfToImage();
             pdfDocument.convert(criterion);
-            /**
-             * This line compresses the folder with images in a zip file
-             */
             FolderZipped.zipFolder(outputJson.getString("name"));
         }
 
@@ -301,6 +297,14 @@ public class Controller {
         }
     }
 
+    /***
+     *  This method let me convert word to pdf
+     * @param asset
+     * @param input
+     * @param config
+     * @param output
+     * @return
+     */
     public WordToPdfResponse WordToPdf(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
                                        @RequestParam("config") String config, @RequestParam("output") String output) {
 
@@ -510,7 +514,6 @@ public class Controller {
             criteria.setAudioCodec(configJson.getString("audioCodec"));
             criteria.setAudioBit(new Integer(configJson.getString("audioBitRate")));
             criteria.setAudioChannel(new Integer(configJson.getString("audioChannel")));
-            criteria.setAudioRate(new Integer(configJson.getString("audioSampleRate")));
             ConvertAudio audio = new ConvertAudio();
             audio.convert(criteria);
 
@@ -546,7 +549,7 @@ public class Controller {
             metaDataFile.writeXmpFile(convertedFile);
             FolderZipped.zipFolder(inputJson.getString("destPath") + outputJson.getString("name"));
             return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), configJson.getString("newFormat"),
-                    configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"), configJson.getString("audioSampleRate"), outputChecksumString);
+                    configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"),  outputChecksumString);
         } else {
             System.out.print("error");
             return null;
@@ -598,7 +601,6 @@ public class Controller {
             criteria.setAudioCodec(configJson.getString("audioCodec"));
             criteria.setAudioBit(new Integer(configJson.getString("audioBitRate")));
             criteria.setAudioChannel(new Integer(configJson.getString("audioChannel")));
-            criteria.setAudioRate(new Integer(configJson.getString("audioSampleRate")));
             ConvertAudio audio = new ConvertAudio();
             audio.convert(criteria);
 
@@ -634,7 +636,7 @@ public class Controller {
             metaDataFile.writeXmpFile(convertedFile);
             FolderZipped.zipFolder(inputJson.getString("destPath") + outputJson.getString("name"));
             return new VideoToAudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), configJson.getString("newFormat"),
-                    configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"), configJson.getString("audioSampleRate"), outputChecksumString);
+                    configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"), outputChecksumString);
         } else {
             System.out.print("error");
             return null;

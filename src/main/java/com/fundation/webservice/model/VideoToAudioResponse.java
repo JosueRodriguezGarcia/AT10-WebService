@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2019 Jalasoft.
- * <p>
+ *
  * This software is the confidential and proprietary information of Jalasoft.
  * ("Confidential Information"). You shall not
  * disclose such Confidential Information and shall use it only in
@@ -24,12 +24,10 @@ public class VideoToAudioResponse extends Response {
     private String aCodec;
     private String aBit;
     private String aChannel;
-    private String aRate;
-
     private String checksum;
 
     public VideoToAudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                                String newFormat, String aCodec, String aBit, String aChannel, String aRate, String checksum) {
+                                String newFormat, String aCodec, String aBit, String aChannel, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -38,7 +36,6 @@ public class VideoToAudioResponse extends Response {
         this.aCodec = aCodec;
         this.aBit = aBit;
         this.aChannel = aChannel;
-        this.aRate = aRate;
         this.checksum = checksum;
     }
 
@@ -72,10 +69,6 @@ public class VideoToAudioResponse extends Response {
 
     public String getaChannel() {
         return aChannel;
-    }
-
-    public String getaRate() {
-        return aRate;
     }
 
     public String getChecksum() {

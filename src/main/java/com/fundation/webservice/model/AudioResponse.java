@@ -21,25 +21,22 @@ public class AudioResponse extends Response {
     private String fileType;
     private long size;
     private String newFormat;
-    //audio
     private String aCodec;
-    private String aBit;
+    private String aBitRate;
     private String aChannel;
-    private String aRate;
 
     private String checksum;
 
     public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                         String newFormat, String aCodec, String aBit, String aChannel, String aRate, String checksum) {
+                         String newFormat, String aCodec, String aBitRate, String aChannel, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
         this.newFormat = newFormat;
         this.aCodec = aCodec;
-        this.aBit = aBit;
+        this.aBitRate = aBitRate;
         this.aChannel = aChannel;
-        this.aRate = aRate;
         this.checksum = checksum;
     }
 
@@ -67,16 +64,12 @@ public class AudioResponse extends Response {
         return aCodec;
     }
 
-    public String getaBit() {
-        return aBit;
+    public String getaBitRate() {
+        return aBitRate;
     }
 
     public String getaChannel() {
         return aChannel;
-    }
-
-    public String getaRate() {
-        return aRate;
     }
 
     public String getChecksum() {
