@@ -335,4 +335,82 @@ public class Controller {
             return null;
         }
     }
+
+    public PPTtoPdfResponse PPTtoPdf(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
+                                     @RequestParam("config") String config, @RequestParam("output") String output) {
+        JSONObject inputJson = new JSONObject(input);
+        JSONObject configJson = new JSONObject(config);
+        JSONObject outputJson = new JSONObject(output);
+        String fileName = uploadService.storeFile(asset);
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
+                + ".zip").toUriString();
+        String inputChecksumString = "";
+        InputStream inputProperties;
+        try {
+            inputProperties = new FileInputStream("application.properties");
+            properties.load(inputProperties);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+
+        try {
+            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(),
+                    "MD5");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (inputJson.getString("checksum").equals(inputChecksumString)) {
+            new File(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/").mkdirs();
+            CriteriaThumbnailImage criteria = new CriteriaThumbnailImage();
+            criteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
+            criteria.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/" +
+                    outputJson.getString("name") + outputJson.getString("ext"));
+            ConvertPPTtoPdf converter = new ConvertPPTtoPdf();
+            converter.convert(criteria);
+            String outputChecksumString = "";
+            try {
+                outputChecksumString = checksum.getChecksum(properties.getProperty("file.downloadDir") +
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"), "MD5");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (configJson.getString("metadata").equals("json")) {
+                //Creation JSON
+                File convertedFile = new File(properties.getProperty("file.downloadDir") +
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
+                Metadata metaDataFile = new Metadata();
+                metaDataFile.writeJsonFile(convertedFile);
+            } else {
+                //Creation XMP
+                File convertedFile = new File(properties.getProperty("file.downloadDir") +
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
+                Metadata metaDataFile = new Metadata();
+                metaDataFile.writeXmpFile(convertedFile);
+            }
+            if (configJson.getString("thumbnail").equals("True")) {
+                //Creation thumbnail
+                CriteriaPdfToImage criterion = new CriteriaPdfToImage();
+                criterion.setSrcPath(properties.getProperty("file.downloadDir") +
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
+                criterion.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "/");
+                criterion.setName(outputJson.getString("name"));
+                criterion.setExt("bmp");
+                criterion.setDpi(150);
+                criterion.setFormatColor("RGB");
+                PdfThumbnail pdf2thumb = new PdfThumbnail();
+                pdf2thumb.convert(criterion);
+            }
+
+            FolderZipped.zipFolder(properties.getProperty("file.downloadDir") + outputJson.getString("name"));
+
+            return new PPTtoPdfResponse(fileName, fileDownloadUri, outputChecksumString);
+        } else {
+            System.out.print("Error");
+            return null;
+        }
+    }
 }
