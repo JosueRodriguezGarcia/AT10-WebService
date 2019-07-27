@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2019 Jalasoft.
- *
+ * <p>
  * This software is the confidential and proprietary information of Jalasoft.
  * ("Confidential Information"). You shall not
  * disclose such Confidential Information and shall use it only in
@@ -15,13 +15,12 @@ package com.fundation.webservice.model;
  * @author Jesus Menacho
  * @version 1.0
  */
-public class VideoToAudioResponse extends Response{
+public class VideoToAudioResponse extends Response {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
     private long size;
     private String newFormat;
-    //audio
     private String aCodec;
     private String aBit;
     private String aChannel;
@@ -79,5 +78,7 @@ public class VideoToAudioResponse extends Response{
         return aRate;
     }
 
-    public String getChecksum() { return checksum; }
+    public String getChecksum() {
+        return checksum;
+    }
 }

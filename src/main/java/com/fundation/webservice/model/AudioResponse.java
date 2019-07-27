@@ -15,7 +15,7 @@ package com.fundation.webservice.model;
  * @author Maday Alcala Cuba, Jess Menacho
  * @version 1.0
  */
-public class AudioResponse extends Response{
+public class AudioResponse extends Response {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
@@ -30,7 +30,7 @@ public class AudioResponse extends Response{
     private String checksum;
 
     public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-            String newFormat, String aCodec, String aBit, String aChannel, String aRate, String checksum) {
+                         String newFormat, String aCodec, String aBit, String aChannel, String aRate, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -79,5 +79,7 @@ public class AudioResponse extends Response{
         return aRate;
     }
 
-    public String getChecksum() { return checksum; }
+    public String getChecksum() {
+        return checksum;
+    }
 }

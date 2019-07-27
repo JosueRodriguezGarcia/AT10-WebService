@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2019 Jalasoft.
- *
+ * <p>
  * This software is the confidential and proprietary information of Jalasoft.
  * ("Confidential Information"). You shall not
  * disclose such Confidential Information and shall use it only in
@@ -43,12 +43,13 @@ public class Controller {
 
     /**
      * This method copy file in other destinations.
+     *
      * @param sourceFile
      * @param destFile
      * @throws IOException
      */
     public static void copyFile(File sourceFile, File destFile) throws IOException {
-        if(!destFile.exists()) {
+        if (!destFile.exists()) {
             destFile.createNewFile();
         }
 
@@ -60,13 +61,12 @@ public class Controller {
 
             long count = 0;
             long size = origen.size();
-            while((count += destino.transferFrom(origen, count, size-count))<size);
-        }
-        finally {
-            if(origen != null) {
+            while ((count += destino.transferFrom(origen, count, size - count)) < size) ;
+        } finally {
+            if (origen != null) {
                 origen.close();
             }
-            if(destino != null) {
+            if (destino != null) {
                 destino.close();
             }
         }
@@ -74,6 +74,7 @@ public class Controller {
 
     /**
      * This method let extrac the extension to the file.
+     *
      * @param file
      * @return
      */
@@ -88,11 +89,12 @@ public class Controller {
 
     /**
      * This method copy all contain in one carpet to other.
+     *
      * @param sourceLocation
      * @param targetLocation
      * @throws IOException
      */
-    public static void copyFiles(File sourceLocation , File targetLocation)
+    public static void copyFiles(File sourceLocation, File targetLocation)
             throws IOException {
 
         if (sourceLocation.isDirectory()) {
@@ -100,9 +102,9 @@ public class Controller {
                 targetLocation.mkdir();
             }
             File[] files = sourceLocation.listFiles();
-            for(File file:files){
+            for (File file : files) {
                 InputStream in = new FileInputStream(file);
-                OutputStream out = new FileOutputStream(targetLocation+"/"+file.getName());
+                OutputStream out = new FileOutputStream(targetLocation + "/" + file.getName());
 
                 // Copy the bits from input stream to output stream
                 byte[] buf = new byte[1024];
@@ -115,6 +117,7 @@ public class Controller {
             }
         }
     }
+
     /**
      * @Services injection through Spring @Autowired
      */
@@ -131,7 +134,7 @@ public class Controller {
                             @RequestParam("config") String config, @RequestParam("output") String output) {
 
         JSONObject inputJson = new JSONObject(input);
-        String  convertType = inputJson.getString("typeConversion");
+        String convertType = inputJson.getString("typeConversion");
         if ("video".equals(convertType)) {
             return this.convertVideo(asset, input, config, output);
         }
@@ -167,6 +170,7 @@ public class Controller {
 
     /**
      * This method convert to pdf file to image file.
+     *
      * @param asset
      * @param input
      * @param config
@@ -198,20 +202,20 @@ public class Controller {
             e.printStackTrace();
         }
         if (inputJson.getString("checksum").equals(inputChecksumString)) {
-        CriteriaPdfToImage criterion = new CriteriaPdfToImage();
-        criterion.setSrcPath(properties.getProperty("file.uploadDir") + pdfName);
-        //criterion.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "\\");
+            CriteriaPdfToImage criterion = new CriteriaPdfToImage();
+            criterion.setSrcPath(properties.getProperty("file.uploadDir") + pdfName);
+            //criterion.setDestPath(properties.getProperty("file.downloadDir") + outputJson.getString("name") + "\\");
             criterion.setDestPath(inputJson.getString("destPath") + outputJson.getString("name") + "\\");
-        criterion.setName(outputJson.getString("name"));
-        criterion.setDpi(new Integer(configJson.getString("dpi")));
-        criterion.setExt(outputJson.getString("ext"));
-        criterion.setFormatColor(configJson.getString("formatColor"));
-        ConvertPdfToImage pdfDocument = new ConvertPdfToImage();
-        pdfDocument.convert(criterion);
-        /**
-         * This line compresses the folder with images in a zip file
-         */
-        FolderZipped.zipFolder(outputJson.getString("name"));
+            criterion.setName(outputJson.getString("name"));
+            criterion.setDpi(new Integer(configJson.getString("dpi")));
+            criterion.setExt(outputJson.getString("ext"));
+            criterion.setFormatColor(configJson.getString("formatColor"));
+            ConvertPdfToImage pdfDocument = new ConvertPdfToImage();
+            pdfDocument.convert(criterion);
+            /**
+             * This line compresses the folder with images in a zip file
+             */
+            FolderZipped.zipFolder(outputJson.getString("name"));
         }
 
         return new PdfResponse(pdfName, fileDownloadUri, asset.getContentType(),
@@ -219,7 +223,7 @@ public class Controller {
     }
 
     public WordToPdfResponse WordToImage(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
-                                       @RequestParam("config") String config, @RequestParam("output") String output) {
+                                         @RequestParam("config") String config, @RequestParam("output") String output) {
 
         JSONObject inputJson = new JSONObject(input);
         JSONObject configJson = new JSONObject(config);
@@ -265,7 +269,7 @@ public class Controller {
             File b = new File(properties.getProperty("file.uploadDir"));
 
             try {
-                copyFiles(a,b);
+                copyFiles(a, b);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -273,33 +277,32 @@ public class Controller {
             File a2 = new File(properties.getProperty("file.uploadDir"));
             File b2 = new File(inputJson.getString("destPath"));
             try {
-                copyFiles(a2,b2);
+                copyFiles(a2, b2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             try {
-                copyFiles(a2,b2);
+                copyFiles(a2, b2);
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
             String outputChecksumString = "";
             try {
-                outputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir").replace("/","\\\\")+ fileName, "MD5");
+                outputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir").replace("/", "\\\\") + fileName, "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }
             FolderZipped.zipFolder(properties.getProperty("file.uploadDir"));
             return new WordToPdfResponse(fileName, fileDownloadUri, outputChecksumString);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
+
     public WordToPdfResponse WordToPdf(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
-                                            @RequestParam("config") String config, @RequestParam("output") String output) {
+                                       @RequestParam("config") String config, @RequestParam("output") String output) {
 
         JSONObject inputJson = new JSONObject(input);
         JSONObject configJson = new JSONObject(config);
@@ -330,27 +333,25 @@ public class Controller {
 
         if (inputJson.getString("checksum").equals(inputChecksumString)) {
             CriteriaConvert criteria = new CriteriaConvert();
-            criteria.setSrcPath(properties.getProperty("file.uploadDir").replace("/","\\\\")  + fileName);
+            criteria.setSrcPath(properties.getProperty("file.uploadDir").replace("/", "\\\\") + fileName);
             ConvertWordToPdf convertWordToPdf = new ConvertWordToPdf();
             convertWordToPdf.convert(criteria);
             File a = new File(properties.getProperty("file.uploadDir"));
             File b = new File(inputJson.getString("destPath"));
             try {
-                copyFiles(a,b);
+                copyFiles(a, b);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             String outputChecksumString = "";
             try {
-                outputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir").replace("/","\\\\")+ fileName, "MD5");
+                outputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir").replace("/", "\\\\") + fileName, "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }
             FolderZipped.zipFolder(properties.getProperty("file.uploadDir"));
             return new WordToPdfResponse(fileName, fileDownloadUri, outputChecksumString);
-        }
-        else
-        {
+        } else {
             return null;
         }
 
@@ -389,7 +390,7 @@ public class Controller {
             CriteriaVideo criteria = new CriteriaVideo();
             criteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
             criteria.setDestPath(inputJson.getString("destPath") + outputJson.getString("name") + "/" +
-                outputJson.getString("name") + outputJson.getString("ext"));
+                    outputJson.getString("name") + outputJson.getString("ext"));
             criteria.setNewFormat(configJson.getString("newFormat"));
             criteria.setAudioCodec(configJson.getString("audioCodec"));
             criteria.setAudioBitRate(new Integer(configJson.getString("audioBitRate")));
@@ -402,23 +403,23 @@ public class Controller {
             String outputChecksumString = "";
             try {
                 outputChecksumString = checksum.getChecksum(inputJson.getString("destPath") +
-                    outputJson.getString("name") + "/" + outputJson.getString("name") +
-                    outputJson.getString("ext"), "MD5");
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"), "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }
             if (configJson.getString("metadata").equals("json")) {
                 //Creation JSON
                 File convertedFile = new File(inputJson.getString("destPath") +
-                    outputJson.getString("name") + "/" + outputJson.getString("name") +
-                    outputJson.getString("ext"));
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeJsonFile(convertedFile);
             } else {
                 //Creation XMP
                 File convertedFile = new File(inputJson.getString("destPath") +
-                    outputJson.getString("name") + "/" + outputJson.getString("name") +
-                    outputJson.getString("ext"));
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeXmpFile(convertedFile);
             }
@@ -426,8 +427,8 @@ public class Controller {
                 //Creation thumbnail
                 CriteriaThumbnailVideo criteriaThumbnailVideo = new CriteriaThumbnailVideo();
                 criteriaThumbnailVideo.setSrcPath(inputJson.getString("destPath") +
-                    outputJson.getString("name") + "/" + outputJson.getString("name") +
-                    outputJson.getString("ext"));
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
                 criteriaThumbnailVideo.setDestPath(inputJson.getString("destPath") + outputJson.getString("name") + "/");
                 criteriaThumbnailVideo.setTime(configJson.getString("thumbnailTime"));
                 criteriaThumbnailVideo.setName(outputJson.getString("name"));
@@ -435,14 +436,14 @@ public class Controller {
                 ThumbnailVideo thumbnailVideo = new ThumbnailVideo(criteriaThumbnailVideo);
                 thumbnailVideo.convert();
             }
-            if(configJson.getString("keyframe").equals("True")){
+            if (configJson.getString("keyframe").equals("True")) {
                 //Creation keyframes
                 CriteriaKeyFrameVideo criteriaKeyFrameVideo = new CriteriaKeyFrameVideo();
                 criteriaKeyFrameVideo.setSrcPath(inputJson.getString("destPath") +
-                    outputJson.getString("name") + "/" + outputJson.getString("name") +
-                    outputJson.getString("ext"));
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
                 criteriaKeyFrameVideo.setDestPath(inputJson.getString("destPath") +
-                    outputJson.getString("name") + "/");
+                        outputJson.getString("name") + "/");
                 criteriaKeyFrameVideo.setTime(configJson.getString("keyframeTime"));
                 criteriaKeyFrameVideo.setName(outputJson.getString("name"));
                 criteriaKeyFrameVideo.setExt("png");
@@ -457,7 +458,7 @@ public class Controller {
                     configJson.getString("audioBitRate"), configJson.getString("audioChannel"),
                     configJson.getString("videoCodec"), configJson.getString("videoBitRate"),
                     configJson.getString("fps"), configJson.getString("metadata"),
-                    configJson.getString("thumbnail"),configJson.getString("keyframe"),
+                    configJson.getString("thumbnail"), configJson.getString("keyframe"),
                     outputChecksumString);
         } else {
             System.out.print("Error");
@@ -501,7 +502,7 @@ public class Controller {
         if (inputJson.getString("checksum").equals(inputChecksumString)) {
             new File(inputJson.getString("destPath") + outputJson.getString("name") + "/").mkdirs();
             CriteriaAudio criteria = new CriteriaAudio();
-            criteria.setSrcPath(inputJson.getString("destPath")+ fileName);
+            criteria.setSrcPath(inputJson.getString("destPath") + fileName);
 
             criteria.setDestPath(inputJson.getString("destPath") + outputJson.getString("name") + "/" +
                     outputJson.getString("name") + outputJson.getString("ext"));
@@ -516,8 +517,8 @@ public class Controller {
             String outputChecksumString = "";
             try {
                 outputChecksumString = checksum.getChecksum(inputJson.getString("destPath") +
-                    outputJson.getString("name") + "/" + outputJson.getString("name") +
-                    outputJson.getString("ext"),"MD5");
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"), "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -553,7 +554,8 @@ public class Controller {
     }
 
     /**
-     *  This method convert the video to audio.
+     * This method convert the video to audio.
+     *
      * @param asset
      * @param input
      * @param config
@@ -588,7 +590,7 @@ public class Controller {
         if (inputJson.getString("checksum").equals(inputChecksumString)) {
             new File(inputJson.getString("destPath") + outputJson.getString("name") + "/").mkdirs();
             CriteriaAudio criteria = new CriteriaAudio();
-            criteria.setSrcPath(inputJson.getString("destPath")+ fileName);
+            criteria.setSrcPath(inputJson.getString("destPath") + fileName);
 
             criteria.setDestPath(inputJson.getString("destPath") + outputJson.getString("name") + "/" +
                     outputJson.getString("name") + outputJson.getString("ext"));
@@ -604,7 +606,7 @@ public class Controller {
             try {
                 outputChecksumString = checksum.getChecksum(inputJson.getString("destPath") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
-                        outputJson.getString("ext"),"MD5");
+                        outputJson.getString("ext"), "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }

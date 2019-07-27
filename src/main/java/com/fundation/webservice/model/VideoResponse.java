@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2019 Jalasoft.
- *
+ * <p>
  * This software is the confidential and proprietary information of Jalasoft.
  * ("Confidential Information"). You shall not
  * disclose such Confidential Information and shall use it only in
@@ -108,7 +108,7 @@ public class VideoResponse extends Response {
         /**
          * Keyframe constructor.
          */
-        this.keyframes =  keyframes;
+        this.keyframes = keyframes;
 
         /**
          * Checksum constructor.
@@ -232,6 +232,7 @@ public class VideoResponse extends Response {
     public String getThumbnail() {
         return thumbnail;
     }
+
     /**
      * Uses for keyframe of the output file
      *
@@ -247,5 +248,7 @@ public class VideoResponse extends Response {
      * @return checksum of the output or input file.
      */
 
-    public String getChecksum(){ return checksum; }
+    public String getChecksum() {
+        return checksum;
+    }
 }
