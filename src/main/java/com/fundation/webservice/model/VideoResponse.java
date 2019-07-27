@@ -14,10 +14,10 @@ import javax.xml.soap.SAAJResult;
 /**
  * Implements a type of response to an /upload request.
  *
- * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas, Jesus Menacho
  * @version 1.1
  */
-public class VideoResponse {
+public class VideoResponse extends Response {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;

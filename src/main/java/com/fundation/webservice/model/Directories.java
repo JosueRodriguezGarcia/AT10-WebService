@@ -23,7 +23,8 @@ public enum Directories {
     IMAGEMAGIC_DIR("ImageMagic/"),
     PANDOC_DIR("pandoc/"),
     POPPLER_DIR("poppler/bin/"),
-    OFFICETOPDF_DIR("officetopdf/");
+    OFFICETOPDF_DIR("officetopdf/"),
+    RSRCT_DIR("rsrc/temp/");
 
     private String dir;
 

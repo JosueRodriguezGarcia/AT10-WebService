@@ -7,37 +7,49 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.fundation.webservice.model;
 
 /**
- * Handlends document let me set a get values the keyframe
+ * Implements a type of response to an /upload request.
  *
- * @author Alejandro Sánchez Luizaga, Jesus Menacho
- * @version 1.0
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas, Jesus Menacho
+ * @version 1.1
  */
-public class KeyFrameResponse extends Response {
+
+public class WordToPdfResponse extends Response {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
     private long size;
-    private String newFormat;
-    private String frame;
-    private String nameOutputFile;
-    private String extOutputFile;
     private String checksum;
 
-    public KeyFrameResponse(String fileName, String fileDownloadUri) {
+    public WordToPdfResponse(String fileName, String fileDownloadUri, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
+        this.checksum = checksum;
     }
 
     public String getFileName() {
         return fileName;
     }
 
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public String getFileDownloadUri() {
         return fileDownloadUri;
     }
 
+    public void setFileDownloadUri(String fileDownloadUri) {
+        this.fileDownloadUri = fileDownloadUri;
+    }
+
+    public String getChecksum() {
+        return checksum;
+    }
+
+    public void setChecksum(String checksum) {
+        this.checksum = checksum;
+    }
 }

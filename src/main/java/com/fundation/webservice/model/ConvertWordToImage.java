@@ -30,6 +30,7 @@ public class ConvertWordToImage extends Run implements IConvert{
         convertWordToPdf.convert(criteriaConvert);
         String intermediateName = filenameWithoutExtension(inputFile);
         criteriaConvert.setSrcPath(USER_DIR + Directories.RSRC_DIR.getDir() + intermediateName + ".pdf");
+        criteriaConvert.setSrcPath(criteriaConvert.getSrcPath());
         ConvertPdfToImage convertPdfToImage = new ConvertPdfToImage();
         convertPdfToImage.convert((CriteriaPdfToImage) criteriaConvert);
     }

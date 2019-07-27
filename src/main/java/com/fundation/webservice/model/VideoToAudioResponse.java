@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2019 Jalasoft.
  *
  * This software is the confidential and proprietary information of Jalasoft.
@@ -12,10 +12,10 @@ package com.fundation.webservice.model;
 /**
  * Implements a type of response to an /upload request.
  *
- * @author Maday Alcala Cuba, Jess Menacho
+ * @author Jesus Menacho
  * @version 1.0
  */
-public class AudioResponse extends Response{
+public class VideoToAudioResponse extends Response{
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
@@ -29,8 +29,8 @@ public class AudioResponse extends Response{
 
     private String checksum;
 
-    public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-            String newFormat, String aCodec, String aBit, String aChannel, String aRate, String checksum) {
+    public VideoToAudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
+                                String newFormat, String aCodec, String aBit, String aChannel, String aRate, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
