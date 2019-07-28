@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
 
@@ -128,6 +129,10 @@ public class Controller {
                 fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
                         + ".zip").toUriString();
             }
+            else {
+                File destPathFile = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+                fileDownloadUri = destPathFile.toURI().toString() ;
+            }
 
         String inputChecksumString = "";
         InputStream inputProperties;
@@ -212,7 +217,7 @@ public class Controller {
 
             FolderZipped.zipFolder(properties.getProperty("file.conversionDir") + outputJson.getString("name"));
 
-            if (fileDownloadUri.isEmpty()) {
+            if (outputJson.has("destPath")) {
                 File resultZip = new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + ".zip");
                 File targetZip = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
                 try {
