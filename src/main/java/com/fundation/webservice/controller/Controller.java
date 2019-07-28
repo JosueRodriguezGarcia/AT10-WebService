@@ -158,22 +158,22 @@ public class Controller {
                 e.printStackTrace();
             }
             if (configJson.getString("metadata").equals("json")) {
-                //Creation JSON
+                //Create JSON
                 File convertedFile = new File(properties.getProperty("file.conversionDir") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
                         outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeJsonFile(convertedFile);
-            } else {
-                //Creation XMP
+            } else if (configJson.getString("metadata").equals("xmp")) {
+                //Create XMP
                 File convertedFile = new File(properties.getProperty("file.conversionDir") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
                         outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeXmpFile(convertedFile);
             }
-            if (configJson.getString("thumbnail").equals("True")) {
-                //Creation thumbnail
+            if (configJson.getBoolean("thumbnail")) {
+                //Create thumbnail
                 CriteriaThumbnailVideo criteriaThumbnailVideo = new CriteriaThumbnailVideo();
                 criteriaThumbnailVideo.setSrcPath(properties.getProperty("file.conversionDir") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
@@ -185,7 +185,7 @@ public class Controller {
                 ThumbnailVideo thumbnailVideo = new ThumbnailVideo();
                 thumbnailVideo.convert(criteriaThumbnailVideo);
             }
-            if (configJson.getString("keyframe").equals("True")) {
+            if (configJson.getBoolean("keyframe")) {
                 //Creation keyframes
                 CriteriaKeyFrameVideo criteriaKeyFrameVideo = new CriteriaKeyFrameVideo();
                 criteriaKeyFrameVideo.setSrcPath(properties.getProperty("file.conversionDir") +
@@ -218,7 +218,7 @@ public class Controller {
                     configJson.getString("audioBitRate"), configJson.getString("audioChannel"),
                     configJson.getString("videoCodec"), configJson.getString("videoBitRate"),
                     configJson.getString("fps"), configJson.getString("metadata"),
-                    configJson.getString("thumbnail"), configJson.getString("keyframe"),
+                    configJson.getBoolean("thumbnail"), configJson.getBoolean("keyframe"),
                     outputChecksumString);
         } else {
             System.out.print("Error");

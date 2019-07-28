@@ -44,12 +44,12 @@ public class VideoResponse extends Response {
     /**
      * Thumbnail Variables.
      */
-    private String thumbnail;
+    private boolean thumbnail;
 
     /**
      * Keyframe Variables.
      */
-    private String keyframes;
+    private boolean keyframes;
 
     /**
      * Checksum variables.
@@ -73,8 +73,8 @@ public class VideoResponse extends Response {
      */
     public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size,
                          String newFormat, String audioCodec, String audioBitRate, String audioChannel,
-                         String videoCodec, String videoBitRate, String fps, String metadata, String thumbnail,
-                         String keyframes, String checksum) {
+                         String videoCodec, String videoBitRate, String fps, String metadata, boolean thumbnail,
+                         boolean keyframes, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -229,7 +229,7 @@ public class VideoResponse extends Response {
      *
      * @return
      */
-    public String getThumbnail() {
+    public boolean getThumbnail() {
         return thumbnail;
     }
 
@@ -238,7 +238,7 @@ public class VideoResponse extends Response {
      *
      * @return
      */
-    public String getKeyframes() {
+    public boolean getKeyframes() {
         return keyframes;
     }
 
