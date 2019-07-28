@@ -19,7 +19,9 @@ public enum VideoConfig {
     audioChannel("2"),
     videoCodec("mpeg4"),
     videoBitRate("320000"),
-    fps("30");
+    fps("30"),
+    thumbnail("false"),
+    keyframes("false");
     private String value;
 
     VideoConfig(String value) {

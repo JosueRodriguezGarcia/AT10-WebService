@@ -111,6 +111,12 @@ public class Controller {
         if (!configJson.has("fps")) {
             configJson.put("fps",VideoConfig.fps.getValue());
         }
+        if (!configJson.has("thumbnail")) {
+            configJson.put("thumbnail",VideoConfig.thumbnail.getValue());
+        }
+        if (!configJson.has("keyframes")) {
+            configJson.put("keyframes",VideoConfig.keyframes.getValue());
+        }
 
         String fileName = uploadService.storeFile(asset);
 
@@ -185,7 +191,7 @@ public class Controller {
                 ThumbnailVideo thumbnailVideo = new ThumbnailVideo();
                 thumbnailVideo.convert(criteriaThumbnailVideo);
             }
-            if (configJson.getBoolean("keyframe")) {
+            if (configJson.getBoolean("keyframes")) {
                 //Creation keyframes
                 CriteriaKeyFrameVideo criteriaKeyFrameVideo = new CriteriaKeyFrameVideo();
                 criteriaKeyFrameVideo.setSrcPath(properties.getProperty("file.conversionDir") +
@@ -218,7 +224,7 @@ public class Controller {
                     configJson.getString("audioBitRate"), configJson.getString("audioChannel"),
                     configJson.getString("videoCodec"), configJson.getString("videoBitRate"),
                     configJson.getString("fps"), configJson.getString("metadata"),
-                    configJson.getBoolean("thumbnail"), configJson.getBoolean("keyframe"),
+                    configJson.getBoolean("thumbnail"), configJson.getBoolean("keyframes"),
                     outputChecksumString);
         } else {
             System.out.print("Error");
