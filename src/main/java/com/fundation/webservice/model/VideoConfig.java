@@ -10,6 +10,8 @@
 package com.fundation.webservice.model;
 
 /**
+ * Enumeration class that holds the default key values for the config parameter within the video transcoding endpoint
+ *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */

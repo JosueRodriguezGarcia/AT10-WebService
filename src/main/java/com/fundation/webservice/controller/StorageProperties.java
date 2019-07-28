@@ -23,7 +23,9 @@ public class StorageProperties {
     private String uploadDir;
     private String conversionDir;
 
-    // Getters AND setters are required by the @ConfigurationProperties annotation.
+    /**
+     * Getters AND setters are required by the @ConfigurationProperties annotation.
+     */
     public String getUploadDir() {
         return uploadDir;
     }

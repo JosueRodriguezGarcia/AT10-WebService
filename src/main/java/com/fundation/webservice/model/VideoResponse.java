@@ -9,13 +9,12 @@
  */
 package com.fundation.webservice.model;
 
-import javax.xml.soap.SAAJResult;
-
 /**
- * Implements a type of response to an /upload request.
+ * API Response after a successful video transcoding.
+ * Returns ouput file information as a JSON formatted string.
  *
  * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas, Jesus Menacho
- * @version 1.1
+ * @version 1.5
  */
 public class VideoResponse extends Response {
     private String fileName;
@@ -23,12 +22,14 @@ public class VideoResponse extends Response {
     private String fileType;
     private long size;
     private String newFormat;
+
     /**
      * Audio  variables.
      */
     private String audioCodec;
     private String audioBitRate;
     private String audioChannel;
+
     /**
      * Video variables.
      */
@@ -57,6 +58,7 @@ public class VideoResponse extends Response {
     private String checksum;
 
     /**
+     * Class Constructor
      *
      * @param fileName defines de name os input file.
      * @param fileDownloadUri defines destination URL direction.
@@ -69,7 +71,13 @@ public class VideoResponse extends Response {
      * @param videoCodec defines the video codec format of the output video file.
      * @param videoBitRate defines the video bit rate.
      * @param fps defines the rate of the output video file.
-     * @param checksum defines the checksum of the output or input file.
+     * @param metadata defines wether the metadata will be provided as xmp or json data. If not specified by the client,
+     *                 it will not return any metadata info
+     * @param thumbnail defines whether the transcoding process provides a thumbnail for the video file for a specific
+     *                  time position in the video.
+     * @param keyframes defines whether the transcoding process provides a set of keyframe images for every n time
+     *                  posision within the video file
+     * @param checksum provides the checksum of the output file.
      */
     public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size,
                          String newFormat, String audioCodec, String audioBitRate, String audioChannel,
