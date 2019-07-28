@@ -153,7 +153,7 @@ public class Controller {
         if ("videoToAudio".equals(convertType)) {
             return this.VideoAudio(asset, input, config, output);
         }
-        return null;
+        return null;  // a;andir response error
     }
 
 
@@ -501,7 +501,7 @@ public class Controller {
         try {
             inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(), "MD5");
         } catch (Exception e) {
-            e.printStackTrace();
+            e.printStackTrace();     ///
         }
         if (inputJson.getString("checksum").equals(inputChecksumString)) {
             new File(inputJson.getString("destPath") + outputJson.getString("name") + "/").mkdirs();
@@ -523,7 +523,7 @@ public class Controller {
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
                         outputJson.getString("ext"), "MD5");
             } catch (Exception e) {
-                e.printStackTrace();
+                e.printStackTrace();     // lanzar error personalizad
             }
 
             if (configJson.getString("metadata").equals("json")) {
@@ -551,7 +551,7 @@ public class Controller {
             return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), configJson.getString("newFormat"),
                     configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"),  outputChecksumString);
         } else {
-            System.out.print("error");
+            System.out.print("error");    // personalizar errorcomo inpu o de tipo config o de tipo outtput
             return null;
         }
     }
