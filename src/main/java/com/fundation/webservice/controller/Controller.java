@@ -92,6 +92,26 @@ public class Controller {
         JSONObject configJson = new JSONObject(config);
         JSONObject outputJson = new JSONObject(output);
 
+        // Config values validation and default values assignment
+        if (!configJson.has("audioCodec")) {
+            configJson.put("audioCodec",VideoConfig.audioCodec.getValue());
+        }
+        if (!configJson.has("audioBitRate")) {
+            configJson.put("audioBitRate",VideoConfig.audioBitRate.getValue());
+        }
+        if (!configJson.has("audioChannel")) {
+            configJson.put("audioChannel",VideoConfig.audioChannel.getValue());
+        }
+        if (!configJson.has("videoCodec")) {
+            configJson.put("videoCodec",VideoConfig.videoCodec.getValue());
+        }
+        if (!configJson.has("videoBitRate")) {
+            configJson.put("videoBitRate",VideoConfig.videoBitRate.getValue());
+        }
+        if (!configJson.has("fps")) {
+            configJson.put("fps",VideoConfig.fps.getValue());
+        }
+
         String fileName = uploadService.storeFile(asset);
 
         String fileDownloadUri = "";
@@ -122,11 +142,11 @@ public class Controller {
                     outputJson.getString("name") + outputJson.getString("ext"));
             criteria.setNewFormat(configJson.getString("newFormat"));
             criteria.setAudioCodec(configJson.getString("audioCodec"));
-            criteria.setAudioBitRate(new Integer(configJson.getString("audioBitRate")));
-            criteria.setAudioChannel(new Integer(configJson.getString("audioChannel")));
+            criteria.setAudioBitRate(configJson.getInt("audioBitRate"));
+            criteria.setAudioChannel(configJson.getInt("audioChannel"));
             criteria.setVideoCodec(configJson.getString("videoCodec"));
-            criteria.setVideoBitRate(new Integer(configJson.getString("videoBitRate")));
-            criteria.setFps(new Integer(configJson.getString("fps")));
+            criteria.setVideoBitRate(configJson.getInt("videoBitRate"));
+            criteria.setFps(configJson.getInt("fps"));
             ConvertVideo video = new ConvertVideo();
             video.convert(criteria);
             String outputChecksumString = "";
