@@ -26,7 +26,9 @@ public class ConvertPPTtoPdf  extends Run implements IConvert {
      */
     public void convert(CriteriaConvert criteriaConvert){
         initCommandLine();
+        commandLine.add("/hidden");
         commandLine.add(criteriaConvert.getSrcPath());
+        commandLine.add(criteriaConvert.getDestPath());
         run();
     }
 
