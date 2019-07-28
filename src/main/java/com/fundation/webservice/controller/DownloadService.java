@@ -35,7 +35,7 @@ public class DownloadService {
     // Constructor will create (if not present) a directory where the converted files are to be retrieved from.
     @Autowired
     public DownloadService(StorageProperties storageProperties) {
-        this.downloadLocation = Paths.get(storageProperties.getDownloadDir()).toAbsolutePath().normalize();
+        this.downloadLocation = Paths.get(storageProperties.getConversionDir()).toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.downloadLocation);
         } 

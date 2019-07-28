@@ -34,6 +34,8 @@ import java.io.IOException;
 
 import java.nio.channels.FileChannel;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Properties;
 
 import org.json.JSONObject;
@@ -76,24 +78,133 @@ public class Controller {
         if (convertType.equals("video")) {
             return this.video(asset, input, config, output);
         }
-        if (convertType.equals("audio")) {
-            return this.audio(asset, input, config, output);
-        }
-        if (convertType.equals("pdfToImage")) {
-            return this.pdfToImage(asset, input, config, output);
-        }
-        if (convertType.equals("wordToImage")) {
-            return this.wordToImage(asset, input, config, output);
-        }
-        if (convertType.equals("wordToPdf")) {
-            return this.wordToPdf(asset, input, config, output);
-        }
-        if (convertType.equals("videoToAudio")) {
-            return this.videoToAudio(asset, input, config, output);
-        }
         return null;
     }
 
+    /**
+     * Video conversoin along with the required conversion criteria input, output and conf with video.
+     *
+     * @return all array string parameters.
+     */
+    public VideoResponse video(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
+                                      @RequestParam("config") String config, @RequestParam("output") String output) {
+        JSONObject inputJson = new JSONObject(input);
+        JSONObject configJson = new JSONObject(config);
+        JSONObject outputJson = new JSONObject(output);
+
+        String fileName = uploadService.storeFile(asset);
+
+        String fileDownloadUri = "";
+            if (!inputJson.has("destPath")) {
+                fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
+                        + ".zip").toUriString();
+            }
+
+        String inputChecksumString = "";
+        InputStream inputProperties;
+
+        try {
+            inputProperties = new FileInputStream("application.properties");
+            properties.load(inputProperties);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
+        try {
+            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(),
+                    "MD5");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (inputJson.getString("checksum").equals(inputChecksumString)) {
+            CriteriaVideo criteria = new CriteriaVideo();
+            criteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
+            criteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/" +
+                    outputJson.getString("name") + outputJson.getString("ext"));
+            criteria.setNewFormat(configJson.getString("newFormat"));
+            criteria.setAudioCodec(configJson.getString("audioCodec"));
+            criteria.setAudioBitRate(new Integer(configJson.getString("audioBitRate")));
+            criteria.setAudioChannel(new Integer(configJson.getString("audioChannel")));
+            criteria.setVideoCodec(configJson.getString("videoCodec"));
+            criteria.setVideoBitRate(new Integer(configJson.getString("videoBitRate")));
+            criteria.setFps(new Integer(configJson.getString("fps")));
+            ConvertVideo video = new ConvertVideo();
+            video.convert(criteria);
+            String outputChecksumString = "";
+            try {
+                outputChecksumString = checksum.getChecksum(properties.getProperty("file.conversionDir") +
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"), "MD5");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            if (configJson.getString("metadata").equals("json")) {
+                //Creation JSON
+                File convertedFile = new File(properties.getProperty("file.conversionDir") +
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
+                Metadata metaDataFile = new Metadata();
+                metaDataFile.writeJsonFile(convertedFile);
+            } else {
+                //Creation XMP
+                File convertedFile = new File(properties.getProperty("file.conversionDir") +
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
+                Metadata metaDataFile = new Metadata();
+                metaDataFile.writeXmpFile(convertedFile);
+            }
+            if (configJson.getString("thumbnail").equals("True")) {
+                //Creation thumbnail
+                CriteriaThumbnailVideo criteriaThumbnailVideo = new CriteriaThumbnailVideo();
+                criteriaThumbnailVideo.setSrcPath(properties.getProperty("file.conversionDir") +
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
+                criteriaThumbnailVideo.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/");
+                criteriaThumbnailVideo.setTime(configJson.getString("thumbnailTime"));
+                criteriaThumbnailVideo.setName(outputJson.getString("name"));
+                criteriaThumbnailVideo.setExt("bmp");
+                ThumbnailVideo thumbnailVideo = new ThumbnailVideo();
+                thumbnailVideo.convert(criteriaThumbnailVideo);
+            }
+            if (configJson.getString("keyframe").equals("True")) {
+                //Creation keyframes
+                CriteriaKeyFrameVideo criteriaKeyFrameVideo = new CriteriaKeyFrameVideo();
+                criteriaKeyFrameVideo.setSrcPath(properties.getProperty("file.conversionDir") +
+                        outputJson.getString("name") + "/" + outputJson.getString("name") +
+                        outputJson.getString("ext"));
+                criteriaKeyFrameVideo.setDestPath(properties.getProperty("file.conversionDir") +
+                        outputJson.getString("name") + "/");
+                criteriaKeyFrameVideo.setTime(configJson.getString("keyframeTime"));
+                criteriaKeyFrameVideo.setName(outputJson.getString("name"));
+                criteriaKeyFrameVideo.setExt("png");
+                KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo(criteriaKeyFrameVideo);
+                keyFrameOfVideo.convert();
+            }
+
+            FolderZipped.zipFolder(properties.getProperty("file.conversionDir") + outputJson.getString("name"));
+
+            if (fileDownloadUri.isEmpty()) {
+                File resultZip = new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + ".zip");
+                File targetZip = new File(inputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+                try {
+                    copyFile(resultZip, targetZip);
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return new VideoResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
+                    configJson.getString("newFormat"), configJson.getString("audioCodec"),
+                    configJson.getString("audioBitRate"), configJson.getString("audioChannel"),
+                    configJson.getString("videoCodec"), configJson.getString("videoBitRate"),
+                    configJson.getString("fps"), configJson.getString("metadata"),
+                    configJson.getString("thumbnail"), configJson.getString("keyframe"),
+                    outputChecksumString);
+        } else {
+            System.out.print("Error");
+            return null;
+        }
+    }
 
     /**
      * Endpoint for downloading converted assets

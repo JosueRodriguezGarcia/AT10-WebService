@@ -21,7 +21,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "file")
 public class StorageProperties {
     private String uploadDir;
-    private String downloadDir;
+    private String conversionDir;
 
     // Getters AND setters are required by the @ConfigurationProperties annotation.
     public String getUploadDir() {
@@ -32,11 +32,11 @@ public class StorageProperties {
         this.uploadDir = uploadDir;
     }
 
-    public String getDownloadDir() {
-        return downloadDir;
+    public String getConversionDir() {
+        return conversionDir;
     }
 
-    public void setDownloadDir(String downloadDir) {
-        this.downloadDir = downloadDir;
+    public void setConversionDir(String downloadDir) {
+        this.conversionDir = downloadDir;
     }
 }
