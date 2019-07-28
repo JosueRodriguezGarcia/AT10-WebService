@@ -115,7 +115,7 @@ public class Controller {
         String fileName = uploadService.storeFile(asset);
 
         String fileDownloadUri = "";
-            if (!inputJson.has("destPath")) {
+            if (!outputJson.has("destPath")) {
                 fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
                         + ".zip").toUriString();
             }
@@ -204,7 +204,7 @@ public class Controller {
 
             if (fileDownloadUri.isEmpty()) {
                 File resultZip = new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + ".zip");
-                File targetZip = new File(inputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+                File targetZip = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
                 try {
                     copyFile(resultZip, targetZip);
                 }
