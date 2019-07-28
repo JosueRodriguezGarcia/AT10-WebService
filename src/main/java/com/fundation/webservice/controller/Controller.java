@@ -196,7 +196,7 @@ public class Controller {
                 thumbnailVideo.convert(criteriaThumbnailVideo);
             }
             if (configJson.getBoolean("keyframes")) {
-                //Creation keyframes
+                //Create keyframes
                 CriteriaKeyFrameVideo criteriaKeyFrameVideo = new CriteriaKeyFrameVideo();
                 criteriaKeyFrameVideo.setSrcPath(properties.getProperty("file.conversionDir") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
@@ -206,8 +206,8 @@ public class Controller {
                 criteriaKeyFrameVideo.setTime(configJson.getString("keyframeTime"));
                 criteriaKeyFrameVideo.setName(outputJson.getString("name"));
                 criteriaKeyFrameVideo.setExt("png");
-                KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo(criteriaKeyFrameVideo);
-                keyFrameOfVideo.convert();
+                KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo();
+                keyFrameOfVideo.convert(criteriaKeyFrameVideo);
             }
 
             FolderZipped.zipFolder(properties.getProperty("file.conversionDir") + outputJson.getString("name"));
