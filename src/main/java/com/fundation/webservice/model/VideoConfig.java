@@ -20,6 +20,7 @@ public enum VideoConfig {
     videoCodec("mpeg4"),
     videoBitRate("320000"),
     fps("30"),
+    metadata(""),
     thumbnail("false"),
     keyframes("false");
     private String value;

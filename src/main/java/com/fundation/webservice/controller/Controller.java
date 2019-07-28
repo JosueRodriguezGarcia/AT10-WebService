@@ -111,6 +111,9 @@ public class Controller {
         if (!configJson.has("fps")) {
             configJson.put("fps",VideoConfig.fps.getValue());
         }
+        if (!configJson.has("metadata")) {
+            configJson.put("metadata",VideoConfig.metadata.getValue());
+        }
         if (!configJson.has("thumbnail")) {
             configJson.put("thumbnail",VideoConfig.thumbnail.getValue());
         }
@@ -170,7 +173,8 @@ public class Controller {
                         outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeJsonFile(convertedFile);
-            } else if (configJson.getString("metadata").equals("xmp")) {
+            }
+            else if (configJson.getString("metadata").equals("xmp")) {
                 //Create XMP
                 File convertedFile = new File(properties.getProperty("file.conversionDir") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
