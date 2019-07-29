@@ -24,6 +24,7 @@ public class ConvertWordToPdfTest {
     public void convert_docx_pdf() {
         CriteriaConvert criteria = new CriteriaConvert();
         criteria.setSrcPath(Directories.RSRC_DIR.getDir() + "BugLifeCycleFAQ.docx");
+        criteria.setDestPath(Directories.RSRC_DIR.getDir() + "BugLifeCycleFAQ.pdf");
         ConvertWordToPdf convertWordToPdf = new ConvertWordToPdf();
         convertWordToPdf.convert(criteria);
         File input = new File(criteria.getSrcPath());

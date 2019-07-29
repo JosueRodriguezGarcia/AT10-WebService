@@ -26,7 +26,6 @@ public class ConvertPptxToImageTest {
     public void convert_ppt_image() {
         CriteriaPptxToImage criteriaPptxtoImage = new CriteriaPptxToImage();
         criteriaPptxtoImage.setSrcPath(Directories.RSRC_DIR.getDir() + "pptTest.pptx");
-        System.out.println(criteriaPptxtoImage.getSrcPath());
         criteriaPptxtoImage.setDestPath(Directories.RSRC_DIR.getDir());
         criteriaPptxtoImage.setExt("jpg");
         ConvertPptxToImage convertPptxToImage = new ConvertPptxToImage();

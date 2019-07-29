@@ -12,10 +12,11 @@ public class ConvertPPTtoPdfTest {
     public void convert_ppt_pdf() {
         CriteriaConvert criteria = new CriteriaConvert();
         criteria.setSrcPath(Directories.RSRC_DIR.getDir() + "pptTest.ppt");
+        criteria.setDestPath(Directories.RSRC_DIR.getDir() + "pptTest.pdf");
         ConvertPPTtoPdf convertPPTtoPdf = new ConvertPPTtoPdf();
         convertPPTtoPdf.convert(criteria);
         File input = new File(criteria.getSrcPath());
-        String actual = Directories.RSRC_DIR.getDir() + filenameWithoutExtension(input) + ".ppt";
+        String actual = Directories.RSRC_DIR.getDir() + filenameWithoutExtension(input) + ".pdf";
         File output = new File(actual);
         assertTrue(output.exists());
     }
