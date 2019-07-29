@@ -28,7 +28,7 @@ import java.util.List;
  * @author Josue Rodriguez, Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public class ConvertPPTtoImage implements IConvert{
+public class ConvertPptxToImage implements IConvert{
     /**
      * Implements convert(CriteriaConvert) from IConvert interface.
      * Conversion is performed via Apache poi utility.
@@ -36,9 +36,9 @@ public class ConvertPPTtoImage implements IConvert{
      * @param criteriaConvert holds source and destination file paths and output file extension.
      */
     public void convert(CriteriaConvert criteriaConvert) {
-        CriteriaPPTtoImage criterion = (CriteriaPPTtoImage) criteriaConvert;
+        CriteriaPptxToImage criteria = (CriteriaPptxToImage) criteriaConvert;
         try {
-            File file = new File(criterion.getSrcPath());
+            File file = new File(criteria.getSrcPath());
             XMLSlideShow ppt = new XMLSlideShow(new FileInputStream(file));
             Dimension pgsize = ppt.getPageSize();
             List<XSLFSlide> slide = ppt.getSlides();
@@ -46,14 +46,12 @@ public class ConvertPPTtoImage implements IConvert{
             for (int i = 0; i < slide.size(); i++) {
                 img = new BufferedImage(pgsize.width, pgsize.height, BufferedImage.TYPE_INT_RGB);
                 Graphics2D graphics = img.createGraphics();
-
                 graphics.setPaint(Color.white);
                 graphics.fill(new Rectangle2D.Float(0, 0, pgsize.width, pgsize.height));
-
                 //render
                 slide.get(i).draw(graphics);
-                FileOutputStream out = new FileOutputStream(criterion.getDestPath() + i + "." + criterion.getExt());
-                javax.imageio.ImageIO.write(img, criterion.getExt(), out);
+                FileOutputStream out = new FileOutputStream(criteria.getDestPath() + i + "." + criteria.getExt());
+                javax.imageio.ImageIO.write(img, criteria.getExt(), out);
                 ppt.write(out);
                 out.close();
             }
