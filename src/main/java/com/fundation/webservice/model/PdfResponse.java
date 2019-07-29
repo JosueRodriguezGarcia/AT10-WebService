@@ -12,7 +12,7 @@ package com.fundation.webservice.model;
 /**
  * Implements a type of response to an /uploadPdf request.
  *
- * @author Maday Alcala Cuba
+ * @author Maday Alcala Cuba, Jesus Menacho
  * @version 1.0
  */
 public class PdfResponse extends Response{

@@ -30,8 +30,6 @@ import java.nio.file.StandardCopyOption;
 public class UploadService {
     private final Path uploadLocation;
 
-    // @Autowired needed in order to properly inject the @Service class
-    // Constructor will create (if not present) a directory where the uploaded assets are to be uploaded to.
     @Autowired
     public UploadService(StorageProperties storageProperties) {
         this.uploadLocation = Paths.get(storageProperties.getUploadDir()).toAbsolutePath().normalize();

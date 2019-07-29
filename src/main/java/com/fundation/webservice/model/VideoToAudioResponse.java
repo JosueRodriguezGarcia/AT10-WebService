@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2019 Jalasoft.
  *
  * This software is the confidential and proprietary information of Jalasoft.
@@ -7,58 +7,54 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.fundation.webservice.model;
 
 /**
- * Implements a response to a transcoding request.
+ * This class save the variable that video to audio required.
  *
- * @author Maday Alcala Cuba, Josue Rodriguez Garcia, Jesús Menacho.
+ * @author Jesus Menacho.
  * @version 1.0
  */
-public class AudioResponse extends Response {
+public class VideoToAudioResponse extends Response {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
     private long size;
     private String newFormat;
-    private String audioCodec;
-    private String audioBitRate;
-    private String audioChannel;
-    private String metadata;
+    private String aCodec;
+    private String aBit;
+    private String aChannel;
     private String checksum;
 
     /**
-     * Constructor of the audio response class
-     * Initializes its attributes.
-     *
+     * This constructor let setting variables to continous show.
      * @param fileName        new name for ouptup file.
      * @param fileDownloadUri url for dwonloader the output file .zip.
      * @param fileType        infoamtion the file type of output file.
      * @param size            show the size of output file.
      * @param newFormat       new format of output file convertetd.
-     * @param audioCodec      Codec use for convertion.
-     * @param audioBitRate    Bit rate of new output file
-     * @param audioChannel    number of channel for the new output file.
-     * @param metadata        defines wether the metadata will be provided as xmp or json data. If not specified by the client,
-     *                        it will not return any metadata info
+     * @param aCodec          Codec use for convertion.
+     * @param aBitRate        Bit rate of new output file
+     * @param aChannel        number of channel for the new output file.
      * @param checksum        information of the checksum for output file.
      */
-    public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-            String newFormat, String audioCodec, String audioBitRate, String audioChannel, String metadata,
-            String checksum) {
+    public VideoToAudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
+                                String newFormat, String aCodec, String aBitRate, String aChannel, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
         this.newFormat = newFormat;
-        this.audioCodec = audioCodec;
-        this.audioBitRate = audioBitRate;
-        this.audioChannel = audioChannel;
-        this.metadata = metadata;
+        this.aCodec = aCodec;
+        this.aBit = aBitRate;
+        this.aChannel = aChannel;
         this.checksum = checksum;
     }
 
+    /**
+     * This method return de variable getFileName.
+     * @return
+     */
     /**
      * Method that return the name of outputFile
      *
@@ -71,7 +67,7 @@ public class AudioResponse extends Response {
     /**
      * Method that return URL of output file for Download.
      *
-     * @return URI of the output File.
+     * @return Uri the output File.
      */
     public String getFileDownloadUri() {
         return fileDownloadUri;
@@ -109,8 +105,8 @@ public class AudioResponse extends Response {
      *
      * @return codec for convert.
      */
-    public String getAudioCodec() {
-        return audioCodec;
+    public String getaCodec() {
+        return aCodec;
     }
 
     /**
@@ -118,8 +114,8 @@ public class AudioResponse extends Response {
      *
      * @return bitrate the bitrate output file.
      */
-    public String getAudioBitRate() {
-        return audioBitRate;
+    public String getaBitRate() {
+        return aBit;
     }
 
     /**
@@ -127,17 +123,8 @@ public class AudioResponse extends Response {
      *
      * @return number the channel for output file.
      */
-    public String getAudioChannel() {
-        return audioChannel;
-    }
-
-    /**
-     * Method whether a metadata format has been specified or not and in which format.
-     *
-     * @return json, xmp or none.
-     */
-    public String getMetadata() {
-        return metadata;
+    public String getaChannel() {
+        return aChannel;
     }
 
     /**
@@ -148,4 +135,5 @@ public class AudioResponse extends Response {
     public String getChecksum() {
         return checksum;
     }
+
 }

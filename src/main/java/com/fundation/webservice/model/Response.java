@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2019 Jalasoft.
  *
  * This software is the confidential and proprietary information of Jalasoft.
@@ -10,6 +10,8 @@
 package com.fundation.webservice.model;
 
 /**
+ * This is the class main to let me carry the Response.
+ *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */

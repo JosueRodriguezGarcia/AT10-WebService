@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2019 Jalasoft.
  *
  * This software is the confidential and proprietary information of Jalasoft.
@@ -12,37 +12,49 @@ package com.fundation.webservice.model;
 /**
  * This class serves as unit test class for Keyframe class.
  *
- * @author Josue Rodriguez Garcia, Jesús Menacho
+ * @author Josue Rodriguez Garcia
  * @version 1.0
  */
 
-public class KeyFrameResponse {
+public class PPTtoPdfResponse {
     private String fileName;
     private String fileDownloadUri;
+    private String checksum;
 
     /**
-     *  This constructor let me setting the variables filenName, fileDownlaodUri.
-     * @param fileName
-     * @param fileDownloadUri
+     * PPTtoPdfResponse Constructor
+     *
+     * @param fileName Input pdf file
+     * @param fileDownloadUri Download URI returned by API endpoint
+     * @param checksum of the output file
      */
-    public KeyFrameResponse(String fileName, String fileDownloadUri) {
+    public PPTtoPdfResponse(String fileName, String fileDownloadUri, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
+        this.checksum = checksum;
     }
 
     /**
-     * This method return fileName.
-     * @return
+     * Return the filename of the input file
+     *
+     * @return the filename of the input file
      */
     public String getFileName() {
         return fileName;
     }
 
     /**
-     * This method return the fileDownloadUri.
-     * @return
+     * @return the download URI of the output file
      */
     public String getFileDownloadUri() {
         return fileDownloadUri;
+    }
+
+    /**
+     *
+     * @return the checksum of the output file
+     */
+    public String getChecksum() {
+        return checksum;
     }
 }

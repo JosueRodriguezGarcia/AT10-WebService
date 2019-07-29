@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2019 Jalasoft.
- *
+ * <p>
  * This software is the confidential and proprietary information of Jalasoft.
  * ("Confidential Information"). You shall not
  * disclose such Confidential Information and shall use it only in
@@ -201,7 +201,7 @@ public class VideoResponse extends Response {
     /**
      * Uses for metadata of the output file.
      *
-     * @return
+     * @return the config for the metadata
      */
     public String getMetadata() {
         return metadata;
@@ -210,16 +210,16 @@ public class VideoResponse extends Response {
     /**
      * Uses for thumbnail of the output file
      *
-     * @return
+     * @return the config of the thumbnail
      */
     public boolean getThumbnail() {
         return thumbnail;
     }
 
     /**
-     * Uses for keyframe of the output file
+     * Method that uses for keyframe of the output file.
      *
-     * @return
+     * @return the keyframes position 
      */
     public boolean getKeyframes() {
         return keyframes;
