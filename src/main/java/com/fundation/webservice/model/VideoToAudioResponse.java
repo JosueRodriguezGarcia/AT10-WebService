@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2019 Jalasoft.
  *
  * This software is the confidential and proprietary information of Jalasoft.
@@ -7,29 +7,27 @@
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
  */
-
 package com.fundation.webservice.model;
 
 /**
- * Implements a type of response to an /upload request.
+ * This class save the variable that video to audio required.
  *
- * @author Maday Alcala Cuba, Josue Rodriguez Garcia, Jesús Menacho.
+ * @author Jesus Menacho.
  * @version 1.0
  */
-public class AudioResponse extends Response {
+public class VideoToAudioResponse extends Response {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
     private long size;
     private String newFormat;
     private String aCodec;
-    private String aBitRate;
+    private String aBit;
     private String aChannel;
     private String checksum;
 
     /**
-     * Method constructor  of the audio response class initial the all variable.
-     *
+     * This constructor let setting variables to continous show.
      * @param fileName        new name for ouptup file.
      * @param fileDownloadUri url for dwonloader the output file .zip.
      * @param fileType        infoamtion the file type of output file.
@@ -40,19 +38,23 @@ public class AudioResponse extends Response {
      * @param aChannel        number of channel for the new output file.
      * @param checksum        information of the checksum for output file.
      */
-    public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                         String newFormat, String aCodec, String aBitRate, String aChannel, String checksum) {
+    public VideoToAudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
+                                String newFormat, String aCodec, String aBitRate, String aChannel, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
         this.newFormat = newFormat;
         this.aCodec = aCodec;
-        this.aBitRate = aBitRate;
+        this.aBit = aBitRate;
         this.aChannel = aChannel;
         this.checksum = checksum;
     }
 
+    /**
+     * This method return de variable getFileName.
+     * @return
+     */
     /**
      * Method that return the name of outputFile
      *
@@ -113,7 +115,7 @@ public class AudioResponse extends Response {
      * @return bitrate the bitrate output file.
      */
     public String getaBitRate() {
-        return aBitRate;
+        return aBit;
     }
 
     /**
@@ -133,4 +135,5 @@ public class AudioResponse extends Response {
     public String getChecksum() {
         return checksum;
     }
+
 }
