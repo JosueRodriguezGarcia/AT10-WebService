@@ -11,7 +11,7 @@
 package com.fundation.webservice.model;
 
 /**
- * Implements a type of response to an /upload request.
+ * Implements a response to a transcoding request.
  *
  * @author Maday Alcala Cuba, Josue Rodriguez Garcia, Jesús Menacho.
  * @version 1.0
@@ -22,34 +22,40 @@ public class AudioResponse extends Response {
     private String fileType;
     private long size;
     private String newFormat;
-    private String aCodec;
-    private String aBitRate;
-    private String aChannel;
+    private String audioCodec;
+    private String audioBitRate;
+    private String audioChannel;
+    private String metadata;
     private String checksum;
 
     /**
-     * Method constructor  of the audio response class initial the all variable.
+     * Constructor of the audio response class
+     * Initializes its attributes.
      *
      * @param fileName        new name for ouptup file.
      * @param fileDownloadUri url for dwonloader the output file .zip.
      * @param fileType        infoamtion the file type of output file.
      * @param size            show the size of output file.
      * @param newFormat       new format of output file convertetd.
-     * @param aCodec          Codec use for convertion.
-     * @param aBitRate        Bit rate of new output file
-     * @param aChannel        number of channel for the new output file.
+     * @param audioCodec      Codec use for convertion.
+     * @param audioBitRate    Bit rate of new output file
+     * @param audioChannel    number of channel for the new output file.
+     * @param metadata        defines wether the metadata will be provided as xmp or json data. If not specified by the client,
+     *                        it will not return any metadata info
      * @param checksum        information of the checksum for output file.
      */
     public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                         String newFormat, String aCodec, String aBitRate, String aChannel, String checksum) {
+            String newFormat, String audioCodec, String audioBitRate, String audioChannel, String metadata,
+            String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
         this.newFormat = newFormat;
-        this.aCodec = aCodec;
-        this.aBitRate = aBitRate;
-        this.aChannel = aChannel;
+        this.audioCodec = audioCodec;
+        this.audioBitRate = audioBitRate;
+        this.audioChannel = audioChannel;
+        this.metadata = metadata;
         this.checksum = checksum;
     }
 
@@ -65,7 +71,7 @@ public class AudioResponse extends Response {
     /**
      * Method that return URL of output file for Download.
      *
-     * @return Uri the output File.
+     * @return URI of the output File.
      */
     public String getFileDownloadUri() {
         return fileDownloadUri;
@@ -103,8 +109,8 @@ public class AudioResponse extends Response {
      *
      * @return codec for convert.
      */
-    public String getaCodec() {
-        return aCodec;
+    public String getAudioCodec() {
+        return audioCodec;
     }
 
     /**
@@ -112,8 +118,8 @@ public class AudioResponse extends Response {
      *
      * @return bitrate the bitrate output file.
      */
-    public String getaBitRate() {
-        return aBitRate;
+    public String getAudioBitRate() {
+        return audioBitRate;
     }
 
     /**
@@ -121,8 +127,17 @@ public class AudioResponse extends Response {
      *
      * @return number the channel for output file.
      */
-    public String getaChannel() {
-        return aChannel;
+    public String getAudioChannel() {
+        return audioChannel;
+    }
+
+    /**
+     * Method whether a metadata format has been specified or not and in which format.
+     *
+     * @return json, xmp or none.
+     */
+    public String getMetadata() {
+        return metadata;
     }
 
     /**

@@ -24,7 +24,7 @@ public class CriteriaAudio extends CriteriaConvert {
 	/**
      * Method that returns new format of the output file.
      *
-     * @return The new format for uoput file.
+     * @return The new format for output file.
      */
     public String getNewFormat() {
         return newFormat;
@@ -51,7 +51,7 @@ public class CriteriaAudio extends CriteriaConvert {
 	/**
      * Method that modifies the codec for the convertion of audio.
      *
-     * @param audioCodec The audioCodec parameter define type codec for the convertion de audio.
+     * @param audioCodec The audioCodec parameter defines the codec for the audio transcoding.
      */
     public void setAudioCodec(String audioCodec) {
         this.audioCodec = audioCodec;
@@ -67,27 +67,27 @@ public class CriteriaAudio extends CriteriaConvert {
     }
 
 	/**
-     * Method that modifies the it rate for output file.
+     * Method that modifies the bitrate for output file.
      *
-     * @param time The audioBitRate parameter define the number of bit rate for output file.
+     * @param audioBitRate The audioBitRate parameter define the number of bitrate for output file.
      */
     public void setAudioBitRate(int audioBitRate) {
         this.audioBitRate = audioBitRate;
     }
 
 	/**
-     * Method that returns numbert of channel for output file.
+     * Method that returns number of channels for output file.
      *
-     * @return The number of channel for output file.
+     * @return The number of channels for output file.
      */
     public int getAudioChannel() {
         return audioChannel;
     }
 
 	/**
-     * Method that modifies numbert of channel for output file.
+     * Method that modifies number of channels for output file.
      *
-     * @param time The audioChannel parameter define the number of channel for output file.
+     * @param audioChannel The audioChannel parameter define the number of channels for output file.
      */
     public void setAudioChannel(int audioChannel) {
         this.audioChannel = audioChannel;

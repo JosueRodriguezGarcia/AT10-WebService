@@ -10,6 +10,7 @@
 package com.fundation.webservice.model;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
@@ -18,17 +19,12 @@ import java.io.InputStreamReader;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class KeyFrameOfVideo {
-    CriteriaKeyFrameVideo criteria;
-
-    public KeyFrameOfVideo(CriteriaKeyFrameVideo criteria) {
-        this.criteria = criteria;
-    }
-
+public class KeyFrameOfVideo implements IConvert{
     /**
      * Converts method get the keyframe depending of the number of frame.
      */
-    public void convert() {
+    public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaKeyFrameVideo criteria = (CriteriaKeyFrameVideo)criteriaConvert;
         try {
             String cmd = Directories.TOOLS_DIR.getDir() + Directories.FFMPEG_DIR.getDir() + "ffmpeg -y -i "
                 + criteria.getSrcPath() + " -vf fps=1/" + criteria.getTime() + " " + criteria.getDestPath()
@@ -41,7 +37,11 @@ public class KeyFrameOfVideo {
             } while (line != null);
             process.waitFor();
             in.close();
-        } catch (Exception e) {
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
     }

@@ -31,11 +31,15 @@ import java.nio.file.Paths;
 public class DownloadService {
     private final Path downloadLocation;
 
-    // @Autowired needed in order to properly inject the @Service class
-    // Constructor will create (if not present) a directory where the converted files are to be retrieved from.
+    /**
+     * Constructor will create (if not present) a directory where the converted files are to be retrieved from
+     * @Autowired needed in order to properly inject the @Service class
+     *
+     * @param storageProperties Class that retrieves server directories from aplication.properties config file
+     */
     @Autowired
     public DownloadService(StorageProperties storageProperties) {
-        this.downloadLocation = Paths.get(storageProperties.getDownloadDir()).toAbsolutePath().normalize();
+        this.downloadLocation = Paths.get(storageProperties.getConversionDir()).toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.downloadLocation);
         } 
@@ -45,6 +49,14 @@ public class DownloadService {
     }
 
     // Returns the actual converted asset at user request, i.e. through the /download endpoint.
+
+    /**
+     * Loads a file as a resource object
+     *
+     * @param fileName Path string that specifies the path to a given file
+     * @return a resource asset for a specified file that it will be provided later to the client for downloading
+     * purposes
+     */
     public Resource loadFileAsResource(String fileName) {
         try {
             Path filePath = this.downloadLocation.resolve(fileName).normalize();
