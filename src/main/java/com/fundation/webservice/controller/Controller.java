@@ -262,6 +262,16 @@ public class Controller {
             configJson.getBoolean("thumbnail"), configJson.getBoolean("keyframes"), outputChecksumString);
     }
 
+    /**
+     * Audio/Video to audio transcoding process based on conversion criteria: input, config and output.
+     *
+     * @param asset The input audio/video file itself
+     * @param input A JSON formatted string (wo \n characters) that holds all the parameters tied to the input file
+     * @param config A JSON formatted string (wo \n characters) that holds all the parameters tied to the configuration
+     *               of the particular process of transcoding.
+     * @param output A JSON formatted string (wo \n characters) that holds all the parameters tied to the output audio
+     * @return a Response specifying details on the output audio product.
+     */
     public AudioResponse audio(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
             @RequestParam("config") String config, @RequestParam("output") String output) {
         JSONObject inputJson = new JSONObject(input);
