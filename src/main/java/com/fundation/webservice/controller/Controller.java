@@ -109,7 +109,7 @@ public class Controller {
                 if (convertType.equals("video")) {
                     return this.video(asset, input, config, output);
                 }
-                if (convertType.equals("audio")) {
+                if ((convertType.equals("audio")) || (convertType.equals("videoToAudio"))) {
                     return this.audio(asset, input, config, output);
                 }
             }
