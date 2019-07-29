@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+
 /**
  * This class implements the CriteriaAudioTest class File and the getter methods for testing CriteriaAudio class.
  *
@@ -20,7 +21,6 @@ import static org.junit.Assert.assertEquals;
  * @version 1.0
  */
 public class CriteriaAudioTest {
-
     CriteriaAudio criteriaAudio = new CriteriaAudio();
 
     /**
