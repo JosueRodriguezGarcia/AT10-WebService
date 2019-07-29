@@ -165,7 +165,6 @@ public class Controller {
             configJson.put("keyframes",VideoConfig.keyframes.getValue());
         }
 
-
         String fileDownloadUri = "";
         if (!outputJson.has("destPath")) {
             fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
@@ -269,6 +268,20 @@ public class Controller {
         JSONObject configJson = new JSONObject(config);
         JSONObject outputJson = new JSONObject(output);
 
+        // Config values validation and default values assignment
+        if (!configJson.has("audioCodec")) {
+            configJson.put("audioCodec",VideoConfig.audioCodec.getValue());
+        }
+        if (!configJson.has("audioBitRate")) {
+            configJson.put("audioBitRate",VideoConfig.audioBitRate.getValue());
+        }
+        if (!configJson.has("audioChannel")) {
+            configJson.put("audioChannel",VideoConfig.audioChannel.getValue());
+        }
+        if (!configJson.has("metadata")) {
+            configJson.put("metadata",VideoConfig.metadata.getValue());
+        }
+
         String fileDownloadUri = "";
         if (!outputJson.has("destPath")) {
             fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
@@ -333,7 +346,7 @@ public class Controller {
         }
 
         return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), configJson.getString("newFormat"),
-            configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"),  outputChecksumString);
+            configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"), configJson.getString("metadata"),  outputChecksumString);
     }
 
     /**
