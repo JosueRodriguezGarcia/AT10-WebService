@@ -16,20 +16,20 @@ import java.io.File;
 import static org.junit.Assert.assertTrue;
 
 /**
- * This class serves as unit test class for ConvertPdfToDoc class.
+ * This class serves as unit test class for ConvertHtmlToDoc class.
  *
  * @author Josue Rodriguez Garcia
  * @version 1.0
  */
-public class ConvertPdfToDocTest {
+public class ConvertHtmlToDocTest {
     @Test
-    public void convert_pdf_doc() {
-        CriteriaPdfToHtml criteriaPdfToDoc = new CriteriaPdfToHtml();
-        criteriaPdfToDoc.setSrcPath(Directories.RSRC_DIR.getDir() + "pdfTest.pdf");
-        criteriaPdfToDoc.setDestPath(Directories.RSRC_DIR.getDir() + "pdfTest");
-        ConvertPdfToDoc convertPdfToDoc = new ConvertPdfToDoc();
-        convertPdfToDoc.convert(criteriaPdfToDoc);
-        File output = new File(criteriaPdfToDoc.getDestPath());
+    public void convert() {
+        CriteriaConvert criteriaConvert = new CriteriaConvert();
+        criteriaConvert.setSrcPath(Directories.RSRC_DIR.getDir() + "pdfTest.html");
+        criteriaConvert.setDestPath(Directories.RSRC_DIR.getDir() + "pdfTest.docx");
+        ConvertHtmlToDoc convertHtmlToDoc = new ConvertHtmlToDoc();
+        convertHtmlToDoc.convert(criteriaConvert);
+        File output = new File(criteriaConvert.getDestPath());
         boolean actual = output.exists();
         assertTrue(actual);
     }

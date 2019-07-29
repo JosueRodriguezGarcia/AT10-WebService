@@ -15,11 +15,11 @@ package com.fundation.webservice.model;
  * @author Josue Rodriguez
  * @version 1.0
  */
-public class CriteriaPPTtoImage extends CriteriaConvert {
+public class CriteriaPptxToImage extends CriteriaConvert {
     private String ext;
 
 	/**
-     * Method that returns the extentions of the output file.
+     * Method that returns the extensions of the output file.
      *
      * @return The extention for output file.
      */
@@ -30,7 +30,7 @@ public class CriteriaPPTtoImage extends CriteriaConvert {
 	/**
      * Method that modifies the extetion of output file.
      *
-     * @param time The exp parameter define the extetion of output file.
+     * @param ext The ext parameter define the extension of output file.
      */
     public void setExt(String ext) {
         this.ext = ext;
