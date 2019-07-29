@@ -36,35 +36,75 @@ public class PdfResponse extends Response{
         this.ext = ext;
         this.formatColor = formatColor;
     }
-    // Getters needed so Spring Boot Framework can return object as JSON
+
+    /**
+     * Method that return the name of outputFile
+     *
+     * @return name the output File.
+     */
     public String getFileName() {
         return fileName;
     }
 
+    /**
+     * Method that return URL of output file for Download.
+     *
+     * @return Uri the output File.
+     */
     public String getPdfDownloadUri() {
         return pdfDownloadUri;
     }
 
+    /**
+     * Method that return the Type of data of the output file.
+     *
+     * @return Type the output File.
+     */
     public String getRefactorType() {
         return refactorType;
     }
 
+    /**
+     * Method that return the size of output File.
+     *
+     * @return Size the output File.
+     */
     public long getSize() {
         return size;
     }
 
+    /**
+     * Method that return the name of output File.
+     *
+     * @return name of output File.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Method that return the dpi of file.
+     *
+     * @return dpi of file.
+     */
     public String getDpi() {
         return dpi;
     }
 
+    /**
+     * Method that return the extention of file.
+     *
+     * @return extention of file.
+     */
     public String getExt() {
         return ext;
     }
 
+    /**
+     * Method that return the format color of file.
+     *
+     * @return format color of file.
+     */
     public String getFormatColor() {
         return formatColor;
     }

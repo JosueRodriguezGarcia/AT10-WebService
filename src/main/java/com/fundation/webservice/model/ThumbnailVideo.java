@@ -19,23 +19,17 @@ import java.io.InputStreamReader;
  * @version 1.0
  */
 public class ThumbnailVideo {
-    CriteriaThumbnailVideo criteria;
 
-    public ThumbnailVideo(CriteriaThumbnailVideo criteria) {
-        this.criteria = criteria;
-    }
-
-    //The convert method capture a thumbnail of a frame specific.
-    public void convert() {
+    /**
+     * This method captures a thumbnail of a frame specific.
+     *
+     * @param criteria
+     */
+    public void convert(CriteriaThumbnailVideo criteria) {
         try {
-            String cmd = Directories.TOOLS_DIR.getDir() + Directories.FFMPEG_DIR.getDir() + "ffmpeg -y -i "
-                    + criteria.getSrcPath()
-                    + " -ss "
-                    + criteria.getTime()
-                    + " -vframes 1 -s 128x128 "
-                    + criteria.getDestPath()
-                    + criteria.getName() + "."
-                    + criteria.getExt();
+            String cmd = Directories.TOOLS_DIR.getDir() + Directories.FFMPEG_DIR.getDir() + "ffmpeg -y -i " + criteria.
+                    getSrcPath() + " -ss " + criteria.getTime() + " -vframes 1 -s 128x128 " + criteria.getDestPath()
+                    + criteria.getName() + "." + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;

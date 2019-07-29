@@ -35,7 +35,7 @@ import org.json.JSONObject;
 /**
  * Implements the REST controller. All HTTP requests will be handled by this controller.
  *
- * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas, Josue Rodriguez, Jesus Menacho
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas, Josue Rodriguez, Jesús Menacho
  * @version 1.0
  */
 @RestController
@@ -44,9 +44,9 @@ public class Controller {
     /**
      * This method copy file in other destinations.
      *
-     * @param sourceFile
-     * @param destFile
-     * @throws IOException
+     * @param sourceFile this is the source a file to copy.
+     * @param destFile this is the destinations file to copy.
+     * @throws IOException this let handle exception.
      */
     public static void copyFile(File sourceFile, File destFile) throws IOException {
         if (!destFile.exists()) {
@@ -73,10 +73,10 @@ public class Controller {
     }
 
     /**
-     * This method let extrac the extension to the file.
+     * This method let extract the extension to the file.
      *
-     * @param file
-     * @return
+     * @param file Its is a parameter that extract the extension.
+     * @return return a file name with out extension.
      */
     public String filenameWithoutExtension(File file) {
         String filenameWithoutExtension = null;
@@ -90,13 +90,14 @@ public class Controller {
     /**
      * This method copy all contain in one carpet to other.
      *
-     * @param sourceLocation
-     * @param targetLocation
-     * @throws IOException
+     * @param sourceLocation this is the source the file.
+     * @param targetLocation this the target to copy file.
+     * @throws IOException this let me handle exception.
      */
     public static void copyFiles(File sourceLocation, File targetLocation)
             throws IOException {
-
+        final int UNIT_BASIC=1024;
+        final int END_FILE=0;
         if (sourceLocation.isDirectory()) {
             if (!targetLocation.exists()) {
                 targetLocation.mkdir();
@@ -105,12 +106,10 @@ public class Controller {
             for (File file : files) {
                 InputStream in = new FileInputStream(file);
                 OutputStream out = new FileOutputStream(targetLocation + "/" + file.getName());
-
-                // Copy the bits from input stream to output stream
-                byte[] buf = new byte[1024];
+                byte[] buf = new byte[UNIT_BASIC];
                 int len;
-                while ((len = in.read(buf)) > 0) {
-                    out.write(buf, 0, len);
+                while ((len = in.read(buf)) > END_FILE) {
+                    out.write(buf, END_FILE, len);
                 }
                 in.close();
                 out.close();
@@ -129,6 +128,14 @@ public class Controller {
     Checksum checksum = new Checksum();
     Properties properties = new Properties();
 
+    /**
+     * In this method show a endpoint convert. It let call method required.
+     * @param asset  defines upload file.
+     * @param input  defines (at the moment) the checksum of the upload file.
+     * @param config defines all the configurations for the output file.
+     * @param output defines the name and the extension of the output result file.
+     * @return all array string parameters.
+     */
     @PostMapping("/convert")
     public Response convert(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
                             @RequestParam("config") String config, @RequestParam("output") String output) {
@@ -153,9 +160,8 @@ public class Controller {
         if ("videoToAudio".equals(convertType)) {
             return this.VideoAudio(asset, input, config, output);
         }
-        return null;  // a;andir response error
+        return null;
     }
-
 
     /**
      * Default Request is a GET method
@@ -171,11 +177,11 @@ public class Controller {
     /**
      * This method convert to pdf file to image file.
      *
-     * @param asset
-     * @param input
-     * @param config
-     * @param output
-     * @return
+     * @param asset  defines upload file.
+     * @param input  defines (at the moment) the checksum of the upload file.
+     * @param config defines all the configurations for the output file.
+     * @param output defines the name and the extension of the output result file.
+     * @return all array string parameters.
      */
     public PdfResponse pdfToImage(@RequestParam("asset") MultipartFile asset, @RequestParam(value = "input", defaultValue = "")
             String input, @RequestParam(value = "config", defaultValue = "") String config, @RequestParam(value = "output",
@@ -213,11 +219,18 @@ public class Controller {
             pdfDocument.convert(criterion);
             FolderZipped.zipFolder(outputJson.getString("name"));
         }
-
         return new PdfResponse(pdfName, fileDownloadUri, asset.getContentType(),
                 asset.getSize(), outputJson.getString("name"), configJson.getString("dpi"), outputJson.getString("ext"), configJson.getString("formatColor"));
     }
 
+    /**
+     * This method let me convert a document the type word to document pdf.
+     * @param asset  defines upload file.
+     * @param input  defines (at the moment) the checksum of the upload file.
+     * @param config defines all the configurations for the output file.
+     * @param output defines the name and the extension of the output result file.
+     * @return all array string parameters.
+     */
     public WordToPdfResponse WordToImage(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
                                          @RequestParam("config") String config, @RequestParam("output") String output) {
 
@@ -240,15 +253,12 @@ public class Controller {
         } catch (IOException io) {
             io.printStackTrace();
         }
-
         try {
             inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(),
                     "MD5");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         if (inputJson.getString("checksum").equals(inputChecksumString)) {
 
             CriteriaPdfToImage pruebaImagen = new CriteriaPdfToImage();
@@ -261,25 +271,23 @@ public class Controller {
             ConvertWordToImage convertWordToImage = new ConvertWordToImage();
             convertWordToImage.convert(pruebaImagen);
 
-            File a = new File(Directories.RSRCT_DIR.getDir());
-            File b = new File(properties.getProperty("file.uploadDir"));
+            File sourceFileA = new File(Directories.RSRCT_DIR.getDir());
+            File sourceFileB = new File(properties.getProperty("file.uploadDir"));
 
             try {
-                copyFiles(a, b);
+                copyFiles(sourceFileA, sourceFileB);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            File a2 = new File(properties.getProperty("file.uploadDir"));
-            File b2 = new File(inputJson.getString("destPath"));
+            File sourceFileOrigin = new File(properties.getProperty("file.uploadDir"));
+            File sourceFileDestinations = new File(inputJson.getString("destPath"));
             try {
-                copyFiles(a2, b2);
+                copyFiles(sourceFileOrigin, sourceFileDestinations);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             try {
-                copyFiles(a2, b2);
+                copyFiles(sourceFileOrigin, sourceFileDestinations);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -298,12 +306,12 @@ public class Controller {
     }
 
     /***
-     *  This method let me convert word to pdf
-     * @param asset
-     * @param input
-     * @param config
-     * @param output
-     * @return
+     *  This method let me convert word to pdf.
+     * @param asset  defines upload file.
+     * @param input  defines (at the moment) the checksum of the upload file.
+     * @param config defines all the configurations for the output file.
+     * @param output defines the name and the extension of the output result file.
+     * @return all array string parameters.
      */
     public WordToPdfResponse WordToPdf(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
                                        @RequestParam("config") String config, @RequestParam("output") String output) {
@@ -311,14 +319,11 @@ public class Controller {
         JSONObject inputJson = new JSONObject(input);
         JSONObject configJson = new JSONObject(config);
         JSONObject outputJson = new JSONObject(output);
-
         String fileName = uploadService.storeFile(asset);
-
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
                 + ".zip").toUriString();
         System.out.println(fileDownloadUri);
         String inputChecksumString = "";
-
         InputStream inputProperties;
         try {
             inputProperties = new FileInputStream("application.properties");
@@ -326,15 +331,12 @@ public class Controller {
         } catch (IOException io) {
             io.printStackTrace();
         }
-
         try {
             inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(),
                     "MD5");
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         if (inputJson.getString("checksum").equals(inputChecksumString)) {
             CriteriaConvert criteria = new CriteriaConvert();
             criteria.setSrcPath(properties.getProperty("file.uploadDir").replace("/", "\\\\") + fileName);
@@ -358,12 +360,14 @@ public class Controller {
         } else {
             return null;
         }
-
     }
 
     /**
-     * POST asset to be converted along with the required conversion criteria input, output and conf with video.
-     *
+     * This method let convert one video in a particular format in other video with any one format.
+     * @param asset  defines upload file.
+     * @param input  defines (at the moment) the checksum of the upload file.
+     * @param config defines all the configurations for the output file.
+     * @param output defines the name and the extension of the output result file.
      * @return all array string parameters.
      */
     public VideoResponse convertVideo(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
@@ -377,7 +381,6 @@ public class Controller {
                 + ".zip").toUriString();
         String inputChecksumString = "";
         InputStream inputProperties;
-
         try {
             inputProperties = new FileInputStream("application.properties");
             properties.load(inputProperties);
@@ -394,7 +397,7 @@ public class Controller {
             CriteriaVideo criteria = new CriteriaVideo();
             criteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
             criteria.setDestPath(inputJson.getString("destPath") + outputJson.getString("name") + "/" +
-                    outputJson.getString("name") + outputJson.getString("ext"));
+            outputJson.getString("name") + outputJson.getString("ext"));
             criteria.setNewFormat(configJson.getString("newFormat"));
             criteria.setAudioCodec(configJson.getString("audioCodec"));
             criteria.setAudioBitRate(new Integer(configJson.getString("audioBitRate")));
@@ -413,14 +416,12 @@ public class Controller {
                 e.printStackTrace();
             }
             if (configJson.getString("metadata").equals("json")) {
-                //Creation JSON
                 File convertedFile = new File(inputJson.getString("destPath") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
                         outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeJsonFile(convertedFile);
             } else {
-                //Creation XMP
                 File convertedFile = new File(inputJson.getString("destPath") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
                         outputJson.getString("ext"));
@@ -428,7 +429,6 @@ public class Controller {
                 metaDataFile.writeXmpFile(convertedFile);
             }
             if (configJson.getString("thumbnail").equals("True")) {
-                //Creation thumbnail
                 CriteriaThumbnailVideo criteriaThumbnailVideo = new CriteriaThumbnailVideo();
                 criteriaThumbnailVideo.setSrcPath(inputJson.getString("destPath") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
@@ -437,11 +437,10 @@ public class Controller {
                 criteriaThumbnailVideo.setTime(configJson.getString("thumbnailTime"));
                 criteriaThumbnailVideo.setName(outputJson.getString("name"));
                 criteriaThumbnailVideo.setExt("bmp");
-                ThumbnailVideo thumbnailVideo = new ThumbnailVideo(criteriaThumbnailVideo);
-                thumbnailVideo.convert();
+                ThumbnailVideo thumbnailVideo = new ThumbnailVideo();
+                thumbnailVideo.convert(criteriaThumbnailVideo);
             }
             if (configJson.getString("keyframe").equals("True")) {
-                //Creation keyframes
                 CriteriaKeyFrameVideo criteriaKeyFrameVideo = new CriteriaKeyFrameVideo();
                 criteriaKeyFrameVideo.setSrcPath(inputJson.getString("destPath") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
@@ -454,9 +453,7 @@ public class Controller {
                 KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo(criteriaKeyFrameVideo);
                 keyFrameOfVideo.convert();
             }
-
             FolderZipped.zipFolder(inputJson.getString("destPath") + outputJson.getString("name"));
-
             return new VideoResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
                     configJson.getString("newFormat"), configJson.getString("audioCodec"),
                     configJson.getString("audioBitRate"), configJson.getString("audioChannel"),
@@ -484,13 +481,11 @@ public class Controller {
         JSONObject inputJson = new JSONObject(input);
         JSONObject configJson = new JSONObject(config);
         JSONObject outputJson = new JSONObject(output);
-
         String fileName = uploadService.storeFile(asset);
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
                 + ".zip").toUriString();
         String inputChecksumString = "";
         InputStream inputProperties;
-
         try {
             inputProperties = new FileInputStream("application.properties");
             properties.load(inputProperties);
@@ -512,11 +507,10 @@ public class Controller {
                     outputJson.getString("name") + outputJson.getString("ext"));
             criteria.setNewFormat(configJson.getString("newFormat"));
             criteria.setAudioCodec(configJson.getString("audioCodec"));
-            criteria.setAudioBit(new Integer(configJson.getString("audioBitRate")));
+            criteria.setAudioBitRate(new Integer(configJson.getString("audioBitRate")));
             criteria.setAudioChannel(new Integer(configJson.getString("audioChannel")));
             ConvertAudio audio = new ConvertAudio();
             audio.convert(criteria);
-
             String outputChecksumString = "";
             try {
                 outputChecksumString = checksum.getChecksum(inputJson.getString("destPath") +
@@ -525,23 +519,19 @@ public class Controller {
             } catch (Exception e) {
                 e.printStackTrace();     // lanzar error personalizad
             }
-
             if (configJson.getString("metadata").equals("json")) {
-                //Creation JSON
                 File convertedFile = new File(inputJson.getString("destPath") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
                         outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeJsonFile(convertedFile);
             } else {
-                //Creation XMP
                 File convertedFile = new File(inputJson.getString("destPath") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
                         outputJson.getString("ext"));
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeXmpFile(convertedFile);
             }
-
             File convertedFile = new File(inputJson.getString("destPath") + outputJson.getString("name") + "\\" + outputJson.getString("name")
                     + outputJson.getString("ext"));
 
@@ -557,13 +547,13 @@ public class Controller {
     }
 
     /**
-     * This method convert the video to audio.
+     * This method convert the video to any format to audio in any format.
      *
-     * @param asset
-     * @param input
-     * @param config
-     * @param output
-     * @return
+     * @param asset  defines upload file.
+     * @param input  defines (at the moment) the checksum of the upload file.
+     * @param config defines all the configurations for the output file.
+     * @param output defines the name and the extension of the output result file.
+     * @return all array string parameters.
      */
     public VideoToAudioResponse VideoAudio(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
                                            @RequestParam("config") String config, @RequestParam("output") String output) {
@@ -584,7 +574,6 @@ public class Controller {
         } catch (IOException io) {
             io.printStackTrace();
         }
-
         try {
             inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(), "MD5");
         } catch (Exception e) {
@@ -594,16 +583,14 @@ public class Controller {
             new File(inputJson.getString("destPath") + outputJson.getString("name") + "/").mkdirs();
             CriteriaAudio criteria = new CriteriaAudio();
             criteria.setSrcPath(inputJson.getString("destPath") + fileName);
-
             criteria.setDestPath(inputJson.getString("destPath") + outputJson.getString("name") + "/" +
                     outputJson.getString("name") + outputJson.getString("ext"));
             criteria.setNewFormat(configJson.getString("newFormat"));
             criteria.setAudioCodec(configJson.getString("audioCodec"));
-            criteria.setAudioBit(new Integer(configJson.getString("audioBitRate")));
+            criteria.setAudioBitRate(new Integer(configJson.getString("audioBitRate")));
             criteria.setAudioChannel(new Integer(configJson.getString("audioChannel")));
             ConvertAudio audio = new ConvertAudio();
             audio.convert(criteria);
-
             String outputChecksumString = "";
             try {
                 outputChecksumString = checksum.getChecksum(inputJson.getString("destPath") +
@@ -612,7 +599,6 @@ public class Controller {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             if (configJson.getString("metadata").equals("json")) {
                 //Creation JSON
                 File convertedFile = new File(inputJson.getString("destPath") +
@@ -628,7 +614,6 @@ public class Controller {
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeXmpFile(convertedFile);
             }
-
             File convertedFile = new File(inputJson.getString("destPath") + outputJson.getString("name") + "\\" + outputJson.getString("name")
                     + outputJson.getString("ext"));
 
@@ -667,5 +652,4 @@ public class Controller {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename()
                         + "\"").body(resource);
     }
-
 }

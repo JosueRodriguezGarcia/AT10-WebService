@@ -18,10 +18,20 @@ package com.fundation.webservice.model;
 public class CriteriaPPTtoImage extends CriteriaConvert {
     private String ext;
 
+	/**
+     * Method that returns the extentions of the output file.
+     *
+     * @return The extention for output file.
+     */
     public String getExt() {
         return ext;
     }
 
+	/**
+     * Method that modifies the extetion of output file.
+     *
+     * @param time The exp parameter define the extetion of output file.
+     */
     public void setExt(String ext) {
         this.ext = ext;
     }

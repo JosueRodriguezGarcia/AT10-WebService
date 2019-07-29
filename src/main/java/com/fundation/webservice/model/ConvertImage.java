@@ -10,20 +10,17 @@
 package com.fundation.webservice.model;
 
 /**
- * @author Maday Alcala Cuba
+ * Implements the ConvertImage class for convert Imagen to Imagen.
+ *
+ * @author Maday Alcala Cuba, Josue Rodriguez Garcia
  * @version 1.0
  */
 public class ConvertImage {
-    CriteriaImage criteria;
-
-    public ConvertImage(CriteriaImage criteria) {
-        this.criteria = criteria;
-    }
 
     /**
      * This method converts an image from one format to another.
      */
-    public void convert() {
+    public void convert(CriteriaImage criteria) {
         String magick = "3rdparty/ImageMagic/magick ";
         try {
             String cmd = magick

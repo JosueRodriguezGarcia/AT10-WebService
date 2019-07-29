@@ -16,5 +16,8 @@
  */
 package com.fundation.webservice.model;
 
+/**
+ * This class this the main the all response.
+ */
 public class Response {
 }

@@ -43,16 +43,13 @@ public class PdfThumbnail implements IConvert{
         final int PAGE = 0;
         try (final PDDocument document = PDDocument.load(new File(criterion.getSrcPath()))) {
             PDFRenderer pdfRenderer = new PDFRenderer(document);
-            BufferedImage bim = pdfRenderer.renderImageWithDPI(PAGE, criterion.getDpi(), ImageType.valueOf(criterion.getFormatColor()));
+            BufferedImage bim = pdfRenderer.renderImageWithDPI(PAGE, criterion.getDpi(), ImageType.valueOf(criterion.
+                    getFormatColor()));
             String fileName = criterion.getDestPath() + criterion.getName() + PAGE + criterion.getExt();
             ImageIOUtil.writeImage(bim, fileName, criterion.getDpi());
             criterion.setSrcPath(fileName);
-            String cmd = magick
-                + criterion.getSrcPath()
-                + " -thumbnail 128x128 "
-                + criterion.getDestPath()
-                + criterion.getName() + "."
-                + criterion.getExt();
+            String cmd = magick + criterion.getSrcPath() + " -thumbnail 128x128 " + criterion.getDestPath() + criterion.
+                    getName() + "." + criterion.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             process.waitFor();
