@@ -336,13 +336,23 @@ public class Controller {
         }
     }
 
+    /**
+     * PPT to PDF conversio method base on a required conversion criteria input, config and output.
+     *
+     * @param asset  defines uploaded input file.
+     * @param input  defines the checksum of the upload file.
+     * @param config defines all the conversion configurations for the output file.
+     * @param output defines the name and the extension of the resulting output file.
+     * @return a JSON formatted Response object providing details about the output file
+     */
     public PPTtoPdfResponse PPTtoPdf(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
                                      @RequestParam("config") String config, @RequestParam("output") String output) {
         JSONObject inputJson = new JSONObject(input);
         JSONObject configJson = new JSONObject(config);
         JSONObject outputJson = new JSONObject(output);
         String fileName = uploadService.storeFile(asset);
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/")
+                .path(outputJson.getString("name")
                 + ".zip").toUriString();
         String inputChecksumString = "";
         InputStream inputProperties;

@@ -20,21 +20,40 @@ public class PPTtoPdfResponse {
     private String fileName;
     private String fileDownloadUri;
     private String checksum;
-    
+
+    /**
+     * PPTtoPdfResponse Constructor
+     *
+     * @param fileName Input pdf file
+     * @param fileDownloadUri Download URI returned by API endpoint
+     * @param checksum of the output file
+     */
     public PPTtoPdfResponse(String fileName, String fileDownloadUri, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.checksum = checksum;
     }
 
+    /**
+     * Return the filename of the input file
+     *
+     * @return the filename of the input file
+     */
     public String getFileName() {
         return fileName;
     }
 
+    /**
+     * @return the download URI of the output file
+     */
     public String getFileDownloadUri() {
         return fileDownloadUri;
     }
 
+    /**
+     *
+     * @return the checksum of the output file
+     */
     public String getChecksum() {
         return checksum;
     }
