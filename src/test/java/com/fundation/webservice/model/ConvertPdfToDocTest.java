@@ -18,7 +18,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * This class serves as unit test class for ConvertPdfToDoc class.
  *
- * @author Josue Rodriguez Garcia
+ * @author Josue Rodriguez Garcia.
  * @version 1.0
  */
 public class ConvertPdfToDocTest {
