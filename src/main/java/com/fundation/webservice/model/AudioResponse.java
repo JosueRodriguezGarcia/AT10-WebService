@@ -11,12 +11,12 @@
 package com.fundation.webservice.model;
 
 /**
- * Implements a type of response to an /upload request.
+ * Implements a response to a transcoding request.
  *
  * @author Maday Alcala Cuba, Josue Rodriguez Garcia.
  * @version 1.0
  */
-public class AudioResponse {
+public class AudioResponse extends Response{
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
@@ -28,7 +28,8 @@ public class AudioResponse {
     private String checksum;
 
     /**
-     * Method constructor  of the audio response class initial the all variable.
+     * Constructor of the audio response class
+     * Initializes its attributes.
      *
      * @param fileName        new name for ouptup file.
      * @param fileDownloadUri url for dwonloader the output file .zip.
@@ -41,7 +42,7 @@ public class AudioResponse {
      * @param checksum        information of the checksum for output file.
      */
     public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                         String newFormat, String aCodec, String aBitRate, String aChannel, String checksum) {
+            String newFormat, String aCodec, String aBitRate, String aChannel, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
@@ -65,7 +66,7 @@ public class AudioResponse {
     /**
      * Method that return URL of output file for Download.
      *
-     * @return Uri the output File.
+     * @return URI of the output File.
      */
     public String getFileDownloadUri() {
         return fileDownloadUri;

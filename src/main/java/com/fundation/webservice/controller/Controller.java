@@ -57,6 +57,8 @@ public class Controller {
     Checksum checksum = new Checksum();
     Properties properties = new Properties();
 
+    String fileName = "";
+
     /**
      * Default Request is a GET method
      *
@@ -92,6 +94,8 @@ public class Controller {
             e.printStackTrace();
         }
 
+        fileName = uploadService.storeFile(asset);
+
         if (inputJson.has("checksum")) {
             String inputChecksumString = "";
             try {
@@ -104,6 +108,9 @@ public class Controller {
             if (inputJson.getString("checksum").equals(inputChecksumString)) {
                 if (convertType.equals("video")) {
                     return this.video(asset, input, config, output);
+                }
+                if (convertType.equals("audio")) {
+                    return this.audio(asset, input, config, output);
                 }
             }
             else {
@@ -158,7 +165,6 @@ public class Controller {
             configJson.put("keyframes",VideoConfig.keyframes.getValue());
         }
 
-        String fileName = uploadService.storeFile(asset);
 
         String fileDownloadUri = "";
         if (!outputJson.has("destPath")) {
@@ -255,6 +261,79 @@ public class Controller {
             configJson.getString("videoCodec"), configJson.getString("videoBitRate"),
             configJson.getString("fps"), configJson.getString("metadata"),
             configJson.getBoolean("thumbnail"), configJson.getBoolean("keyframes"), outputChecksumString);
+    }
+
+    public AudioResponse audio(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
+            @RequestParam("config") String config, @RequestParam("output") String output) {
+        JSONObject inputJson = new JSONObject(input);
+        JSONObject configJson = new JSONObject(config);
+        JSONObject outputJson = new JSONObject(output);
+
+        String fileDownloadUri = "";
+        if (!outputJson.has("destPath")) {
+            fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
+                    + ".zip").toUriString();
+        }
+        else {
+            File destPathFile = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+            fileDownloadUri = destPathFile.toURI().toString() ;
+        }
+
+        CriteriaAudio criteria = new CriteriaAudio();
+        criteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
+        criteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/" +
+            outputJson.getString("name") + outputJson.getString("ext"));
+        criteria.setNewFormat(configJson.getString("newFormat"));
+        criteria.setAudioCodec(configJson.getString("audioCodec"));
+        criteria.setAudioBitRate(new Integer(configJson.getString("audioBitRate")));
+        criteria.setAudioChannel(new Integer(configJson.getString("audioChannel")));
+        ConvertAudio audio = new ConvertAudio();
+        audio.convert(criteria);
+
+        String outputChecksumString = "";
+        try {
+            outputChecksumString = checksum.getChecksum(properties.getProperty("file.conversionDir") +
+                outputJson.getString("name") + "/" + outputJson.getString("name") +
+                outputJson.getString("ext"), "MD5");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if (configJson.getString("metadata").equals("json")) {
+            //Create JSON
+            File convertedFile = new File(properties.getProperty("file.conversionDir") +
+                outputJson.getString("name") + "/" + outputJson.getString("name") +
+                outputJson.getString("ext"));
+            Metadata metaDataFile = new Metadata();
+            metaDataFile.writeJsonFile(convertedFile);
+        }
+        else if (configJson.getString("metadata").equals("xmp")){
+            //Create XMP
+            File convertedFile = new File(properties.getProperty("file.conversionDir") +
+                outputJson.getString("name") + "/" + outputJson.getString("name") +
+                outputJson.getString("ext"));
+            Metadata metaDataFile = new Metadata();
+            metaDataFile.writeXmpFile(convertedFile);
+        }
+
+        // Zip all the files in the conversion directory
+        FolderZipped.zipFolder(properties.getProperty("file.conversionDir") + outputJson.getString("name"));
+
+        // If a target location has been specified, copy the zip file there.
+        if (outputJson.has("destPath")) {
+            File resultZip = new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + ".zip");
+            File targetZip = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+            try {
+                copyFile(resultZip, targetZip);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), configJson.getString("newFormat"),
+            configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"),  outputChecksumString);
     }
 
     /**
