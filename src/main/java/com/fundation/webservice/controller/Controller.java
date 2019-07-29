@@ -202,8 +202,8 @@ public class Controller {
          */
         String inputChecksumString = "";
         try {
-            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(),
-                    "MD5");
+            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") +
+                    asset.getOriginalFilename(),"MD5");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -220,7 +220,8 @@ public class Controller {
             FolderZipped.zipFolder(outputJson.getString("name"));
         }
         return new PdfResponse(pdfName, fileDownloadUri, asset.getContentType(),
-                asset.getSize(), outputJson.getString("name"), configJson.getString("dpi"), outputJson.getString("ext"), configJson.getString("formatColor"));
+                asset.getSize(), outputJson.getString("name"), configJson.getString("dpi"),
+                outputJson.getString("ext"), configJson.getString("formatColor"));
     }
 
     /**
@@ -240,8 +241,8 @@ public class Controller {
 
         String fileName = uploadService.storeFile(asset);
 
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
-                + ".zip").toUriString();
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").
+                path(outputJson.getString("name")+ ".zip").toUriString();
         System.out.println(fileDownloadUri);
 
         String inputChecksumString = "";
@@ -254,8 +255,8 @@ public class Controller {
             io.printStackTrace();
         }
         try {
-            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(),
-                    "MD5");
+            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") +
+                            asset.getOriginalFilename(),"MD5");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -294,7 +295,8 @@ public class Controller {
 
             String outputChecksumString = "";
             try {
-                outputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir").replace("/", "\\\\") + fileName, "MD5");
+                outputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir").
+                        replace("/", "\\\\") + fileName, "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -320,7 +322,8 @@ public class Controller {
         JSONObject configJson = new JSONObject(config);
         JSONObject outputJson = new JSONObject(output);
         String fileName = uploadService.storeFile(asset);
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").
+                path(outputJson.getString("name")
                 + ".zip").toUriString();
         System.out.println(fileDownloadUri);
         String inputChecksumString = "";
@@ -332,8 +335,8 @@ public class Controller {
             io.printStackTrace();
         }
         try {
-            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(),
-                    "MD5");
+            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") +
+                            asset.getOriginalFilename(),"MD5");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -351,7 +354,8 @@ public class Controller {
             }
             String outputChecksumString = "";
             try {
-                outputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir").replace("/", "\\\\") + fileName, "MD5");
+                outputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir")
+                        .replace("/", "\\\\") + fileName, "MD5");
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -377,8 +381,8 @@ public class Controller {
         JSONObject outputJson = new JSONObject(output);
         String fileName = uploadService.storeFile(asset);
 
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
-                + ".zip").toUriString();
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/")
+                .path(outputJson.getString("name") + ".zip").toUriString();
         String inputChecksumString = "";
         InputStream inputProperties;
         try {
@@ -388,8 +392,8 @@ public class Controller {
             io.printStackTrace();
         }
         try {
-            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(),
-                    "MD5");
+            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir")
+                            + asset.getOriginalFilename(),"MD5");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -433,7 +437,8 @@ public class Controller {
                 criteriaThumbnailVideo.setSrcPath(inputJson.getString("destPath") +
                         outputJson.getString("name") + "/" + outputJson.getString("name") +
                         outputJson.getString("ext"));
-                criteriaThumbnailVideo.setDestPath(inputJson.getString("destPath") + outputJson.getString("name") + "/");
+                criteriaThumbnailVideo.setDestPath(inputJson.getString("destPath") +
+                        outputJson.getString("name") + "/");
                 criteriaThumbnailVideo.setTime(configJson.getString("thumbnailTime"));
                 criteriaThumbnailVideo.setName(outputJson.getString("name"));
                 criteriaThumbnailVideo.setExt("bmp");
@@ -482,8 +487,8 @@ public class Controller {
         JSONObject configJson = new JSONObject(config);
         JSONObject outputJson = new JSONObject(output);
         String fileName = uploadService.storeFile(asset);
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
-                + ".zip").toUriString();
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").
+                path(outputJson.getString("name") + ".zip").toUriString();
         String inputChecksumString = "";
         InputStream inputProperties;
         try {
@@ -494,7 +499,8 @@ public class Controller {
         }
 
         try {
-            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(), "MD5");
+            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") +
+                    asset.getOriginalFilename(), "MD5");
         } catch (Exception e) {
             e.printStackTrace();     ///
         }
@@ -532,14 +538,17 @@ public class Controller {
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeXmpFile(convertedFile);
             }
-            File convertedFile = new File(inputJson.getString("destPath") + outputJson.getString("name") + "\\" + outputJson.getString("name")
-                    + outputJson.getString("ext"));
+            File convertedFile = new File(inputJson.getString("destPath") +
+                    outputJson.getString("name") + "\\" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
 
             Metadata metaDataFile = new Metadata();
             metaDataFile.writeXmpFile(convertedFile);
             FolderZipped.zipFolder(inputJson.getString("destPath") + outputJson.getString("name"));
-            return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), configJson.getString("newFormat"),
-                    configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"),  outputChecksumString);
+            return new AudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
+                    configJson.getString("newFormat"), configJson.getString("audioCodec"),
+                    configJson.getString("audioBitRate"), configJson.getString("audioChannel"),
+                    outputChecksumString);
         } else {
             System.out.print("error");    // personalizar errorcomo inpu o de tipo config o de tipo outtput
             return null;
@@ -563,8 +572,8 @@ public class Controller {
 
         String fileName = uploadService.storeFile(asset);
 
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").path(outputJson.getString("name")
-                + ".zip").toUriString();
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/").
+                path(outputJson.getString("name") + ".zip").toUriString();
         String inputChecksumString = "";
         InputStream inputProperties;
 
@@ -575,7 +584,8 @@ public class Controller {
             io.printStackTrace();
         }
         try {
-            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") + asset.getOriginalFilename(), "MD5");
+            inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") +
+                    asset.getOriginalFilename(), "MD5");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -614,14 +624,17 @@ public class Controller {
                 Metadata metaDataFile = new Metadata();
                 metaDataFile.writeXmpFile(convertedFile);
             }
-            File convertedFile = new File(inputJson.getString("destPath") + outputJson.getString("name") + "\\" + outputJson.getString("name")
+            File convertedFile = new File(inputJson.getString("destPath") +
+                    outputJson.getString("name") + "\\" + outputJson.getString("name")
                     + outputJson.getString("ext"));
 
             Metadata metaDataFile = new Metadata();
             metaDataFile.writeXmpFile(convertedFile);
             FolderZipped.zipFolder(inputJson.getString("destPath") + outputJson.getString("name"));
-            return new VideoToAudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(), configJson.getString("newFormat"),
-                    configJson.getString("audioCodec"), configJson.getString("audioBitRate"), configJson.getString("audioChannel"), outputChecksumString);
+            return new VideoToAudioResponse(fileName, fileDownloadUri, asset.getContentType(), asset.getSize(),
+                    configJson.getString("newFormat"), configJson.getString("audioCodec"),
+                    configJson.getString("audioBitRate"), configJson.getString("audioChannel"),
+                    outputChecksumString);
         } else {
             System.out.print("error");
             return null;
