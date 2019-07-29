@@ -36,6 +36,9 @@ public class ConvertPptxToImage implements IConvert{
      * @param criteriaConvert holds source and destination file paths and output file extension.
      */
     public void convert(CriteriaConvert criteriaConvert) {
+        final int POS_X = 0;
+        final int POS_Y = 0;
+
         CriteriaPptxToImage criteria = (CriteriaPptxToImage) criteriaConvert;
         try {
             File file = new File(criteria.getSrcPath());
@@ -43,14 +46,14 @@ public class ConvertPptxToImage implements IConvert{
             Dimension pgsize = ppt.getPageSize();
             List<XSLFSlide> slide = ppt.getSlides();
             BufferedImage img = null;
-            for (int i = 0; i < slide.size(); i++) {
+            for (int index = 0; index < slide.size(); index++) {
                 img = new BufferedImage(pgsize.width, pgsize.height, BufferedImage.TYPE_INT_RGB);
                 Graphics2D graphics = img.createGraphics();
                 graphics.setPaint(Color.white);
-                graphics.fill(new Rectangle2D.Float(0, 0, pgsize.width, pgsize.height));
+                graphics.fill(new Rectangle2D.Float(POS_X, POS_Y, pgsize.width, pgsize.height));
                 //render
-                slide.get(i).draw(graphics);
-                FileOutputStream out = new FileOutputStream(criteria.getDestPath() + i + "." + criteria.getExt());
+                slide.get(index).draw(graphics);
+                FileOutputStream out = new FileOutputStream(criteria.getDestPath() + index + "." + criteria.getExt());
                 javax.imageio.ImageIO.write(img, criteria.getExt(), out);
                 ppt.write(out);
                 out.close();
@@ -59,5 +62,4 @@ public class ConvertPptxToImage implements IConvert{
             e.printStackTrace();
         }
     }
-
 }
