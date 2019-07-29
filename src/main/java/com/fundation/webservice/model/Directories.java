@@ -12,7 +12,7 @@ package com.fundation.webservice.model;
 /**
  * Enum list that holds all path strings for various key directories.
  *
- * @author Alejandro Sánchez Luizaga
+ * @author Alejandro Sánchez Luizaga, Jesús Menacho
  * @version 1.0
  */
 public enum Directories {
@@ -23,7 +23,8 @@ public enum Directories {
     IMAGEMAGIC_DIR("ImageMagic/"),
     PANDOC_DIR("pandoc/"),
     POPPLER_DIR("poppler/bin/"),
-    OFFICETOPDF_DIR("officetopdf/");
+    OFFICETOPDF_DIR("officetopdf/"),
+    RSRCT_DIR("rsrc/temp/");
     private String dir;
     Directories(String dir) {
         this.dir = dir;

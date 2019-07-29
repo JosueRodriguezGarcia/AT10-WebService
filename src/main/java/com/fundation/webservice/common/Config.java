@@ -25,6 +25,24 @@ public class Config {
     private static String password;
     private static String port;
     private static String host;
+    private static String uploaddir;
+    private static String downloadDir;
+
+    public static String getUploaddir() {
+        return uploaddir;
+    }
+
+    public static void setUploaddir(String uploaddir) {
+        Config.uploaddir = uploaddir;
+    }
+
+    public static String getDownloadDir() {
+        return downloadDir;
+    }
+
+    public static void setDownloadDir(String downloadDir) {
+        Config.downloadDir = downloadDir;
+    }
 
     /**
      * This method return the variable

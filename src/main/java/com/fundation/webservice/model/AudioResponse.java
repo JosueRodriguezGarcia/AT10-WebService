@@ -13,10 +13,10 @@ package com.fundation.webservice.model;
 /**
  * Implements a type of response to an /upload request.
  *
- * @author Maday Alcala Cuba, Josue Rodriguez Garcia.
+ * @author Maday Alcala Cuba, Josue Rodriguez Garcia, Jesús Menacho.
  * @version 1.0
  */
-public class AudioResponse {
+public class AudioResponse extends Response {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
