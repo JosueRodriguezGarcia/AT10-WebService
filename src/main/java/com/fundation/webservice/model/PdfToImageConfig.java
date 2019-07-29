@@ -16,7 +16,7 @@ package com.fundation.webservice.model;
  * @version 1.0
  */
 public enum PdfToImageConfig {
-    dpi("150"),
+    dpi("300"),
     formatColor("RGB"),
     thumbnail("false");
     private String value;

@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2019 Jalasoft.
- * <p>
+ *
  * This software is the confidential and proprietary information of Jalasoft.
  * ("Confidential Information"). You shall not
  * disclose such Confidential Information and shall use it only in
@@ -23,38 +23,26 @@ public class VideoResponse extends Response {
     private long size;
     private String newFormat;
 
-    /**
-     * Audio  variables.
-     */
+    // Audio  variables.
     private String audioCodec;
     private String audioBitRate;
     private String audioChannel;
 
-    /**
-     * Video variables.
-     */
+    // Video variables.
     private String videoCodec;
     private String videoBitRate;
     private String fps;
 
-    /**
-     * Metadata Variable.
-     */
+    // Metadata Variable.
     private String metadata;
 
-    /**
-     * Thumbnail Variables.
-     */
+    // Thumbnail Variables.
     private boolean thumbnail;
 
-    /**
-     * Keyframe Variables.
-     */
+    // Keyframe Variables.
     private boolean keyframes;
 
-    /**
-     * Checksum variables.
-     */
+    // Checksum variables.
     private String checksum;
 
     /**
@@ -79,48 +67,35 @@ public class VideoResponse extends Response {
      *                  posision within the video file
      * @param checksum provides the checksum of the output file.
      */
-    public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                         String newFormat, String audioCodec, String audioBitRate, String audioChannel,
-                         String videoCodec, String videoBitRate, String fps, String metadata, boolean thumbnail,
-                         boolean keyframes, String checksum) {
+    public VideoResponse(String fileName, String fileDownloadUri, String fileType, long size, String newFormat,
+            String audioCodec, String audioBitRate, String audioChannel, String videoCodec, String videoBitRate,
+            String fps, String metadata, boolean thumbnail, boolean keyframes, String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
         this.size = size;
         this.newFormat = newFormat;
 
-        /**
-         * Audio constructors.
-         */
+        // Audio constructors.
         this.audioCodec = audioCodec;
         this.audioBitRate = audioBitRate;
         this.audioChannel = audioChannel;
 
-        /**
-         * Audio constructors.
-         */
+        // Audio constructors.
         this.videoCodec = videoCodec;
         this.videoBitRate = videoBitRate;
         this.fps = fps;
 
-        /**
-         * Metadata constructor.
-         */
+        // Metadata constructor.
         this.metadata = metadata;
 
-        /**
-         * Thumbnail constructors.
-         */
+        // Thumbnail constructors.
         this.thumbnail = thumbnail;
 
-        /**
-         * Keyframe constructor.
-         */
+        // Keyframe constructor.
         this.keyframes = keyframes;
 
-        /**
-         * Checksum constructor.
-         */
+        // Checksum constructor.
         this.checksum = checksum;
     }
 

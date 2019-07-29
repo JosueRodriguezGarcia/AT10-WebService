@@ -45,7 +45,8 @@ public class AudioResponse extends Response{
      * @param checksum        information of the checksum for output file.
      */
     public AudioResponse(String fileName, String fileDownloadUri, String fileType, long size,
-                         String newFormat, String audioCodec, String audioBitRate, String audioChannel, String metadata, String checksum) {
+            String newFormat, String audioCodec, String audioBitRate, String audioChannel, String metadata,
+            String checksum) {
         this.fileName = fileName;
         this.fileDownloadUri = fileDownloadUri;
         this.fileType = fileType;
