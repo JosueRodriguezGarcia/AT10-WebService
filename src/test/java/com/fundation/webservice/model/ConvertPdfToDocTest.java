@@ -24,9 +24,9 @@ import static org.junit.Assert.assertTrue;
 public class ConvertPdfToDocTest {
     @Test
     public void convert_pdf_doc() {
-        CriteriaPdfToDoc criteriaPdfToDoc = new CriteriaPdfToDoc();
+        CriteriaPdfToHtml criteriaPdfToDoc = new CriteriaPdfToHtml();
         criteriaPdfToDoc.setSrcPath(Directories.RSRC_DIR.getDir() + "pdfTest.pdf");
-        criteriaPdfToDoc.setDestPath(Directories.RSRC_DIR.getDir() + "pdfTest.docx");
+        criteriaPdfToDoc.setDestPath(Directories.RSRC_DIR.getDir() + "pdfTest");
         ConvertPdfToDoc convertPdfToDoc = new ConvertPdfToDoc();
         convertPdfToDoc.convert(criteriaPdfToDoc);
         File output = new File(criteriaPdfToDoc.getDestPath());

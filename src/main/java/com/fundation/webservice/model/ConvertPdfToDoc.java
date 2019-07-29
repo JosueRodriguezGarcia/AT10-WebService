@@ -30,6 +30,7 @@ public class ConvertPdfToDoc {
         File inputFile = new File(criteriaConvert.getSrcPath());
         String intermediateName = filenameWithoutExtension(inputFile);
         criteriaConvert.setSrcPath(Directories.RSRC_DIR.getDir() + intermediateName + ".html");
+        criteriaConvert.setDestPath(Directories.RSRC_DIR.getDir() +intermediateName + ".docx");
         ConvertHtmlToDoc convertHtmlToDoc = new ConvertHtmlToDoc();
         convertHtmlToDoc.convert(criteriaConvert);
     }
