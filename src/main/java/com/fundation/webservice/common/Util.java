@@ -24,8 +24,8 @@ import java.util.Properties;
  * The methos let me save variable about the connections to db.
  */
 public class Util {
-    private static Util Utilcreation = new Util();
-    private static Config config;
+    private static Util Utilcreation;
+    private static Config config=new Config();
 
     /**
      * This constructor let me initializer the initUnit.
@@ -55,6 +55,8 @@ public class Util {
         final String USER_PASSWORD;
         final String PORT_CONNECTION;
         final String HOST_NAME;
+        final String UPLOAD_DIR;
+        final String DOWNLOAD_DIR;
 
         USER_DIR = System.getProperty("user.dir");
         try (InputStream input = new FileInputStream(USER_DIR + "/config.properties")) {
@@ -64,7 +66,9 @@ public class Util {
             USER_NAME = properties.getProperty("dir.user_name");
             USER_PASSWORD = properties.getProperty("dir.user_password");
             PORT_CONNECTION = properties.getProperty("dir.port_connection");
-            HOST_NAME=properties.getProperty("dir.host_name");
+            HOST_NAME = properties.getProperty("dir.host_name");
+            UPLOAD_DIR=properties.getProperty("file.uploadDir");
+            DOWNLOAD_DIR=properties.getProperty("file.downloadDir");
             config.setWebserverdb(WEBSERVER_DB);
             config.setRoot(USER_NAME);
             config.setPassword(USER_PASSWORD);

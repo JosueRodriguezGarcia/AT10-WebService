@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2019 Jalasoft.
- *
+ * <p>
  * This software is the confidential and proprietary information of Jalasoft.
  * ("Confidential Information"). You shall not
  * disclose such Confidential Information and shall use it only in
@@ -12,10 +12,10 @@ package com.fundation.webservice.model;
 /**
  * Implements a type of response to an /upload request.
  *
- * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas, Jesus Menacho
  * @version 1.1
  */
-public class VideoResponse {
+public class VideoResponse extends Response {
     private String fileName;
     private String fileDownloadUri;
     private String fileType;
@@ -207,8 +207,9 @@ public class VideoResponse {
     public String getThumbnail() {
         return thumbnail;
     }
+
     /**
-     * Method that uses for keyframe of the output file
+     * Method that uses for keyframe of the output file.
      *
      * @return
      */
