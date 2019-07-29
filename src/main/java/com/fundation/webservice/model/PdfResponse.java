@@ -15,7 +15,7 @@ package com.fundation.webservice.model;
  * @author Maday Alcala Cuba
  * @version 1.0
  */
-public class PdfResponse {
+public class PdfResponse extends Response{
     private String fileName;
     private String pdfDownloadUri;
     private String refactorType;
