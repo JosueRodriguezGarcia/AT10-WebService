@@ -24,13 +24,13 @@ public class ConvertImage {
         String magick = "3rdparty/ImageMagic/magick ";
         try {
             String cmd = magick
-                    + criteria.getSrcPath()
-                    + " -resize " + criteria.getResolution()
-                    + " -rotate " + criteria.getRotation()
-                    + " -quality " + criteria.getQuality() + " "
-                    + criteria.getDestPath()
-                    + criteria.getName() + "."
-                    + criteria.getExt();
+                + criteria.getSrcPath()
+                + " -resize " + criteria.getResolution()
+                + " -rotate " + criteria.getRotation()
+                + " -quality " + criteria.getQuality() + " "
+                + criteria.getDestPath()
+                + criteria.getName()
+                + criteria.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             process.waitFor();
         } catch (Exception e) {

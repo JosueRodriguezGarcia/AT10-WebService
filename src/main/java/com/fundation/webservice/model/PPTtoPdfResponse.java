@@ -16,7 +16,7 @@ package com.fundation.webservice.model;
  * @version 1.0
  */
 
-public class PPTtoPdfResponse {
+public class PPTtoPdfResponse extends Response {
     private String fileName;
     private String fileDownloadUri;
     private String checksum;
