@@ -71,6 +71,7 @@ public class DBConnection {
             System.out.println(WEBSERVER_DB);
             conn = DriverManager.getConnection("jdbc:mysql://" + HOST_NAME + ":" + PORT_CONNECTION + "/" + WEBSERVER_DB, USER_NAME, USER_PASSWORD);
         } catch (SQLException e) {
+            System.out.println(e);
             e.getMessage();
         }
     }
