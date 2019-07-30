@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import org.json.JSONObject;
 
@@ -96,9 +97,20 @@ public class Controller {
             e.printStackTrace();
         }
 
-        fileName = uploadService.storeFile(asset);
-
         if (inputJson.has("checksum")) {
+            QueryDriver queryDriver = new QueryDriver();
+            Logger logger = Logger.getLogger("Controller.class");
+
+            if (queryDriver.verifiyExist(inputJson.getString("checksum"))) {
+                logger.info("This file already exists!");
+            }
+            else {
+                logger.info("FILE SUCCESSFULLY UPLOADED.");
+                fileName = uploadService.storeFile(asset);
+                queryDriver.saveInfo(inputJson.getString("checksum"), properties.getProperty("file.uploadDir") +
+                        asset.getOriginalFilename());
+            }
+
             String inputChecksumString = "";
             try {
                 inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") +
