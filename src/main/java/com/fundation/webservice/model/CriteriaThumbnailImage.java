@@ -49,7 +49,7 @@ public class CriteriaThumbnailImage extends CriteriaConvert {
 	/**
      * Method that modifies the extetion of output thumbnail.
      *
-     * @param time The exp parameter define the extetion of output thumbnail.
+     * @param ext The ext parameter define the extension of output thumbnail.
      */
     public void setExt(String ext) {
         this.ext = ext;
