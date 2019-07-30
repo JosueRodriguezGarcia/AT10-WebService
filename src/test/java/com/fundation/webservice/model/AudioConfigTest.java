@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class AudioConfigTest {
     @Test
-    public void getValueCaudioCodec() {
+    public void getValue_audioCodec() {
         assertEquals("libvorbis",AudioConfig.audioCodec.getValue());
     }
 
