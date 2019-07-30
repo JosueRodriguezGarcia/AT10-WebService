@@ -117,6 +117,9 @@ public class Controller {
                 if (convertType.equals("pdfToImage")) {
                     return this.pdfToImage(asset, input, config, output);
                 }
+                if (convertType.equals("wordToPdf")) {
+                    return this.wordToPdf(asset, input, config, output);
+                }
                 if (convertType.equals("pptToPdf")) {
                     return this.pptToPdf(asset, input, config, output);
                 }
@@ -452,6 +455,95 @@ public class Controller {
             outputJson.getString("ext"), configJson.getString("formatColor"));
     }
 
+    public WordToPdfResponse wordToPdf(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
+                                     @RequestParam("config") String config, @RequestParam("output") String output) {
+        JSONObject inputJson = new JSONObject(input);
+        JSONObject configJson = new JSONObject(config);
+        JSONObject outputJson = new JSONObject(output);
+
+        // Config values validation and default values assignment
+        if (!configJson.has("metadata")) {
+            configJson.put("metadata", OfficeToPdfConfig.metadata.getValue());
+        }
+        if (!configJson.has("thumbnail")) {
+            configJson.put("thumbnail", OfficeToPdfConfig.thumbnail.getValue());
+        }
+
+        String fileDownloadUri = "";
+        if (!outputJson.has("destPath")) {
+            fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/")
+                    .path(outputJson.getString("name") + ".zip").toUriString();
+        }
+        else {
+            File destPathFile = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+            fileDownloadUri = destPathFile.toURI().toString() ;
+        }
+
+        // Contrary to video and audio methods, pdfToImage needs the explicit creation (if not present) of the directory
+        new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/").mkdirs();
+
+        CriteriaThumbnailImage criteria = new CriteriaThumbnailImage();
+        criteria.setSrcPath(System.getenv("SystemDrive") + properties.getProperty("file.uploadDir") + fileName);
+        criteria.setDestPath(System.getenv("SystemDrive") + properties.getProperty("file.conversionDir") +
+                outputJson.getString("name") + "/" + outputJson.getString("name") + outputJson.getString("ext"));
+        ConvertPPTtoPdf converter = new ConvertPPTtoPdf();
+        converter.convert(criteria);
+        String outputChecksumString = "";
+        try {
+            outputChecksumString = checksum.getChecksum(properties.getProperty("file.conversionDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"), "MD5");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (configJson.getString("metadata").equals("json")) {
+            //Creation JSON
+            File convertedFile = new File(properties.getProperty("file.conversionDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
+            Metadata metaDataFile = new Metadata();
+            metaDataFile.writeJsonFile(convertedFile);
+        }
+        else if (configJson.getString("metadata").equals("xmp")) {
+            //Creation XMP
+            File convertedFile = new File(properties.getProperty("file.conversionDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
+            Metadata metaDataFile = new Metadata();
+            metaDataFile.writeXmpFile(convertedFile);
+        }
+        if (configJson.getBoolean("thumbnail")) {
+            //Creation thumbnail
+            CriteriaPdfToImage pdfToImgCriteria = new CriteriaPdfToImage();
+            pdfToImgCriteria.setSrcPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") +
+                    "/" + outputJson.getString("name") + outputJson.getString("ext"));
+            pdfToImgCriteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") +
+                    "/");
+            pdfToImgCriteria.setName(outputJson.getString("name"));
+            pdfToImgCriteria.setExt(".jpg");
+            pdfToImgCriteria.setDpi(150);
+            pdfToImgCriteria.setFormatColor("RGB");
+            PdfThumbnail pdfToThumb = new PdfThumbnail();
+            pdfToThumb.convert(pdfToImgCriteria);
+        }
+
+        FolderZipped.zipFolder(properties.getProperty("file.conversionDir") + outputJson.getString("name"));
+
+        // If a target location has been specified, copy the zip file there.
+        if (outputJson.has("destPath")) {
+            File resultZip = new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + ".zip");
+            File targetZip = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+            try {
+                copyFile(resultZip, targetZip);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new WordToPdfResponse(fileName, fileDownloadUri, outputChecksumString);
+    }
+
     public PPTtoPdfResponse pptToPdf(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
                                      @RequestParam("config") String config, @RequestParam("output") String output) {
         JSONObject inputJson = new JSONObject(input);
@@ -460,10 +552,10 @@ public class Controller {
 
         // Config values validation and default values assignment
         if (!configJson.has("metadata")) {
-            configJson.put("metadata",PptToPdfConfig.metadata.getValue());
+            configJson.put("metadata", OfficeToPdfConfig.metadata.getValue());
         }
         if (!configJson.has("thumbnail")) {
-            configJson.put("thumbnail",PptToPdfConfig.thumbnail.getValue());
+            configJson.put("thumbnail", OfficeToPdfConfig.thumbnail.getValue());
         }
 
         String fileDownloadUri = "";
@@ -517,11 +609,11 @@ public class Controller {
             pdfToImgCriteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") +
                 "/");
             pdfToImgCriteria.setName(outputJson.getString("name"));
-            pdfToImgCriteria.setExt("bmp");
+            pdfToImgCriteria.setExt(".jpg");
             pdfToImgCriteria.setDpi(150);
             pdfToImgCriteria.setFormatColor("RGB");
             PdfThumbnail pdfToThumb = new PdfThumbnail();
-            pdfToThumb.convert(criteria);
+            pdfToThumb.convert(pdfToImgCriteria);
         }
 
         FolderZipped.zipFolder(properties.getProperty("file.conversionDir") + outputJson.getString("name"));

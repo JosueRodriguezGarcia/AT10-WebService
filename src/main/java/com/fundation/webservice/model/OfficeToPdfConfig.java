@@ -13,12 +13,12 @@ package com.fundation.webservice.model;
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
-public enum PptToPdfConfig {
+public enum OfficeToPdfConfig {
     metadata(""),
     thumbnail("false");
     private String value;
 
-    PptToPdfConfig(String value) {
+    OfficeToPdfConfig(String value) {
         this.value = value;
     }
 
