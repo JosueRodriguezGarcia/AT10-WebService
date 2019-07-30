@@ -750,6 +750,16 @@ public class Controller {
                 outputJson.getString("ext"), configJson.getString("formatColor"));
     }
 
+    /**
+     * Converts from an image format to antoher image format based on a user-provided criteria: input, config and output.
+     *
+     * @param asset The input pdf file itself
+     * @param input A JSON formatted string (wo \n characters) that holds all the parameters tied to the input image
+     * @param config A JSON formatted string (wo \n characters) that holds all the parameters tied to the configuration
+     *               of the particular process of conversion.
+     * @param output A JSON formatted string (wo \n characters) that holds all the parameters tied to the output image
+     * @return a Response specifying details on the output image(s).
+     */
     public PPTtoPdfResponse imageToImage(@RequestParam("asset") MultipartFile asset,
                                   @RequestParam(value = "input", defaultValue = "{}") String input,
                                   @RequestParam(value = "config", defaultValue = "{}") String config,
@@ -828,17 +838,6 @@ public class Controller {
             criteriaThumb.setDestPath(criteria.getDestPath());
             criteriaThumb.setName(criteria.getName());
             criteriaThumb.setExt(".jpg");
-            /*
-            CriteriaPdfToImage pdfToImgCriteria = new CriteriaPdfToImage();
-            pdfToImgCriteria.setSrcPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") +
-                    "/" + outputJson.getString("name") + outputJson.getString("ext"));
-            pdfToImgCriteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") +
-                    "/");
-            pdfToImgCriteria.setName(outputJson.getString("name"));
-            pdfToImgCriteria.setExt(".jpg");
-            pdfToImgCriteria.setDpi(150);
-            pdfToImgCriteria.setFormatColor("RGB");
-             */
             ThumbnailImage thumb = new ThumbnailImage();
             thumb.convert(criteriaThumb);
         }
