@@ -40,8 +40,6 @@ public class Query {
         }
     }
 
-
-
     /**
      * This method show informations from the table criteria.
      */
@@ -64,21 +62,22 @@ public class Query {
     /**
      * This method acording the checksum
      */
-    public void searchChecksum(String checksum) {
-        String sql = "SELECT * FROM FILERECORD WHERE CHECKSUM = ?";
+    public boolean verifyChecksumExist(String checksum) {
+        String sql = "SELECT * FROM FILERECORD";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, checksum);
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
-
-                System.out.println(result.getString("CHECKSUM") + "\t" + result.getInt("DAY") + "\t" + result.getDate("DATECREATION")+"\t" + result.getString("PATH") );
+                if (result.getString("CHECKSUM").equals(checksum)){
+                    return true;
+                }
             }
         } catch (SQLException e) {
             System.out.println(e);
             e.getMessage();
         }
+        return false;
     }
 
     /**
@@ -100,7 +99,7 @@ public class Query {
         Query query=new Query();
        // query.insertChecksum("asdfa","11","2019-01-01","asdfasdf");
         //query.getAllData();
-        //query.searchChecksum("asdfa");
+        System.out.println(query.verifyChecksumExist("asdfad"));
         //query.deleteByCheckSum("asdfa");
     }
 }
