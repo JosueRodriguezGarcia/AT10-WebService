@@ -19,25 +19,23 @@ import java.io.InputStreamReader;
  * @version 1.0
  */
 public class KeyFrameInVideo {
-    CriteriaKeyFrameVideo criteria;
-    public KeyFrameInVideo(CriteriaKeyFrameVideo criteria) {
-        this.criteria = criteria;
-    }
 
     /**
      * Converts method add a keyframe for every certain amount of frame.
      */
-    public void convert() {
+    public void convert(CriteriaKeyFrameVideo criteriaKeyFrameVideo) {
+
         try {
-            String cmd = "ffmpeg -i " + criteria.getSrcPath() + " -vcodec libx264 -x264-params keyint="
-                + criteria.getTime() + ":scenecut=0 -acodec copy " + criteria.getDestPath() + criteria.getName() + "."
-                + criteria.getExt();
+            String cmd = "ffmpeg -y -i " + criteriaKeyFrameVideo.getSrcPath() + " -vcodec libx264 -x264-params keyint="
+                    + criteriaKeyFrameVideo.getTime() + ":scenecut=0 -acodec copy " + criteriaKeyFrameVideo.getDestPath()
+                    + criteriaKeyFrameVideo.getName() + "."
+                    + criteriaKeyFrameVideo.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             String line;
-            do{
+            do {
                 line = in.readLine();
-            }while(line != null);
+            } while (line != null);
             process.waitFor();
             in.close();
         } catch (Exception e) {
