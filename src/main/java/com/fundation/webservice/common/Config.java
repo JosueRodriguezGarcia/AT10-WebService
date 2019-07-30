@@ -20,28 +20,37 @@ package com.fundation.webservice.common;
  * This class allows to store the values of the file "aplication.setting", this class is used by Util.
  */
 public class Config {
-    private static String webserverdb;
-    private static String root;
-    private static String password;
-    private static String port;
-    private static String host;
-    private static String uploaddir;
-    private static String downloadDir;
+    private String webserverdb;
+    private String root;
+    private String password;
+    private String port;
+    private String host;
+    private String uploaddir;
+    private String downloadDir;
+    private String day;
 
-    public static String getUploaddir() {
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public String getUploaddir() {
         return uploaddir;
     }
 
-    public static void setUploaddir(String uploaddir) {
-        Config.uploaddir = uploaddir;
+    public void setUploaddir(String uploaddir) {
+        this.uploaddir = uploaddir;
     }
 
-    public static String getDownloadDir() {
+    public String getDownloadDir() {
         return downloadDir;
     }
 
-    public static void setDownloadDir(String downloadDir) {
-        Config.downloadDir = downloadDir;
+    public void setDownloadDir(String downloadDir) {
+        this.downloadDir = downloadDir;
     }
 
     /**
