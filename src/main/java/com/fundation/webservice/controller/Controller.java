@@ -123,6 +123,9 @@ public class Controller {
                 if (convertType.equals("pptToPdf")) {
                     return this.pptToPdf(asset, input, config, output);
                 }
+                if ((convertType.equals("wordToImage")) || (convertType.equals("pptToImage"))) {
+                    return this.officeToImage(asset, input, config, output);
+                }
             }
             else {
                 return null;
@@ -631,6 +634,78 @@ public class Controller {
         }
 
         return new PPTtoPdfResponse(fileName, fileDownloadUri, outputChecksumString);
+    }
+
+    public PdfResponse officeToImage(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
+                                       @RequestParam("config") String config, @RequestParam("output") String output) {
+        JSONObject inputJson = new JSONObject(input);
+        JSONObject configJson = new JSONObject(config);
+        JSONObject outputJson = new JSONObject(output);
+
+        // Config values validation and default values assignment
+        if (!configJson.has("dpi")) {
+            configJson.put("dpi",PdfToImageConfig.dpi.getValue());
+        }
+        if (!configJson.has("formatColor")) {
+            configJson.put("formatColor",PdfToImageConfig.formatColor.getValue());
+        }
+        if (!configJson.has("thumbnail")) {
+            configJson.put("thumbnail", PdfToImageConfig.thumbnail.getValue());
+        }
+
+        String fileDownloadUri = "";
+        if (!outputJson.has("destPath")) {
+            fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/")
+                    .path(outputJson.getString("name") + ".zip").toUriString();
+        }
+        else {
+            File destPathFile = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+            fileDownloadUri = destPathFile.toURI().toString() ;
+        }
+
+        // Contrary to video and audio methods, pdfToImage needs the explicit creation (if not present) of the directory
+        new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/").mkdirs();
+
+        CriteriaPdfToImage criteria = new CriteriaPdfToImage();
+        criteria.setSrcPath(System.getenv("SystemDrive") + properties.getProperty("file.uploadDir") + fileName);
+        criteria.setDestPath(System.getenv("SystemDrive") + properties.getProperty("file.conversionDir") +
+            outputJson.getString("name") + "/" + outputJson.getString("name") + ".pdf");
+        ConvertPPTtoPdf converter = new ConvertPPTtoPdf();
+        converter.convert(criteria);
+
+        criteria.setSrcPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") +
+            "/" + outputJson.getString("name") + ".pdf");
+        criteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/");
+        criteria.setName(outputJson.getString("name"));
+        criteria.setExt(outputJson.getString("ext"));
+        criteria.setDpi(configJson.getInt("dpi"));
+        criteria.setFormatColor(configJson.getString("formatColor"));
+        ConvertPdfToImage pdfToImage = new ConvertPdfToImage();
+        pdfToImage.convert(criteria);
+
+        if (configJson.getBoolean("thumbnail")) {
+            //Creation thumbnail
+            PdfThumbnail pdfToThumb = new PdfThumbnail();
+            pdfToThumb.convert(criteria);
+        }
+
+        FolderZipped.zipFolder(properties.getProperty("file.conversionDir") + outputJson.getString("name"));
+
+        // If a target location has been specified, copy the zip file there.
+        if (outputJson.has("destPath")) {
+            File resultZip = new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + ".zip");
+            File targetZip = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+            try {
+                copyFile(resultZip, targetZip);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new PdfResponse(fileName, fileDownloadUri, asset.getContentType(),
+                asset.getSize(), outputJson.getString("name"), configJson.getString("dpi"),
+                outputJson.getString("ext"), configJson.getString("formatColor"));
     }
 
     /**
