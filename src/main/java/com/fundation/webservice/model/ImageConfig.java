@@ -34,3 +34,4 @@ public enum ImageConfig {
         return value;
     }
 }
+
