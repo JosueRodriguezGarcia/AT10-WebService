@@ -9,11 +9,7 @@
  */
 package com.fundation.webservice.database;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +23,15 @@ public class Query {
     /**
      * This method inster informations from name and json to Data Base
      */
-    public void insertChecksum(String checksum, String date) {
-        String sql = "INSERT INTO savedb(checksum,timeDate) VALUES(?,?)";
+    public void insertChecksum(String checksum,String day ,String dateCreation, String path) {
+        String sql = "INSERT INTO FILERECORD(CHECKSUM,DAY,DATECREATION,PATH) VALUES(?,?,?,?)";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, checksum);
-           statement.setString(2, date);
+            statement.setInt(2, Integer.parseInt(day));
+            statement.setDate(3, Date.valueOf(dateCreation));
+            statement.setString(4, path);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.getMessage();
@@ -45,20 +43,20 @@ public class Query {
      * This method show informations from the table criteria.
      */
     public List getAllData() {
-        List<String> infsavedb = new ArrayList<String>();
-        String sql = "SELECT * FROM savedb";
+        List<String> dataList = new ArrayList<String>();
+        String sql = "SELECT * FROM FILERECORD";
         try {
             Connection conn = DBConnection.getInstance().getConnection();
             Statement statement = conn.createStatement();
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
 
-                System.out.println(result.getInt("id") + "\t" + result.getString("checksum") + "\t" + result.getDate("timeDate") );
-            }
+                dataList.add(result.getString("CHECKSUM") + "\t" + result.getInt("DAY") + "\t" + result.getDate("DATECREATION")+"\t" + result.getString("PATH") );
+                }
         } catch (SQLException e) {
             e.getMessage();
         }
-        return infsavedb;
+        return dataList;
     }
     /**
      * This method acording the checksum
@@ -92,5 +90,10 @@ public class Query {
         } catch (SQLException e) {
             e.getMessage();
         }
+    }
+    public static void main(String hola[]){
+        Query query=new Query();
+        //query.insertChecksum("asdfa","11","2019-01-01","asdfasdf");
+        query.getAllData();
     }
 }
