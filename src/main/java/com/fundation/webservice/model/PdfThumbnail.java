@@ -49,7 +49,7 @@ public class PdfThumbnail implements IConvert{
             ImageIOUtil.writeImage(bim, fileName, criterion.getDpi());
             criterion.setSrcPath(fileName);
             String cmd = magick + criterion.getSrcPath() + " -thumbnail 128x128 " + criterion.getDestPath() + criterion.
-                    getName() + "." + criterion.getExt();
+                    getName() + criterion.getExt();
             Process process = Runtime.getRuntime().exec(cmd);
             BufferedReader in = new BufferedReader(new InputStreamReader(process.getErrorStream()));
             process.waitFor();
