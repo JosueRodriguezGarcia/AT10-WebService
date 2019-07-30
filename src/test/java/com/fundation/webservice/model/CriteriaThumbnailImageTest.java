@@ -23,26 +23,17 @@ import static org.junit.Assert.*;
 public class CriteriaThumbnailImageTest {
     CriteriaThumbnailImage thumbnailImage = new CriteriaThumbnailImage();
 
-    /**
-     * This method permit create similar objects that is use before they can run.
-     */
     @Before
     public void setUp(){
         thumbnailImage.setName("nameTest");
         thumbnailImage.setExt("png");
     }
 
-    /**
-     * This method returns expected "nameTest" file name when enter actual file name in getName.
-     */
     @Test
     public void getName() {
         assertEquals("nameTest",thumbnailImage.getName());
     }
 
-    /**
-     * This method returns expected "png" image extension when enter actual extension in getExt.
-     */
     @Test
     public void getExt() {
         assertEquals("png",thumbnailImage.getExt());

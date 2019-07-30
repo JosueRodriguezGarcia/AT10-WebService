@@ -21,9 +21,6 @@ import static org.junit.Assert.*;
  */
 public class CriteriaPptxToImageTest {
 
-    /**
-     * This method returns expected "jpg" extension when enter actual image extension in getExt.
-     */
     @Test
     public void getExt() {
         CriteriaPptxToImage criteriaPptxToImage = new CriteriaPptxToImage();
