@@ -69,7 +69,7 @@ public class Util {
             PORT_CONNECTION = properties.getProperty("dir.port_connection");
             HOST_NAME = properties.getProperty("dir.host_name");
             UPLOAD_DIR=properties.getProperty("file.uploadDir");
-            DOWNLOAD_DIR=properties.getProperty("file.downloadDir");
+            DOWNLOAD_DIR=properties.getProperty("file.conversionDir");
             DAY_FILE=properties.getProperty("dir.day_file");
             config.setDay(DAY_FILE);
             config.setWebserverdb(WEBSERVER_DB);
@@ -77,6 +77,8 @@ public class Util {
             config.setPassword(USER_PASSWORD);
             config.setPort(PORT_CONNECTION);
             config.setHost(HOST_NAME);
+            config.setDownloadDir(DOWNLOAD_DIR);
+            config.setUploaddir(UPLOAD_DIR);
         }
         catch (Exception ex) {
             ex.printStackTrace();
