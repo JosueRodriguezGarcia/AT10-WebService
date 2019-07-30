@@ -121,6 +121,7 @@ public class Query {
        // query.insertChecksum("asdfa","11","2019-01-01","asdfasdf");
         //query.getAllData();
         System.out.println(query.verifyChecksumExist("asdfad"));
-        //query.deleteByCheckSum("asdfa");
+
+        query.deleteByCheckSum("c9455952c102fe7893b67712b8e586fd");
     }
 }
