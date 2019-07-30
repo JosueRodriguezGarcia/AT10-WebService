@@ -14,10 +14,11 @@ import org.junit.Test;
 import java.io.File;
 
 import static org.junit.Assert.assertTrue;
+
 /**
  * This class serves as unit test class for ConvertPdfToWord class.
  *
- * @author Josue Rodriguez Garcia
+ * @author Josue Rodriguez Garcia.
  * @version 1.0
  */
 public class ConvertPdfToWordTest {
