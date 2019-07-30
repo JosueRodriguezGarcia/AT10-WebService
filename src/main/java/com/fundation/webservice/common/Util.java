@@ -57,9 +57,10 @@ public class Util {
         final String HOST_NAME;
         final String UPLOAD_DIR;
         final String DOWNLOAD_DIR;
+        final String DAY_FILE;
 
         USER_DIR = System.getProperty("user.dir");
-        try (InputStream input = new FileInputStream(USER_DIR + "/config.properties")) {
+        try (InputStream input = new FileInputStream(USER_DIR + "/application.properties")) {
             Properties properties = new Properties();
             properties.load(input);
             WEBSERVER_DB = properties.getProperty("dir.webserver_db");
@@ -69,6 +70,8 @@ public class Util {
             HOST_NAME = properties.getProperty("dir.host_name");
             UPLOAD_DIR=properties.getProperty("file.uploadDir");
             DOWNLOAD_DIR=properties.getProperty("file.downloadDir");
+            DAY_FILE=properties.getProperty("dir.day_file");
+            config.setDay(DAY_FILE);
             config.setWebserverdb(WEBSERVER_DB);
             config.setRoot(USER_NAME);
             config.setPassword(USER_PASSWORD);
