@@ -14,7 +14,7 @@ package com.fundation.webservice.model;
  * @version 1.0
  */
 public enum ImageConfig {
-    resolution("640x"),
+    resolution("640x320"),
     rotation("0"),
     quality("75"),
     metadata(""),
