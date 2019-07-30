@@ -458,8 +458,20 @@ public class Controller {
             outputJson.getString("ext"), configJson.getString("formatColor"));
     }
 
-    public WordToPdfResponse wordToPdf(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
-                                     @RequestParam("config") String config, @RequestParam("output") String output) {
+    /**
+     * MS Word to PDF document conversion based on criteria: input, config and output.
+     *
+     * @param asset The input pdf file itself
+     * @param input A JSON formatted string (wo \n characters) that holds all the parameters tied to the input file
+     * @param config A JSON formatted string (wo \n characters) that holds all the parameters tied to the configuration
+     *               of the particular process of conversion.
+     * @param output A JSON formatted string (wo \n characters) that holds all the parameters tied to the output file
+     * @return a Response specifying details on the output pdf file.
+     */
+    public WordToPdfResponse wordToPdf(@RequestParam("asset") MultipartFile asset,
+            @RequestParam(value = "input", defaultValue = "{}") String input,
+            @RequestParam(value = "config", defaultValue = "{}") String config,
+            @RequestParam(value = "output", defaultValue = "{}") String output) {
         JSONObject inputJson = new JSONObject(input);
         JSONObject configJson = new JSONObject(config);
         JSONObject outputJson = new JSONObject(output);
@@ -547,8 +559,20 @@ public class Controller {
         return new WordToPdfResponse(fileName, fileDownloadUri, outputChecksumString);
     }
 
-    public PPTtoPdfResponse pptToPdf(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
-                                     @RequestParam("config") String config, @RequestParam("output") String output) {
+    /**
+     * MS PowerPoint to PDF document conversion based on criteria: input, config and output.
+     *
+     * @param asset The input pdf file itself
+     * @param input A JSON formatted string (wo \n characters) that holds all the parameters tied to the input file
+     * @param config A JSON formatted string (wo \n characters) that holds all the parameters tied to the configuration
+     *               of the particular process of conversion.
+     * @param output A JSON formatted string (wo \n characters) that holds all the parameters tied to the output file
+     * @return a Response specifying details on the output pdf file.
+     */
+    public PPTtoPdfResponse pptToPdf(@RequestParam("asset") MultipartFile asset,
+                                     @RequestParam(value = "input", defaultValue = "{}") String input,
+                                     @RequestParam(value = "config", defaultValue = "{}") String config,
+                                     @RequestParam(value = "output", defaultValue = "{}") String output) {
         JSONObject inputJson = new JSONObject(input);
         JSONObject configJson = new JSONObject(config);
         JSONObject outputJson = new JSONObject(output);
@@ -636,8 +660,20 @@ public class Controller {
         return new PPTtoPdfResponse(fileName, fileDownloadUri, outputChecksumString);
     }
 
-    public PdfResponse officeToImage(@RequestParam("asset") MultipartFile asset, @RequestParam("input") String input,
-                                       @RequestParam("config") String config, @RequestParam("output") String output) {
+    /**
+     * MS documents to images conversion based on criteria: input, config and output.
+     *
+     * @param asset The input pdf file itself
+     * @param input A JSON formatted string (wo \n characters) that holds all the parameters tied to the input document
+     * @param config A JSON formatted string (wo \n characters) that holds all the parameters tied to the configuration
+     *               of the particular process of conversion.
+     * @param output A JSON formatted string (wo \n characters) that holds all the parameters tied to the output files
+     * @return a Response specifying details on the output images.
+     */
+    public PdfResponse officeToImage(@RequestParam("asset") MultipartFile asset,
+            @RequestParam(value = "input", defaultValue = "{}") String input,
+            @RequestParam(value = "config", defaultValue = "{}") String config,
+            @RequestParam(value = "output", defaultValue = "{}") String output) {
         JSONObject inputJson = new JSONObject(input);
         JSONObject configJson = new JSONObject(config);
         JSONObject outputJson = new JSONObject(output);
