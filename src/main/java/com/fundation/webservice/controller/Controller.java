@@ -10,6 +10,7 @@
 package com.fundation.webservice.controller;
 
 import com.fundation.webservice.model.*;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,7 @@ import java.io.IOException;
 
 import java.nio.channels.FileChannel;
 
+import java.nio.file.Files;
 import java.util.Properties;
 
 import org.json.JSONObject;
@@ -59,6 +61,43 @@ public class Controller {
 
     String fileName = "";
 
+
+    private static void copyFileUsingJava7Files(File source, File dest) throws IOException {
+        Files.copy(source.toPath(), dest.toPath());
+    }
+
+    private static void copyFileUsingChannel(File source, File dest) throws IOException {
+        FileChannel sourceChannel = null;
+        FileChannel destChannel = null;
+        try {
+            sourceChannel = new FileInputStream(source).getChannel();
+            destChannel = new FileOutputStream(dest).getChannel();
+            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+        }finally{
+            sourceChannel.close();
+            destChannel.close();
+        }
+    }
+
+
+    private static void copyFileUsingStream(File source, File dest) throws IOException {
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            is = new FileInputStream(source);
+            os = new FileOutputStream(dest);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = is.read(buffer)) > 0) {
+                os.write(buffer, 0, length);
+            }
+        } finally {
+            is.close();
+            os.close();
+        }
+    }
+
+
     /**
      * Default Request is a GET method
      *
@@ -66,7 +105,7 @@ public class Controller {
      */
     @RequestMapping("/")
     public String home() {
-        return "Welcome to the AT-10 File Conversion Service!";
+        return "xvdsfasdWelcome to the AT-10 File Conversion Service!";
     }
 
     /**
@@ -320,8 +359,28 @@ public class Controller {
         criteria.setAudioCodec(configJson.getString("audioCodec"));
         criteria.setAudioBitRate(new Integer(configJson.getString("audioBitRate")));
         criteria.setAudioChannel(new Integer(configJson.getString("audioChannel")));
-        ConvertAudio audio = new ConvertAudio();
-        audio.convert(criteria);
+        QueryDriver queryDriver=new QueryDriver();
+
+        if (queryDriver.verifiyExist(inputJson.getString("checksum"))){
+            File directorio=new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/");
+            directorio.mkdir();
+            try {
+                File resultFileA = new File(queryDriver.extractPath(inputJson.getString("checksum")));
+                File targetFileB = new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/" +
+                        outputJson.getString("name") + outputJson.getString("ext"));
+                copyFile(resultFileA, targetFileB);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            ConvertAudio audio = new ConvertAudio();
+            audio.convert(criteria);
+            queryDriver.saveInfo(inputJson.getString("checksum"),properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/" +
+                    outputJson.getString("name") + outputJson.getString("ext"));
+
+        }
 
         String outputChecksumString = "";
         try {
@@ -350,13 +409,23 @@ public class Controller {
             metaDataFile.writeXmpFile(convertedFile);
         }
 
+
+
+
         // Zip all the files in the conversion directory
         FolderZipped.zipFolder(properties.getProperty("file.conversionDir") + outputJson.getString("name"));
 
         // If a target location has been specified, copy the zip file there.
-        if (outputJson.has("destPath")) {
+        if (inputJson.has("destPath")) {
+            System.out.println("entro aqui");
+
+
             File resultZip = new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + ".zip");
-            File targetZip = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+            File targetZip = new File(inputJson.getString("destPath") +outputJson.getString("name") + ".zip");
+           // File targetZip = new File("c:/prueba/" + outputJson.getString("name") + ".zip");
+
+//
+
             try {
                 copyFile(resultZip, targetZip);
             }
