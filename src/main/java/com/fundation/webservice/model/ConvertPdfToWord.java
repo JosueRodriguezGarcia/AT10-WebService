@@ -26,7 +26,7 @@ import com.itextpdf.text.pdf.parser.TextExtractionStrategy;
  * Performs document conversion from PDF format to docx formats.
  * This class is limited to text extraction only.
  *
- * @author Josue Rodriguez, Alejandro Sánchez Luizaga
+ * @author Josue Rodriguez, Alejandro Sánchez Luizaga.
  * @version 1.0
  */
 public class ConvertPdfToWord implements IConvert{
@@ -42,11 +42,11 @@ public class ConvertPdfToWord implements IConvert{
         try {
             PdfReader reader = new PdfReader(pdf);
             PdfReaderContentParser parser = new PdfReaderContentParser(reader);
-            for (int i = 1; i <= reader.getNumberOfPages(); i++) {
-                TextExtractionStrategy strategy = parser.processContent(i, new SimpleTextExtractionStrategy());
+            for (int index = 1; index <= reader.getNumberOfPages(); index++) {
+                TextExtractionStrategy strategy = parser.processContent(index, new SimpleTextExtractionStrategy());
                 String text = strategy.getResultantText();
-                XWPFParagraph p = doc.createParagraph();
-                XWPFRun run = p.createRun();
+                XWPFParagraph xwpfParagraph = doc.createParagraph();
+                XWPFRun run = xwpfParagraph.createRun();
                 run.setText(text);
                 run.addBreak(BreakType.PAGE);
             }
