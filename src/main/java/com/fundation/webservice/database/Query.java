@@ -9,6 +9,7 @@
  */
 package com.fundation.webservice.database;
 
+import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,8 @@ public class Query {
         }
     }
 
+
+
     /**
      * This method show informations from the table criteria.
      */
@@ -62,7 +65,7 @@ public class Query {
      * This method acording the checksum
      */
     public void searchChecksum(String checksum) {
-        String sql = "SELECT * FROM savedb where checksum=?";
+        String sql = "SELECT * FROM FILERECORD WHERE CHECKSUM = ?";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -70,9 +73,10 @@ public class Query {
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
 
-                System.out.println(result.getInt("id") + "\t" + result.getString("checksum") + "\t" + result.getDate("timeDate") );
+                System.out.println(result.getString("CHECKSUM") + "\t" + result.getInt("DAY") + "\t" + result.getDate("DATECREATION")+"\t" + result.getString("PATH") );
             }
         } catch (SQLException e) {
+            System.out.println(e);
             e.getMessage();
         }
     }
@@ -80,20 +84,23 @@ public class Query {
     /**
      * This method delete informations acording a id from the table criteria.
      */
-    public void deleteByIde(String ID) {
-        String sql = "DELETE FROM savedb WHERE id = ?";
+    public void deleteByCheckSum(String checksum) {
+        String sql = "DELETE FROM FILERECORD WHERE CHECKSUM = ?";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, ID);
+            statement.setString(1, checksum);
             statement.executeUpdate();
         } catch (SQLException e) {
+            System.out.println(e);
             e.getMessage();
         }
     }
     public static void main(String hola[]){
         Query query=new Query();
-        //query.insertChecksum("asdfa","11","2019-01-01","asdfasdf");
-        query.getAllData();
+       // query.insertChecksum("asdfa","11","2019-01-01","asdfasdf");
+        //query.getAllData();
+        //query.searchChecksum("asdfa");
+        //query.deleteByCheckSum("asdfa");
     }
 }
