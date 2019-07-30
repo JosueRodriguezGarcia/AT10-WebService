@@ -30,7 +30,7 @@ public class PdfThumbnailTest {
         criteriaConvert.setDpi(300);
         criteriaConvert.setFormatColor("RGB");
         criteriaConvert.setName("test");
-        criteriaConvert.setExt("png");
+        criteriaConvert.setExt(".png");
         PdfThumbnail pdfThumbnail = new PdfThumbnail();
         pdfThumbnail.convert(criteriaConvert);
         File output = new File(Directories.RSRC_DIR.getDir() + "test.png");
