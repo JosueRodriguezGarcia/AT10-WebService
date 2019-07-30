@@ -81,6 +81,27 @@ public class Query {
     }
 
     /**
+     * This method acording the checksum
+     */
+    public String extractPath(String checksum) {
+        String sql = "SELECT * FROM FILERECORD";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet result = statement.executeQuery(sql);
+            while (result.next()) {
+                if (result.getString("CHECKSUM").equals(checksum)){
+                    return result.getString("PATH") ;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+            e.getMessage();
+        }
+        return "";
+    }
+
+    /**
      * This method delete informations acording a id from the table criteria.
      */
     public void deleteByCheckSum(String checksum) {
