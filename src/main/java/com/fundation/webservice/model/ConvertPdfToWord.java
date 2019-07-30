@@ -42,8 +42,8 @@ public class ConvertPdfToWord implements IConvert{
         try {
             PdfReader reader = new PdfReader(pdf);
             PdfReaderContentParser parser = new PdfReaderContentParser(reader);
-            for (int i = 1; i <= reader.getNumberOfPages(); i++) {
-                TextExtractionStrategy strategy = parser.processContent(i, new SimpleTextExtractionStrategy());
+            for (int index = 1; index <= reader.getNumberOfPages(); index++) {
+                TextExtractionStrategy strategy = parser.processContent(index, new SimpleTextExtractionStrategy());
                 String text = strategy.getResultantText();
                 XWPFParagraph p = doc.createParagraph();
                 XWPFRun run = p.createRun();
