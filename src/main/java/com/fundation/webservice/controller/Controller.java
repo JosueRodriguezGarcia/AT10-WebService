@@ -911,24 +911,24 @@ public class Controller {
         String outputChecksumString = "";
         try {
             outputChecksumString = checksum.getChecksum(properties.getProperty("file.conversionDir") +
-                    outputJson.getString("name") + "/" + outputJson.getString("name") +
-                    outputJson.getString("ext"), "MD5");
+                outputJson.getString("name") + "/" + outputJson.getString("name") +
+                outputJson.getString("ext"), "MD5");
         } catch (Exception e) {
             e.printStackTrace();
         }
         if (configJson.getString("metadata").equals("json")) {
             //Creation JSON
             File convertedFile = new File(properties.getProperty("file.conversionDir") +
-                    outputJson.getString("name") + "/" + outputJson.getString("name") +
-                    outputJson.getString("ext"));
+                outputJson.getString("name") + "/" + outputJson.getString("name") +
+                outputJson.getString("ext"));
             Metadata metaDataFile = new Metadata();
             metaDataFile.writeJsonFile(convertedFile);
         }
         else if (configJson.getString("metadata").equals("xmp")) {
             //Creation XMP
             File convertedFile = new File(properties.getProperty("file.conversionDir") +
-                    outputJson.getString("name") + "/" + outputJson.getString("name") +
-                    outputJson.getString("ext"));
+                outputJson.getString("name") + "/" + outputJson.getString("name") +
+                outputJson.getString("ext"));
             Metadata metaDataFile = new Metadata();
             metaDataFile.writeXmpFile(convertedFile);
         }
@@ -937,7 +937,7 @@ public class Controller {
             CriteriaPdfToImage pdfToImgCriteria = new CriteriaPdfToImage();
             pdfToImgCriteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
             pdfToImgCriteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") +
-                    "/");
+                "/");
             pdfToImgCriteria.setName(outputJson.getString("name"));
             pdfToImgCriteria.setExt(".jpg");
             pdfToImgCriteria.setDpi(150);
@@ -963,8 +963,6 @@ public class Controller {
 
         return new PPTtoPdfResponse(fileName, fileDownloadUri, outputChecksumString);
     }
-
-
 
     /**
      * Endpoint for downloading zip file containing the products of a conversion process.
