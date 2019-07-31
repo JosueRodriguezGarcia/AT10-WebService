@@ -14,14 +14,15 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * This class implement the utility .
+ * Class implement the utility .
  *
  * @author Jesus Menacho
  * @version 1.0
  */
 
 /**
- * The methos let me save variable about the connections to db.
+ * The util class implements the singleton which allows to read
+ * the variables only once which are used in the DB.
  */
 public class Util {
     private static Util Utilcreation;
@@ -35,8 +36,8 @@ public class Util {
     }
 
     /**
-     * This method let me return the instance Util class
-     * @return Util
+     * Method let me return the instance Util class
+     * @return Util util calss
      */
     public static Util getInstance() {
         if (Utilcreation == null) {
@@ -46,7 +47,7 @@ public class Util {
     }
 
     /**
-     * This method init the class util.
+     * Method init the class util.
      */
     private static void initUtil() {
         final String USER_DIR;
@@ -86,8 +87,8 @@ public class Util {
     }
 
     /**
-     * This method let me obtain the class Config for access to variables.
-     * @return Config.
+     * Method let me obtain the class Config for access to variables.
+     * @return Config the class, constains all variable required in DB connections.
      */
     public Config getConfig() {
         return config;

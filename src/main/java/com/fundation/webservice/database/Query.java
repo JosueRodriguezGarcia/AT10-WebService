@@ -9,23 +9,26 @@
  */
 package com.fundation.webservice.database;
 
-import javax.swing.plaf.synth.SynthOptionPaneUI;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 /**
- * Implements insert in a table .
+ * Class query allows you to perform methods of querying
+ * the database such as data insertion queries, deletion among others..
  *
  * @author Jesus Menacho
  * @version 1.0
  */
 public class Query {
     /**
-     * This method inster informations from name and json to Data Base
+     * Method inserts information into the Database.
      */
     public void insertChecksum(String checksum,String day ,String dateCreation, String path) {
-        String sql = "INSERT INTO FILERECORD(CHECKSUM,DAY,DATECREATION,PATH) VALUES(?,?,?,?)";
+        String sql = "INSERT INTO FILERECORD(CHECKSUM, DAY, DATECREATION, PATH) VALUES(?,?,?,?)";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -36,33 +39,13 @@ public class Query {
             statement.executeUpdate();
         } catch (SQLException e) {
             e.getMessage();
-            System.out.printf(String.valueOf(e));
         }
     }
 
     /**
-     * This method show informations from the table criteria.
+     * Method verifies that the one stored in the database.
      */
-    public List getAllData() {
-        List<String> dataList = new ArrayList<String>();
-        String sql = "SELECT * FROM FILERECORD";
-        try {
-            Connection conn = DBConnection.getInstance().getConnection();
-            Statement statement = conn.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-            while (result.next()) {
-
-                dataList.add(result.getString("CHECKSUM") + "\t" + result.getInt("DAY") + "\t" + result.getDate("DATECREATION")+"\t" + result.getString("PATH") );
-            }
-        } catch (SQLException e) {
-            e.getMessage();
-        }
-        return dataList;
-    }
-    /**
-     * This method acording the checksum
-     */
-    public boolean verifyChecksumExist(String checksum) {
+    public boolean verifyCheckSumExist(String checksum) {
         String sql = "SELECT * FROM FILERECORD";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
@@ -74,35 +57,14 @@ public class Query {
                 }
             }
         } catch (SQLException e) {
-            System.out.println(e);
             e.getMessage();
         }
         return false;
     }
 
-    /**
-     * This method acording the checksum
-     */
-    public String extractPath(String checksum) {
-        String sql = "SELECT * FROM FILERECORD";
-        try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet result = statement.executeQuery(sql);
-            while (result.next()) {
-                if (result.getString("CHECKSUM").equals(checksum)){
-                    return result.getString("PATH") ;
-                }
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-            e.getMessage();
-        }
-        return "";
-    }
 
     /**
-     * This method delete informations acording a id from the table criteria.
+     * Method removes information from database according to checksum field.
      */
     public void deleteByCheckSum(String checksum) {
         String sql = "DELETE FROM FILERECORD WHERE CHECKSUM = ?";
@@ -112,16 +74,7 @@ public class Query {
             statement.setString(1, checksum);
             statement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e);
             e.getMessage();
         }
-    }
-    public static void main(String hola[]){
-        Query query=new Query();
-        // query.insertChecksum("asdfa","11","2019-01-01","asdfasdf");
-        //query.getAllData();
-        System.out.println(query.verifyChecksumExist("asdfad"));
-
-        query.deleteByCheckSum("c9455952c102fe7893b67712b8e586fd");
     }
 }

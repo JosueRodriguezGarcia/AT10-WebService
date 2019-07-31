@@ -20,7 +20,9 @@ import java.sql.Statement;
 import java.util.Properties;
 
 /**
- * Implements insert in a table .
+ * Method allows to make the connection with the database for that uses
+ * a pattern design called singlenton which allows to create
+ * the connection uses only once.
  *
  * @author Jesus Menacho
  * @version 1.0
@@ -35,7 +37,7 @@ public class DBConnection {
 
     /**
      * This method let me return the instance DBConnection.
-     * @return DBConnection.
+     * @return DBConnection variable save the instance.
      */
     public static DBConnection getInstance() {
         if (dbcon == null) {
@@ -45,7 +47,7 @@ public class DBConnection {
     }
 
     /**
-     *  This method let me initConnection.
+     *  Method that initializes the connection to the database.
      */
     private static void initConnection() {
         String WEBSERVER_DB = "";
@@ -70,7 +72,7 @@ public class DBConnection {
 
     /**
      * This method let me return the connections to db.
-     * @return conn.
+     * @return conn the variable tha contain the connection.
      */
     public Connection getConnection() {
         return conn;
