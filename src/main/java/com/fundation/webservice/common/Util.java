@@ -14,14 +14,15 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * This class implement the utility .
+ * Class implement the utility .
  *
  * @author Jesus Menacho
  * @version 1.0
  */
 
 /**
- * The methos let me save variable about the connections to db.
+ * The util class implements the singleton which allows to read
+ * the variables only once which are used in the DB.
  */
 public class Util {
     private static Util Utilcreation;
@@ -35,8 +36,8 @@ public class Util {
     }
 
     /**
-     * This method let me return the instance Util class
-     * @return Util
+     * Method let me return the instance Util class
+     * @return Util util calss
      */
     public static Util getInstance() {
         if (Utilcreation == null) {
@@ -46,7 +47,7 @@ public class Util {
     }
 
     /**
-     * This method init the class util.
+     * Method init the class util.
      */
     private static void initUtil() {
         final String USER_DIR;
@@ -57,9 +58,10 @@ public class Util {
         final String HOST_NAME;
         final String UPLOAD_DIR;
         final String DOWNLOAD_DIR;
+        final String DAY_FILE;
 
         USER_DIR = System.getProperty("user.dir");
-        try (InputStream input = new FileInputStream(USER_DIR + "/config.properties")) {
+        try (InputStream input = new FileInputStream(USER_DIR + "/application.properties")) {
             Properties properties = new Properties();
             properties.load(input);
             WEBSERVER_DB = properties.getProperty("dir.webserver_db");
@@ -68,12 +70,16 @@ public class Util {
             PORT_CONNECTION = properties.getProperty("dir.port_connection");
             HOST_NAME = properties.getProperty("dir.host_name");
             UPLOAD_DIR=properties.getProperty("file.uploadDir");
-            DOWNLOAD_DIR=properties.getProperty("file.downloadDir");
+            DOWNLOAD_DIR=properties.getProperty("file.conversionDir");
+            DAY_FILE=properties.getProperty("dir.day_file");
+            config.setDay(DAY_FILE);
             config.setWebserverdb(WEBSERVER_DB);
             config.setRoot(USER_NAME);
             config.setPassword(USER_PASSWORD);
             config.setPort(PORT_CONNECTION);
             config.setHost(HOST_NAME);
+            config.setDownloadDir(DOWNLOAD_DIR);
+            config.setUploaddir(UPLOAD_DIR);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -81,8 +87,8 @@ public class Util {
     }
 
     /**
-     * This method let me obtain the class Config for access to variables.
-     * @return Config.
+     * Method let me obtain the class Config for access to variables.
+     * @return Config the class, constains all variable required in DB connections.
      */
     public Config getConfig() {
         return config;

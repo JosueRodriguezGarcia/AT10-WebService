@@ -35,13 +35,14 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import org.json.JSONObject;
 
 /**
  * Implements a REST controller. All HTTP requests will be handled by this controller.
  *
- * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas, Josue Rodriguez
+ * @author Alejandro Sanchez Luizaga, Maday Alcala Cuba, Limbert Vargas, Josue Rodriguez, Jesus Menacho.
  * @version 1.0
  */
 @RestController
@@ -96,9 +97,20 @@ public class Controller {
             e.printStackTrace();
         }
 
-        fileName = uploadService.storeFile(asset);
-
         if (inputJson.has("checksum")) {
+            QueryDriver queryDriver = new QueryDriver();
+            Logger logger = Logger.getLogger("Controller.class");
+
+            if (queryDriver.verifyExist(inputJson.getString("checksum"))) {
+                logger.info("This file already exists!");
+            }
+            else {
+                logger.info("FILE SUCCESSFULLY UPLOADED.");
+                fileName = uploadService.storeFile(asset);
+                queryDriver.saveInfo(inputJson.getString("checksum"), properties.getProperty("file.uploadDir") +
+                        asset.getOriginalFilename());
+            }
+
             String inputChecksumString = "";
             try {
                 inputChecksumString = checksum.getChecksum(properties.getProperty("file.uploadDir") +
@@ -1081,8 +1093,8 @@ public class Controller {
     /**
      * Endpoint for downloading zip file containing the products of a conversion process.
      *
-     * @param fileName Name of the output zip file
-     * @param request HTTP GET verb
+     * @param fileName Name of the output zip file.
+     * @param request HTTP GET verb.
      * @return a JSON formatted Response providing the URI of the resulting zip file.
      */
     @GetMapping("/download/{fileName:.+}")
@@ -1167,7 +1179,7 @@ public class Controller {
      * This method returns the name of a file without its extension.
      *
      * @param file File object as handler that points to a file based on a String file path.
-     * @return the filename without extension
+     * @return the filename without extension.
      */
     public String filenameWithoutExtension(File file) {
         String filenameWithoutExtension = null;

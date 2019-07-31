@@ -10,84 +10,68 @@
 package com.fundation.webservice.database;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
- * Implements insert in a table .
+ * Class query allows you to perform methods of querying
+ * the database such as data insertion queries, deletion among others..
  *
  * @author Jesus Menacho
  * @version 1.0
  */
 public class Query {
     /**
-     * This method inster informations from name and json to Data Base
+     * Method inserts information into the Database.
      */
-    public void insertChecksum(String checksum, String date) {
-        String sql = "INSERT INTO savedb(checksum,timeDate) VALUES(?,?)";
+    public void insertChecksum(String checksum,String day ,String dateCreation, String path) {
+        String sql = "INSERT INTO FILERECORD(CHECKSUM, DAY, DATECREATION, PATH) VALUES(?,?,?,?)";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, checksum);
-           statement.setString(2, date);
+            statement.setInt(2, Integer.parseInt(day));
+            statement.setDate(3, Date.valueOf(dateCreation));
+            statement.setString(4, path);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.getMessage();
-            System.out.printf(String.valueOf(e));
         }
     }
 
     /**
-     * This method show informations from the table criteria.
+     * Method verifies that the one stored in the database.
      */
-    public List getAllData() {
-        List<String> infsavedb = new ArrayList<String>();
-        String sql = "SELECT * FROM savedb";
+    public boolean verifyCheckSumExist(String checksum) {
+        String sql = "SELECT * FROM FILERECORD";
         try {
-            Connection conn = DBConnection.getInstance().getConnection();
-            Statement statement = conn.createStatement();
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet result = statement.executeQuery(sql);
             while (result.next()) {
-
-                System.out.println(result.getInt("id") + "\t" + result.getString("checksum") + "\t" + result.getDate("timeDate") );
+                if (result.getString("CHECKSUM").equals(checksum)){
+                    return true;
+                }
             }
         } catch (SQLException e) {
             e.getMessage();
         }
-        return infsavedb;
+        return false;
     }
+
+
     /**
-     * This method acording the checksum
+     * Method removes information from database according to checksum field.
      */
-    public void searchChecksum(String checksum) {
-        String sql = "SELECT * FROM savedb where checksum=?";
+    public void deleteByCheckSum(String checksum) {
+        String sql = "DELETE FROM FILERECORD WHERE CHECKSUM = ?";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, checksum);
-            ResultSet result = statement.executeQuery(sql);
-            while (result.next()) {
-
-                System.out.println(result.getInt("id") + "\t" + result.getString("checksum") + "\t" + result.getDate("timeDate") );
-            }
-        } catch (SQLException e) {
-            e.getMessage();
-        }
-    }
-
-    /**
-     * This method delete informations acording a id from the table criteria.
-     */
-    public void deleteByIde(String ID) {
-        String sql = "DELETE FROM savedb WHERE id = ?";
-        try {
-            Connection connection = DBConnection.getInstance().getConnection();
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, ID);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.getMessage();

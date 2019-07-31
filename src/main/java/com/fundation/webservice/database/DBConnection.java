@@ -20,13 +20,15 @@ import java.sql.Statement;
 import java.util.Properties;
 
 /**
- * Implements insert in a table .
+ * Method allows to make the connection with the database for that uses
+ * a pattern design called singlenton which allows to create
+ * the connection uses only once.
  *
  * @author Jesus Menacho
  * @version 1.0
  */
 public class DBConnection {
-    private static DBConnection dbcon = new DBConnection();
+    private static DBConnection dbcon;
     private static Connection conn;
 
     private DBConnection() {
@@ -35,7 +37,7 @@ public class DBConnection {
 
     /**
      * This method let me return the instance DBConnection.
-     * @return DBConnection.
+     * @return DBConnection variable save the instance.
      */
     public static DBConnection getInstance() {
         if (dbcon == null) {
@@ -45,7 +47,7 @@ public class DBConnection {
     }
 
     /**
-     *  This method let me initConnection.
+     *  Method that initializes the connection to the database.
      */
     private static void initConnection() {
         String WEBSERVER_DB = "";
@@ -55,29 +57,22 @@ public class DBConnection {
         String HOST_NAME = "";
 
         try {
-            final String USER_DIR;
-            USER_DIR = System.getProperty("user.dir");
-            try (InputStream input = new FileInputStream(USER_DIR + "/application.properties")) {
-                Properties properties = new Properties();
-                properties.load(input);
-                WEBSERVER_DB = properties.getProperty("dir.webserver_db");
-                USER_NAME = properties.getProperty("dir.user_name");
-                USER_PASSWORD = properties.getProperty("dir.user_password");
-                PORT_CONNECTION = properties.getProperty("dir.port_connection");
-                HOST_NAME = properties.getProperty("dir.host_name");
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+            WEBSERVER_DB = Util.getInstance().getConfig().getWebserverdb();
+            USER_NAME = Util.getInstance().getConfig().getRoot();
+            USER_PASSWORD = Util.getInstance().getConfig().getPassword();
+            PORT_CONNECTION = Util.getInstance().getConfig().getPort();
+            HOST_NAME = Util.getInstance().getConfig().getHost();
             System.out.println(WEBSERVER_DB);
             conn = DriverManager.getConnection("jdbc:mysql://" + HOST_NAME + ":" + PORT_CONNECTION + "/" + WEBSERVER_DB, USER_NAME, USER_PASSWORD);
         } catch (SQLException e) {
+            System.out.println(e);
             e.getMessage();
         }
     }
 
     /**
      * This method let me return the connections to db.
-     * @return conn.
+     * @return conn the variable tha contain the connection.
      */
     public Connection getConnection() {
         return conn;
