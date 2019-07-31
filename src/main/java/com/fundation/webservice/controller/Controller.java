@@ -101,7 +101,7 @@ public class Controller {
             QueryDriver queryDriver = new QueryDriver();
             Logger logger = Logger.getLogger("Controller.class");
 
-            if (queryDriver.verifiyExist(inputJson.getString("checksum"))) {
+            if (queryDriver.verifyExist(inputJson.getString("checksum"))) {
                 logger.info("This file already exists!");
             }
             else {
