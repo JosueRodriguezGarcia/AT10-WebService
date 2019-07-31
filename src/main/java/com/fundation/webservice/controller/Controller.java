@@ -132,6 +132,9 @@ public class Controller {
                 if (convertType.equals("pdfToHtml")) {
                     return this.pdfToHtml(asset, input, config, output);
                 }
+                if (convertType.equals("pdfToDocx")) {
+                    return this.pdfToDocx(asset, input, config, output);
+                }
             }
             else {
                 return null;
@@ -938,6 +941,117 @@ public class Controller {
             pdfToImgCriteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
             pdfToImgCriteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") +
                 "/");
+            pdfToImgCriteria.setName(outputJson.getString("name"));
+            pdfToImgCriteria.setExt(".jpg");
+            pdfToImgCriteria.setDpi(150);
+            pdfToImgCriteria.setFormatColor("RGB");
+            PdfThumbnail pdfToThumb = new PdfThumbnail();
+            pdfToThumb.convert(pdfToImgCriteria);
+        }
+
+        // Zip all the files in the conversion directory
+        FolderZipped.zipFolder(properties.getProperty("file.conversionDir") + outputJson.getString("name"));
+
+        // If a target location has been specified, copy the zip file there.
+        if (outputJson.has("destPath")) {
+            File resultZip = new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + ".zip");
+            File targetZip = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+            try {
+                copyFile(resultZip, targetZip);
+            }
+            catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return new PPTtoPdfResponse(fileName, fileDownloadUri, outputChecksumString);
+    }
+
+    /**
+     * Converts from a PDF document to to a MS Word document based on a user-provided criteria: input, config and output.
+     *
+     * @param asset The input pdf document itself
+     * @param input A JSON formatted string (wo \n characters) that holds all the parameters tied to the input document
+     * @param config A JSON formatted string (wo \n characters) that holds all the parameters tied to the configuration
+     *               of the particular process of conversion.
+     * @param output A JSON formatted string (wo \n characters) that holds all the parameters tied to the output document
+     * @return a Response specifying details on the output file.
+     */
+    public PPTtoPdfResponse pdfToDocx(@RequestParam("asset") MultipartFile asset,
+                                      @RequestParam(value = "input", defaultValue = "{}") String input,
+                                      @RequestParam(value = "config", defaultValue = "{}") String config,
+                                      @RequestParam(value = "output", defaultValue = "{}") String output) {
+        JSONObject inputJson = new JSONObject(input);
+        JSONObject configJson = new JSONObject(config);
+        JSONObject outputJson = new JSONObject(output);
+
+        if (!configJson.has("metadata")) {
+            configJson.put("metadata",ImageConfig.metadata.getValue());
+        }
+        if (!configJson.has("thumbnail")) {
+            configJson.put("thumbnail",ImageConfig.thumbnail.getValue());
+        }
+
+        String fileDownloadUri = "";
+        if (!outputJson.has("destPath")) {
+            fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath().path("/download/")
+                    .path(outputJson.getString("name") + ".zip").toUriString();
+        }
+        else {
+            File destPathFile = new File(outputJson.getString("destPath") + outputJson.getString("name") + ".zip");
+            fileDownloadUri = destPathFile.toURI().toString() ;
+        }
+
+        new File(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/").mkdirs();
+
+        // Two-step process
+        // 1st step: From PDF to HTML
+        CriteriaThumbnailImage criteria = new CriteriaThumbnailImage();
+        criteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
+        criteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/");
+        criteria.setName(outputJson.getString("name"));
+        criteria.setExt(".html");
+        ConvertPdfToHtml pdfToHtmlConverter = new ConvertPdfToHtml();
+        pdfToHtmlConverter.convert(criteria);
+        // 2nd step: From HTML to MS Word
+        criteria.setSrcPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/" +
+            outputJson.getString("name") + ".html");
+        criteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") + "/");
+        criteria.setName(outputJson.getString("name"));
+        criteria.setExt(outputJson.getString("ext"));
+        ConvertHtmlToDoc htmlToDocConverter = new ConvertHtmlToDoc();
+        htmlToDocConverter.convert(criteria);
+
+        String outputChecksumString = "";
+        try {
+            outputChecksumString = checksum.getChecksum(properties.getProperty("file.conversionDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"), "MD5");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (configJson.getString("metadata").equals("json")) {
+            //Creation JSON
+            File convertedFile = new File(properties.getProperty("file.conversionDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
+            Metadata metaDataFile = new Metadata();
+            metaDataFile.writeJsonFile(convertedFile);
+        }
+        else if (configJson.getString("metadata").equals("xmp")) {
+            //Creation XMP
+            File convertedFile = new File(properties.getProperty("file.conversionDir") +
+                    outputJson.getString("name") + "/" + outputJson.getString("name") +
+                    outputJson.getString("ext"));
+            Metadata metaDataFile = new Metadata();
+            metaDataFile.writeXmpFile(convertedFile);
+        }
+        if (configJson.getBoolean("thumbnail")) {
+            //Creation thumbnail
+            CriteriaPdfToImage pdfToImgCriteria = new CriteriaPdfToImage();
+            pdfToImgCriteria.setSrcPath(properties.getProperty("file.uploadDir") + fileName);
+            pdfToImgCriteria.setDestPath(properties.getProperty("file.conversionDir") + outputJson.getString("name") +
+                    "/");
             pdfToImgCriteria.setName(outputJson.getString("name"));
             pdfToImgCriteria.setExt(".jpg");
             pdfToImgCriteria.setDpi(150);

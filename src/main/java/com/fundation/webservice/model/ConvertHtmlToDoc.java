@@ -27,8 +27,9 @@ public class ConvertHtmlToDoc implements IConvert{
      * @param criteriaConvert holds the source and destination file paths.
      */
     public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaThumbnailImage criteria = (CriteriaThumbnailImage) criteriaConvert;
         try {
-            Process process = Runtime.getRuntime().exec("3rdparty/" + "pandoc/" + "pandoc.exe -o " + criteriaConvert.getDestPath() + " " + criteriaConvert.getSrcPath());
+            Process process = Runtime.getRuntime().exec(Directories.TOOLS_DIR.getDir() + Directories.PANDOC_DIR.getDir() + "pandoc.exe -o " + criteria.getDestPath() + criteria.getName() + criteria.getExt() + " " + criteria.getSrcPath());
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
             process.waitFor();
             stdInput.close();
