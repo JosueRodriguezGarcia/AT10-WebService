@@ -869,11 +869,11 @@ public class Controller {
     /**
      * Converts from a pdf document to an html page based on a user-provided criteria: input, config and output.
      *
-     * @param asset The input pdf file itself
-     * @param input A JSON formatted string (wo \n characters) that holds all the parameters tied to the input image
+     * @param asset The input pdf file itself.
+     * @param input A JSON formatted string (wo \n characters) that holds all the parameters tied to the input image.
      * @param config A JSON formatted string (wo \n characters) that holds all the parameters tied to the configuration
      *               of the particular process of conversion.
-     * @param output A JSON formatted string (wo \n characters) that holds all the parameters tied to the output page
+     * @param output A JSON formatted string (wo \n characters) that holds all the parameters tied to the output page.
      * @return a Response specifying details on the output page(s).
      */
     public PPTtoPdfResponse pdfToHtml(@RequestParam("asset") MultipartFile asset,
@@ -970,11 +970,11 @@ public class Controller {
     /**
      * Converts from a PDF document to to a MS Word document based on a user-provided criteria: input, config and output.
      *
-     * @param asset The input pdf document itself
-     * @param input A JSON formatted string (wo \n characters) that holds all the parameters tied to the input document
+     * @param asset The input pdf document itself.
+     * @param input A JSON formatted string (wo \n characters) that holds all the parameters tied to the input document.
      * @param config A JSON formatted string (wo \n characters) that holds all the parameters tied to the configuration
      *               of the particular process of conversion.
-     * @param output A JSON formatted string (wo \n characters) that holds all the parameters tied to the output document
+     * @param output A JSON formatted string (wo \n characters) that holds all the parameters tied to the output document.
      * @return a Response specifying details on the output file.
      */
     public PPTtoPdfResponse pdfToDocx(@RequestParam("asset") MultipartFile asset,
