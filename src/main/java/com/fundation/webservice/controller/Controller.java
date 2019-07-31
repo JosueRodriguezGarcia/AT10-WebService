@@ -875,7 +875,7 @@ public class Controller {
     /**
      * Endpoint for downloading zip file containing the products of a conversion process.
      *
-     * @param fileName Name of the output zip file
+     * @param fileName Name of the output zip file.
      * @param request HTTP GET verb.
      * @return a JSON formatted Response providing the URI of the resulting zip file.
      */
