@@ -27,8 +27,9 @@ public class ConvertPdfToHtml implements IConvert{
      * @param criteriaConvert
      */
     public void convert(CriteriaConvert criteriaConvert) {
+        CriteriaThumbnailImage criteria = (CriteriaThumbnailImage) criteriaConvert;
         try {
-            Process process = Runtime.getRuntime().exec("3rdparty/" + "poppler/bin/" + "pdftohtml.exe -c -noframes " + criteriaConvert.getSrcPath() + " " + criteriaConvert.getDestPath());
+            Process process = Runtime.getRuntime().exec(Directories.TOOLS_DIR.getDir() + Directories.POPPLER_DIR.getDir() + "pdftohtml.exe -c -noframes " + criteria.getSrcPath() + " " + criteria.getDestPath() + criteria.getName() + criteria.getExt());
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(process.getInputStream()));
             process.waitFor();
             stdInput.close();
