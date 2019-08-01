@@ -49,4 +49,13 @@ public class QueryTest {
         String expected = infContent.get(0);
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void insertChecksum_verifyDayRecordInDB() {
+        List<String> infContent = new ArrayList<String>();
+        infContent = query.showContent("test1");
+        String actual = "1";
+        String expected = infContent.get(1);
+        assertEquals(expected, actual);
+    }
 }
