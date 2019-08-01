@@ -46,7 +46,7 @@ public class Query {
      * Method verifies that the one stored in the database.
      */
     public boolean verifyCheckSumExist(String checksum) {
-        String sql = "SELECT * FROM FILERECORD";
+        String sql = "SELECT CHECKSUM FROM FILERECORD";
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
