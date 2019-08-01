@@ -26,4 +26,9 @@ public class DBConnectionTest {
     public void getConnection_verifyNotNullConnection() {
         assertNotNull(DBConnection.getInstance().getConnection());
     }
+
+    @Test
+    public void getInstance_verifyNotNullInstance() {
+        assertNotNull(DBConnection.getInstance());
+    }
 }
