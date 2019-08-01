@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (c) 2019 Jalasoft.
  *
  * This software is the confidential and proprietary information of Jalasoft.
@@ -6,7 +6,9 @@
  * disclose such Confidential Information and shall use it only in
  * accordance with the terms of the license agreement you entered into
  * with Jalasoft.
+ *
  */
+
 package com.fundation.webservice.database;
 
 import com.fundation.webservice.common.Util;
@@ -20,9 +22,8 @@ import java.sql.Statement;
 import java.util.Properties;
 
 /**
- * Method allows to make the connection with the database for that uses
- * a pattern design called singlenton which allows to create
- * the connection uses only once.
+ * Class that allows make the connection with the database.
+ * This class use the pattern design singlenton.
  *
  * @author Jesus Menacho
  * @version 1.0
