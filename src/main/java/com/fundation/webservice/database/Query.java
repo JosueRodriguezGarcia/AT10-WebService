@@ -87,6 +87,7 @@ public class Query {
         try {
             Connection connection = DBConnection.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, checksum);
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 infContent.add(result.getString("CHECKSUM"));
