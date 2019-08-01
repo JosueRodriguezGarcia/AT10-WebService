@@ -63,7 +63,6 @@ public class DBConnection {
             USER_PASSWORD = Util.getInstance().getConfig().getPassword();
             PORT_CONNECTION = Util.getInstance().getConfig().getPort();
             HOST_NAME = Util.getInstance().getConfig().getHost();
-            System.out.println(WEBSERVER_DB);
             conn = DriverManager.getConnection("jdbc:mysql://" + HOST_NAME + ":" + PORT_CONNECTION + "/" + WEBSERVER_DB, USER_NAME, USER_PASSWORD);
         } catch (SQLException e) {
             System.out.println(e);
