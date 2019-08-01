@@ -14,7 +14,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class query allows you to perform methods of querying
@@ -62,7 +63,6 @@ public class Query {
         return false;
     }
 
-
     /**
      * Method removes information from database according to checksum field.
      */
@@ -76,5 +76,27 @@ public class Query {
         } catch (SQLException e) {
             e.getMessage();
         }
+    }
+
+    /**
+     * Method show the content from database.
+     */
+    public List showContent(String checksum) {
+        List<String> infContent = new ArrayList<String>();
+        String sql = "SELECT CHECKSUM, DAY, DATECREATION, PATH FROM FILERECORD WHERE CHECKSUM = ?";
+        try {
+            Connection connection = DBConnection.getInstance().getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet result = statement.executeQuery();
+            while (result.next()) {
+                infContent.add(result.getString("CHECKSUM"));
+                infContent.add(Integer.toString(result.getInt("DAY")));
+                infContent.add(String.valueOf(result.getDate("DATECREATION")));
+                infContent.add(result.getString("PATH"));
+            }
+        } catch (SQLException e) {
+            e.getMessage();
+        }
+        return infContent;
     }
 }
