@@ -25,7 +25,7 @@ public class KeyFrameOfVideoTest {
     CriteriaKeyFrameVideo criteriaKeyFrameVideo = new CriteriaKeyFrameVideo();
 
     @Test
-    public void convert() {
+    public void convert_criteriaWithNonExistentKeyFrame_noKeyframe() {
         criteriaKeyFrameVideo.setSrcPath(Directories.RSRC_DIR.getDir() + "videoTest.mp4");
         criteriaKeyFrameVideo.setDestPath(Directories.RSRC_DIR.getDir());
         criteriaKeyFrameVideo.setName("keyFrameOfVideo");
@@ -37,5 +37,23 @@ public class KeyFrameOfVideoTest {
                 criteriaKeyFrameVideo.getExt());
         boolean actual = output.exists();
         assertFalse(actual);
+    }
+
+    @Test (expected = Exception.class)
+    public void convert_criteriaWithNonExistentVideo_resultException() {
+        criteriaKeyFrameVideo.setSrcPath(Directories.RSRC_DIR.getDir() + "nonExistentVideo.ogv");
+        criteriaKeyFrameVideo.setDestPath(Directories.RSRC_DIR.getDir());
+        criteriaKeyFrameVideo.setTime("500");
+        criteriaKeyFrameVideo.setName("keyframeOfVideo");
+        criteriaKeyFrameVideo.setExt("ogv");
+        KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo();
+        keyFrameOfVideo.convert(criteriaKeyFrameVideo);
+    }
+
+    @Test (expected = Exception.class)
+    public void KeyFrameInVideo_blankCriteria_resultIllegalArgumentException() {
+        CriteriaKeyFrameVideo blankCriteria = new CriteriaKeyFrameVideo();
+        KeyFrameOfVideo keyFrameOfVideo = new KeyFrameOfVideo();
+            keyFrameOfVideo.convert(blankCriteria);
     }
 }
