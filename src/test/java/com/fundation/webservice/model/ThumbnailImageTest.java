@@ -12,6 +12,7 @@ package com.fundation.webservice.model;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import static org.junit.Assert.assertTrue;
 
@@ -22,7 +23,6 @@ import static org.junit.Assert.assertTrue;
  * @version 1.0
  */
 public class ThumbnailImageTest {
-
     @Test
     public void convert() {
         CriteriaThumbnailImage criteriaThumbnailImage = new CriteriaThumbnailImage();
@@ -36,5 +36,34 @@ public class ThumbnailImageTest {
                 "." + criteriaThumbnailImage.getExt());
         Boolean actual = outputFile.exists();
         assertTrue(actual);
+    }
+
+    @Test (expected = Exception.class)
+    public void convert_blankCriteria_resultException() {
+        CriteriaThumbnailImage criteriaThumbnailImage = new CriteriaThumbnailImage();
+        ThumbnailImage thumbnailImage = new ThumbnailImage();
+        thumbnailImage.convert(criteriaThumbnailImage);
+    }
+
+    @Test (expected = FileNotFoundException.class)
+    public void convert_nonExistentFile_resultException() {
+        CriteriaThumbnailImage criteriaConvert = new CriteriaThumbnailImage();
+        criteriaConvert.setSrcPath(Directories.RSRC_DIR.getDir() + "nonExistentImage.jpg");
+        criteriaConvert.setDestPath(Directories.RSRC_DIR.getDir());
+        criteriaConvert.setName("test");
+        criteriaConvert.setExt(".png");
+        ThumbnailImage thumbnailImage = new ThumbnailImage();
+        thumbnailImage.convert(criteriaConvert);
+    }
+
+    @Test (expected = Exception.class)
+    public void convert_invalidFormatColor_resultException() {
+        CriteriaThumbnailImage criteriaConvert = new CriteriaThumbnailImage();
+        criteriaConvert.setSrcPath(Directories.RSRC_DIR.getDir() + "imageTest.jpg");
+        criteriaConvert.setDestPath(Directories.RSRC_DIR.getDir());
+        criteriaConvert.setName("test");
+        criteriaConvert.setExt(".png");
+        ThumbnailImage thumbnailImage = new ThumbnailImage();
+        thumbnailImage.convert(criteriaConvert);
     }
 }
