@@ -77,4 +77,12 @@ public class QueryTest {
         assertEquals(expected, actual);
     }
 
+    @Test
+    public void verifyCheckSumExist_searchChecksum() {
+        List<String> infContent = new ArrayList<String>();
+        infContent = query.showContent("test1");
+        String actual = "test1";
+        String expected = infContent.get(0);
+        assertEquals(expected, actual);
+    }
 }
