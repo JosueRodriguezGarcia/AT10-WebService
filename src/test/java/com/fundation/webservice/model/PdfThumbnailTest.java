@@ -12,6 +12,7 @@ package com.fundation.webservice.model;
 import org.junit.Test;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import static org.junit.Assert.assertTrue;
 
@@ -26,6 +27,29 @@ public class PdfThumbnailTest {
     public void convert() {
         CriteriaPdfToImage criteriaConvert = new CriteriaPdfToImage();
         criteriaConvert.setSrcPath(Directories.RSRC_DIR.getDir() + "pdfTest.pdf");
+        criteriaConvert.setDestPath(Directories.RSRC_DIR.getDir());
+        criteriaConvert.setDpi(300);
+        criteriaConvert.setFormatColor("RGB");
+        criteriaConvert.setName("test");
+        criteriaConvert.setExt(".png");
+        PdfThumbnail pdfThumbnail = new PdfThumbnail();
+        pdfThumbnail.convert(criteriaConvert);
+        File output = new File(Directories.RSRC_DIR.getDir() + "test.png");
+        boolean actual = output.exists();
+        assertTrue(actual);
+    }
+
+    @Test (expected = Exception.class)
+    public void convert_null_exception() {
+        CriteriaPdfToImage criteriaConvert = new CriteriaPdfToImage();
+        PdfThumbnail pdfThumbnail = new PdfThumbnail();
+        pdfThumbnail.convert(criteriaConvert);
+    }
+
+    @Test (expected = FileNotFoundException.class)
+    public void convert_nonExistentFile_resultException() {
+        CriteriaPdfToImage criteriaConvert = new CriteriaPdfToImage();
+        criteriaConvert.setSrcPath(Directories.RSRC_DIR.getDir() + "nonExistentFile.pdf");
         criteriaConvert.setDestPath(Directories.RSRC_DIR.getDir());
         criteriaConvert.setDpi(300);
         criteriaConvert.setFormatColor("RGB");
