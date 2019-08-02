@@ -15,11 +15,12 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * This class serves as JUnit test class for KeyFrameResponseTest class from our model entity.
+ *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
 public class KeyFrameResponseTest {
-
     @Test
     public void getFileName() {
         String fileName = "video.mp4";
