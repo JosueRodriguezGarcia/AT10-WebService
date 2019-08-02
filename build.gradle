@@ -1,15 +1,55 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.6.RELEASE")
+    }
+}
 plugins {
     id 'java'
 }
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
+bootJar {
+    baseName = 'webservice'
+    version =  '1.0'
+}
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    // https://mvnrepository.com/artifact/org.im4java/im4java
+    compile group: 'org.im4java', name: 'im4java', version: '1.4.0'
+    // refs/remotes/origin/Model/implementation.PptToImage
+    compile group: 'org.apache.pdfbox', name: 'pdfbox-tools', version: '2.0.1'
+    // https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+    compile group: 'com.itextpdf', name: 'itextpdf', version: '5.5.13.1'
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.0'
+    // https://mvnrepository.com/artifact/ws.schild/jave-all-deps
+    compile group: 'ws.schild', name: 'jave-all-deps', version: '2.5.0'
+    
+    implementation 'org.eclipse.birt.runtime.3_7_1:com.lowagie.text:2.1.7'
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas
+    compile group: 'org.apache.poi', name: 'poi-ooxml-schemas', version: '4.1.0'
+    //implementation 'org.apache.poi:poi-scratchpad:4.1.0'
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-scratchpad
+    compile group: 'org.apache.poi', name: 'poi-scratchpad', version: '3.9'
+    compile group: 'org.json', name: 'json', version: '20180813'
+    // https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans
+    compile group: 'org.apache.xmlbeans', name: 'xmlbeans', version: '3.1.0'
+    // https://mvnrepository.com/artifact/com.lowagie.text/com.springsource.com.lowagie.text
+    compile group: 'com.lowagie.text', name: 'com.springsource.com.lowagie.text', version: '2.0.8'
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
 }
