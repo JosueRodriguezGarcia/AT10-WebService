@@ -63,9 +63,8 @@ public class Metadata extends Run{
      *
      * @return a Map structure containing the pairs provided by exiftool
      */
-    public Map<String, String> parseToMap(File file) {
+    public Map<String, String> parseToMap(File file) throws Exception {
         Map<String, String> result = new HashMap<String, String>();
-        try{
             initCommandLine();
             commandLine.add(file.getAbsolutePath());
             Process process = new ProcessBuilder(commandLine).start();
@@ -78,11 +77,6 @@ public class Metadata extends Run{
                 }
             }
             input.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw new RuntimeException("", e);
-        }
         return result;
     }
 
