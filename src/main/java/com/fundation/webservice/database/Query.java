@@ -18,8 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class query allows you to perform methods of querying
- * the database such as data insertion queries, deletion among others..
+ * Class query allows you to perform methods of querying.
+ * the database such as data insertion queries, deletion among others.
  *
  * @author Jesus Menacho
  * @version 1.0
