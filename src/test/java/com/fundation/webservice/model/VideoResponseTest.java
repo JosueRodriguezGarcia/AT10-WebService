@@ -15,28 +15,29 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
+ * This class serves as JUnit test class for the VideoResponse class.
+ *
  * @author Alejandro Sánchez Luizaga
  * @version 1.0
  */
 public class VideoResponseTest {
-
-        String fileName = "name";
-        String fileDownloadUri = "URI";
-        String fileType = "video/codec";
-        long size = 987654321;
-        String newFormat = "format";
-        String audioCodec = "libvorbis";
-        String audioBitRate = "320000";
-        String audioChannel = "2";
-        String videoCodec = "mpeg4";
-        String videoBitRate = "950000";
-        String fps = "30";
-        String metadata = "json";
-        boolean thumbnail = true;
-        boolean keyframes = true;
-        String checksum = "1234567890123456789012";
-        VideoResponse response = new VideoResponse(fileName, fileDownloadUri, fileType, size, newFormat, audioCodec,
-            audioBitRate, audioChannel, videoCodec, videoBitRate, fps, metadata, thumbnail, keyframes, checksum);
+    String fileName = "name";
+    String fileDownloadUri = "URI";
+    String fileType = "video/codec";
+    long size = 987654321;
+    String newFormat = "format";
+    String audioCodec = "libvorbis";
+    String audioBitRate = "320000";
+    String audioChannel = "2";
+    String videoCodec = "mpeg4";
+    String videoBitRate = "950000";
+    String fps = "30";
+    String metadata = "json";
+    boolean thumbnail = true;
+    boolean keyframes = true;
+    String checksum = "1234567890123456789012";
+    VideoResponse response = new VideoResponse(fileName, fileDownloadUri, fileType, size, newFormat, audioCodec,
+        audioBitRate, audioChannel, videoCodec, videoBitRate, fps, metadata, thumbnail, keyframes, checksum);
 
     @Test
     public void getFileName() {
