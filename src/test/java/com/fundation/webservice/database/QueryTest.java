@@ -22,15 +22,20 @@ import static org.junit.Assert.*;
 /**
  * Class that allows to carry out the tests to the queries the database.
  *
- * @author Jesus Menacho
+ * @author Jesus Menacho.
  * @version 1.0
  */
 public class QueryTest {
 
     Query query = new Query();
-
+    final Integer CHECKSUM=0;
+    final Integer DAYFILE=1;
+    final Integer DATE=2;
+    final Integer PATH=0;
     @Before
     public void settingVariable() {
+
+
         query.deleteByCheckSum("test1");
         Calendar c = new GregorianCalendar();
         String date = "31";
@@ -46,7 +51,7 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         infContent = query.showContent("test1");
         String actual = "test1";
-        String expected = infContent.get(0);
+        String expected = infContent.get(CHECKSUM);
         assertEquals(expected, actual);
     }
 
@@ -55,7 +60,7 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         infContent = query.showContent("test1");
         String actual = "1";
-        String expected = infContent.get(1);
+        String expected = infContent.get(DAYFILE);
         assertEquals(expected, actual);
     }
 
@@ -64,7 +69,7 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         infContent = query.showContent("test1");
         String actual = "2019-07-30";
-        String expected = infContent.get(2);
+        String expected = infContent.get(DATE);
         assertEquals(expected, actual);
     }
 
@@ -73,7 +78,7 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         infContent = query.showContent("test1");
         String actual = "//testPath/path/file.mp4";
-        String expected = infContent.get(3);
+        String expected = infContent.get(PATH);
         assertEquals(expected, actual);
     }
 
@@ -82,7 +87,7 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         infContent = query.showContent("test1");
         String actual = "test1";
-        String expected = infContent.get(0);
+        String expected = infContent.get(CHECKSUM);
         assertEquals(expected, actual);
     }
 
@@ -91,7 +96,7 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         query.deleteByCheckSum("test1");
         infContent = query.showContent("test1");
-        String nullString = infContent.get(0);
+        String nullString = infContent.get(CHECKSUM);
     }
 
     @Test
@@ -99,7 +104,7 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         infContent = query.showContent("test1");
         String actual = "test1";
-        String expected = infContent.get(0);
+        String expected = infContent.get(CHECKSUM);
         assertEquals(expected, actual);
     }
 
@@ -108,7 +113,7 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         infContent = query.showContent("test1");
         String actual = "1";
-        String expected = infContent.get(1);
+        String expected = infContent.get(DAYFILE);
         assertEquals(expected, actual);
     }
 
@@ -117,7 +122,7 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         infContent = query.showContent("test1");
         String actual = "2019-07-30";
-        String expected = infContent.get(2);
+        String expected = infContent.get(DATE);
         assertEquals(expected, actual);
     }
 
@@ -126,7 +131,7 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         infContent = query.showContent("test1");
         String actual = "//testPath/path/file.mp4";
-        String expected = infContent.get(3);
+        String expected = infContent.get(PATH);
         assertEquals(expected, actual);
     }
 }

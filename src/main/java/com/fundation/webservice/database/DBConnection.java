@@ -25,7 +25,7 @@ import java.util.Properties;
  * Class that allows make the connection with the database.
  * This class use the pattern design singlenton.
  *
- * @author Jesus Menacho
+ * @author Jesus Menacho.
  * @version 1.0
  */
 public class DBConnection {

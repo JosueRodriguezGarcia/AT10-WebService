@@ -18,7 +18,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Class that allows to carry out the connection test with the database.
  *
- * @author Jesus Menacho
+ * @author Jesus Menacho.
  * @version 1.0
  */
 public class DBConnectionTest {
