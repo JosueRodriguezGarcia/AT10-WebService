@@ -58,4 +58,13 @@ public class QueryTest {
         String expected = infContent.get(1);
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void insertChecksum_verifyDateInDB() {
+        List<String> infContent = new ArrayList<String>();
+        infContent = query.showContent("test1");
+        String actual = "2019-07-30";
+        String expected = infContent.get(2);
+        assertEquals(expected, actual);
+    }
 }
