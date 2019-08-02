@@ -67,4 +67,14 @@ public class QueryTest {
         String expected = infContent.get(2);
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void insertChecksum_verifyRecordPath() {
+        List<String> infContent = new ArrayList<String>();
+        infContent = query.showContent("test1");
+        String actual = "//testPath/path/file.mp4";
+        String expected = infContent.get(3);
+        assertEquals(expected, actual);
+    }
+
 }
