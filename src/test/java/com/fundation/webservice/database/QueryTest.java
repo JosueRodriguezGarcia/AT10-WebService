@@ -85,4 +85,13 @@ public class QueryTest {
         String expected = infContent.get(0);
         assertEquals(expected, actual);
     }
+
+    @Test (expected = Exception.class)
+    public void deleteByCheckSum_deleteCheckSum() {
+        List<String> infContent = new ArrayList<String>();
+        query.deleteByCheckSum("test1");
+        infContent = query.showContent("test1");
+        String stringNull = infContent.get(0);
+    }
+
 }
