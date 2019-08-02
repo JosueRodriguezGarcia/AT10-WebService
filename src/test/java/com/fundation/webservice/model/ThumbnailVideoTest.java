@@ -16,9 +16,9 @@ import java.io.File;
 import static org.junit.Assert.*;
 
 /**
- * This class serves as Junit test class for Thumbnail class.
+ * This class serves as Junit test class for ThumbnailVideo class.
  *
- * @author Josue Rodriguez Garcia
+ * @author Josue Rodriguez Garcia, Alejandro Sánchez Luizaga
  * @version 1.0
  */
 
