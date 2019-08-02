@@ -34,7 +34,7 @@ public class QueryTest {
     final Integer CHECKSUM=0;
     final Integer DAYFILE=1;
     final Integer DATE=2;
-    final Integer PATH=0;
+    final Integer PATH=3;
     @Before
     public void settingVariable() {
 
