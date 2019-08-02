@@ -13,7 +13,7 @@ package com.fundation.webservice.database;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Class that allows to carry out the connection test with the database.
