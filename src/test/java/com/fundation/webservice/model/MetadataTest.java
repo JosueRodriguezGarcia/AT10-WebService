@@ -89,18 +89,17 @@ public class MetadataTest {
     }
 
     @Test
-    public void parseToMap_map() {
+    public void parseToMap_map() throws Exception{
         String inputFilePath = Directories.RSRC_DIR.getDir() + "wild.wmv";
         File inputFile = new File(inputFilePath);
         Map map = metadata.parseToMap(inputFile);
         assertEquals(inputFile.getName(), map.get("File Name"));
     }
 
-    @Test
-    public void parseToMap_null_map() {
+    @Test (expected = Exception.class)
+    public void parseToMap_null_map() throws Exception{
         String inputFilePath = null;
         File inputFile = new File(inputFilePath);
         Map map = metadata.parseToMap(inputFile);
-        assertEquals(inputFile.getName(), map.get("File Name"));
     }
 }
