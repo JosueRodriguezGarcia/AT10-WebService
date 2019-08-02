@@ -91,7 +91,24 @@ public class QueryTest {
         List<String> infContent = new ArrayList<String>();
         query.deleteByCheckSum("test1");
         infContent = query.showContent("test1");
-        String stringNull = infContent.get(0);
+        String nullString = infContent.get(0);
     }
 
+    @Test
+    public void showContent_verifyChecksumInDB() {
+        List<String> infContent = new ArrayList<String>();
+        infContent = query.showContent("test1");
+        String actual = "test1";
+        String expected = infContent.get(0);
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void showContent_verifyDayRecordInDB() {
+        List<String> infContent = new ArrayList<String>();
+        infContent = query.showContent("test1");
+        String actual = "1";
+        String expected = infContent.get(1);
+        assertEquals(expected, actual);
+    }
 }
